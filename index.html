@@ -164,7 +164,13 @@
     .player-item:hover .kick-btn { opacity: 1; }
 
     .sparkle-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .sparkle { position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; animation: sparkle 3s ease-in-out infinite; }
+    .sparkle { position: absolute; border-radius: 50%; animation: sparkle 3s ease-in-out infinite; }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+    .animate-twinkle { animation: twinkle 2s ease-in-out infinite; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -563,11 +569,19 @@
       const resultIndex = Math.floor(Math.random() * slots);
       const spins = 5 + Math.random() * 3;
       const slotAngle = 360 / slots;
-      const finalAngle = spins * 360 + (360 - resultIndex * slotAngle - slotAngle / 2);
       
-      render(); // 먼저 spinning 상태로 렌더링
+      // 현재 각도에서 추가 회전 (이전 위치에서 이어서 돌림)
+      const currentAngle = state.rouletteAngle || 0;
+      // resultIndex 칸이 포인터(12시)에 오도록 계산
+      const targetSegmentAngle = resultIndex * slotAngle + slotAngle / 2;
+      const additionalRotation = spins * 360 + (360 - targetSegmentAngle);
+      const finalAngle = currentAngle + additionalRotation;
       
-      // DOM이 그려진 후 약간의 딜레이를 주고 회전 시작
+      // 결과 인덱스와 최종 각도를 미리 저장
+      const savedResultIndex = resultIndex;
+      
+      render();
+      
       requestAnimationFrame(() => {
         setTimeout(() => {
           const wheel = document.querySelector('.roulette-wheel');
@@ -579,7 +593,7 @@
       
       setTimeout(() => {
         state.rouletteSpinning = false;
-        state.rouletteResult = resultIndex;
+        state.rouletteResult = savedResultIndex;
         state.rouletteAngle = finalAngle;
         playSound('win');
         render();
@@ -1002,8 +1016,25 @@
 
       return `
         <div class="min-h-screen bg-roulette p-4 lg:p-6 relative overflow-hidden">
-          <div class="absolute top-10 left-10 text-5xl opacity-15 animate-float">🎡</div>
-          <div class="absolute bottom-10 right-10 text-5xl opacity-15 animate-float-reverse">✨</div>
+          <!-- 떠다니는 이모지들 -->
+          <div class="absolute top-[5%] left-[5%] text-5xl opacity-20 animate-float">🎡</div>
+          <div class="absolute top-[15%] right-[10%] text-4xl opacity-15 animate-float-reverse" style="animation-delay: 0.5s;">✨</div>
+          <div class="absolute top-[40%] left-[3%] text-3xl opacity-15 animate-float" style="animation-delay: 1s;">🌟</div>
+          <div class="absolute bottom-[30%] right-[5%] text-4xl opacity-20 animate-float-reverse" style="animation-delay: 1.5s;">💫</div>
+          <div class="absolute bottom-[10%] left-[8%] text-5xl opacity-15 animate-float" style="animation-delay: 2s;">🎰</div>
+          <div class="absolute bottom-[15%] right-[12%] text-3xl opacity-20 animate-float-reverse" style="animation-delay: 0.3s;">🎲</div>
+          <div class="absolute top-[60%] right-[3%] text-4xl opacity-15 animate-float" style="animation-delay: 2.5s;">🍀</div>
+          <div class="absolute top-[8%] left-[40%] text-3xl opacity-10 animate-float-reverse" style="animation-delay: 1.8s;">⭐</div>
+          
+          <!-- 스파클 효과 -->
+          <div class="sparkle-container">
+            ${Array(15).fill(0).map((_, i) => `<div class="sparkle" style="left: ${Math.random()*100}%; top: ${Math.random()*100}%; animation-delay: ${Math.random()*3}s; width: ${3+Math.random()*6}px; height: ${3+Math.random()*6}px; background: rgba(168, 85, 247, 0.6);"></div>`).join('')}
+          </div>
+          
+          <!-- 글로우 오브 -->
+          <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute bottom-1/4 right-1/4 w-48 h-48 bg-pink-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
           
           <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-center mb-6">
@@ -1013,18 +1044,23 @@
             </div>
 
             <div class="flex flex-col lg:flex-row items-center justify-center gap-8">
+              <!-- 룰렛 휠 -->
               <div class="relative">
+                <!-- 휠 뒤 글로우 -->
+                <div class="absolute inset-0 bg-purple-500/20 rounded-full blur-2xl scale-110 pointer-events-none"></div>
+                
+                <!-- 포인터 -->
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-20">
                   <div class="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[40px] border-l-transparent border-r-transparent border-t-yellow-400" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></div>
                 </div>
                 
                 <div class="relative w-[320px] h-[320px]">
-                  <svg viewBox="0 0 300 300" class="w-full h-full roulette-wheel" style="transform: rotate(${spinning ? 0 : angle}deg);">
+                  <svg viewBox="0 0 300 300" class="w-full h-full roulette-wheel" style="transform: rotate(${angle}deg);">
                     ${wheelSegments.map((seg, i) => `
-                      <path d="${seg.path}" fill="${seg.color}" stroke="#1a0a2e" stroke-width="2"/>
+                      <path d="${seg.path}" fill="${seg.color}" stroke="#0d0015" stroke-width="2"/>
                       <text x="${seg.textX}" y="${seg.textY}" fill="white" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(${seg.textAngle}, ${seg.textX}, ${seg.textY})">${seg.name.slice(0,6)}</text>
                     `).join('')}
-                    <circle cx="150" cy="150" r="25" fill="#1a0a2e" stroke="#6b3fa0" stroke-width="3"/>
+                    <circle cx="150" cy="150" r="25" fill="#0d0015" stroke="#6b3fa0" stroke-width="3"/>
                     <text x="150" y="150" fill="white" font-size="20" text-anchor="middle" dominant-baseline="middle">🎡</text>
                   </svg>
                 </div>
