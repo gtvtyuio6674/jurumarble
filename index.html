@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍺 주루마블 - 온라인</title>
+  <title>🎮 파티게임 - 온라인</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -27,70 +27,31 @@
     .title-font { font-family: 'Black Han Sans', sans-serif; }
     
     .bg-pattern {
+      background-color: #1a1a2e;
+      background-image: 
+        radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .bg-pattern-beer {
       background-color: #2C2416;
       background-image: 
         radial-gradient(ellipse at 20% 30%, rgba(244, 168, 54, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(244, 168, 54, 0.1) 0%, transparent 50%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F4A836' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        radial-gradient(ellipse at 80% 70%, rgba(244, 168, 54, 0.1) 0%, transparent 50%);
     }
 
-    /* 입장 애니메이션 */
-    @keyframes slide-in-left {
-      0% { transform: translateX(-100px); opacity: 0; }
-      100% { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slide-in-right {
-      0% { transform: translateX(100px); opacity: 0; }
-      100% { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slide-in-up {
-      0% { transform: translateY(50px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes fade-in-scale {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes bounce-in {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); }
-      70% { transform: scale(0.9); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes dice-roll {
-      0% { transform: rotate(0deg) scale(1); }
-      25% { transform: rotate(20deg) scale(1.15); }
-      50% { transform: rotate(-20deg) scale(1.1); }
-      75% { transform: rotate(10deg) scale(1.15); }
-      100% { transform: rotate(0deg) scale(1); }
-    }
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(244, 168, 54, 0.4); }
-      50% { box-shadow: 0 0 35px rgba(244, 168, 54, 0.7); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-15px) rotate(2deg); }
-    }
-    @keyframes bubble {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
-      50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
-    }
-    @keyframes pour {
-      0% { transform: rotate(-30deg); }
-      50% { transform: rotate(-45deg); }
-      100% { transform: rotate(-30deg); }
-    }
-    @keyframes move-token {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3) translateY(-10px); }
-      100% { transform: scale(1); }
-    }
-    @keyframes btn-press {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.95); }
-      100% { transform: scale(1); }
-    }
+    @keyframes slide-in-left { 0% { transform: translateX(-100px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes slide-in-right { 0% { transform: translateX(100px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes slide-in-up { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fade-in-scale { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes bounce-in { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes dice-roll { 0% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(20deg) scale(1.15); } 50% { transform: rotate(-20deg) scale(1.1); } 75% { transform: rotate(10deg) scale(1.15); } 100% { transform: rotate(0deg) scale(1); } }
+    @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(244, 168, 54, 0.4); } 50% { box-shadow: 0 0 35px rgba(244, 168, 54, 0.7); } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
+    @keyframes pour { 0% { transform: rotate(-30deg); } 50% { transform: rotate(-45deg); } 100% { transform: rotate(-30deg); } }
+    @keyframes move-token { 0% { transform: scale(1); } 50% { transform: scale(1.3) translateY(-10px); } 100% { transform: scale(1); } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     
     .animate-slide-left { animation: slide-in-left 0.5s ease-out forwards; }
     .animate-slide-right { animation: slide-in-right 0.5s ease-out forwards; }
@@ -100,10 +61,9 @@
     .animate-dice-roll { animation: dice-roll 0.15s ease-in-out infinite; }
     .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
     .animate-float { animation: float 4s ease-in-out infinite; }
-    .animate-bubble { animation: bubble 2s ease-in-out infinite; }
     .animate-pour { animation: pour 1s ease-in-out infinite; }
     .animate-move { animation: move-token 0.5s ease-out; }
-    .animate-btn-press { animation: btn-press 0.15s ease-out; }
+    .animate-shake { animation: shake 0.3s ease-in-out; }
 
     .delay-100 { animation-delay: 0.1s; opacity: 0; }
     .delay-200 { animation-delay: 0.2s; opacity: 0; }
@@ -111,19 +71,45 @@
     .delay-400 { animation-delay: 0.4s; opacity: 0; }
     .delay-500 { animation-delay: 0.5s; opacity: 0; }
 
+    .card-dark {
+      background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 50%, #16162a 100%);
+      border: 2px solid #3d3d5c;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
     .card-wood {
       background: linear-gradient(145deg, #4A3728 0%, #3D2E1F 50%, #2C2416 100%);
       border: 3px solid #5D4634;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
-    .tile-drink { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-game { background: linear-gradient(135deg, #059669 0%, #047857 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-bonus { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-move { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-special { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-free { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
-    .tile-start { background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3); }
+    .game-card {
+      background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 100%);
+      border: 2px solid #3d3d5c;
+      transition: all 0.3s;
+    }
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: #6366f1;
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    }
+
+    .tile-drink { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); }
+    .tile-game { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+    .tile-bonus { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); }
+    .tile-move { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); }
+    .tile-special { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+    .tile-free { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); }
+    .tile-start { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+      border: 2px solid #4338ca;
+      box-shadow: 0 4px 0 #3730a3, 0 6px 10px rgba(0,0,0,0.3);
+      transition: all 0.1s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #3730a3, 0 8px 15px rgba(0,0,0,0.3); }
+    .btn-primary:active, .btn-primary.pressed { transform: translateY(2px); box-shadow: 0 2px 0 #3730a3, 0 3px 5px rgba(0,0,0,0.3); }
 
     .btn-beer {
       background: linear-gradient(180deg, #F4A836 0%, #D4891C 100%);
@@ -131,32 +117,40 @@
       box-shadow: 0 4px 0 #8B5A14, 0 6px 10px rgba(0,0,0,0.3);
       transition: all 0.1s;
     }
-    .btn-beer:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #8B5A14, 0 8px 15px rgba(0,0,0,0.3); }
-    .btn-beer:active, .btn-beer.pressed { transform: translateY(2px); box-shadow: 0 2px 0 #8B5A14, 0 3px 5px rgba(0,0,0,0.3); }
+    .btn-beer:hover { transform: translateY(-2px); }
+    .btn-beer:active, .btn-beer.pressed { transform: translateY(2px); box-shadow: 0 2px 0 #8B5A14; }
+
+    .btn-danger {
+      background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+      border: 2px solid #b91c1c;
+      box-shadow: 0 4px 0 #991b1b, 0 6px 10px rgba(0,0,0,0.3);
+      transition: all 0.1s;
+    }
+    .btn-danger:hover { transform: translateY(-2px); }
+    .btn-danger:active, .btn-danger.pressed { transform: translateY(2px); box-shadow: 0 2px 0 #991b1b; }
 
     .btn-secondary {
       background: transparent;
-      border: 2px solid rgba(251, 191, 36, 0.5);
+      border: 2px solid rgba(99, 102, 241, 0.5);
       transition: all 0.15s;
     }
-    .btn-secondary:hover { background: rgba(251, 191, 36, 0.2); border-color: #F4A836; }
-    .btn-secondary:active, .btn-secondary.pressed { transform: scale(0.97); background: rgba(251, 191, 36, 0.3); }
+    .btn-secondary:hover { background: rgba(99, 102, 241, 0.2); border-color: #6366f1; }
+    .btn-secondary:active, .btn-secondary.pressed { transform: scale(0.97); }
 
-    .btn-green {
-      background: linear-gradient(180deg, #22C55E 0%, #16A34A 100%);
-      border: 2px solid #15803D;
-      box-shadow: 0 4px 0 #166534, 0 6px 10px rgba(0,0,0,0.3);
-      transition: all 0.1s;
+    .btn-ghost {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.15s;
     }
-    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #166534, 0 8px 15px rgba(0,0,0,0.3); }
-    .btn-green:active, .btn-green.pressed { transform: translateY(2px); box-shadow: 0 2px 0 #166534, 0 3px 5px rgba(0,0,0,0.3); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
 
-    .input-wood {
-      background: linear-gradient(180deg, #FFF8E7 0%, #F5F0E8 100%);
-      border: 2px solid #8B7355;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    .input-dark {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
     }
-    .input-wood:focus { border-color: #F4A836; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(244,168,54,0.3); }
+    .input-dark:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.3); outline: none; }
+    .input-dark::placeholder { color: rgba(255,255,255,0.4); }
 
     .player-token {
       box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
@@ -165,19 +159,18 @@
 
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb { background: #8B7355; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #4d4d6d; border-radius: 4px; }
+
+    .kick-btn {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .player-item:hover .kick-btn {
+      opacity: 1;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-pattern">
-  <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute top-10 left-10 text-6xl opacity-20 animate-float" style="animation-delay: 0s;">🍺</div>
-    <div class="absolute top-20 right-20 text-5xl opacity-15 animate-float" style="animation-delay: 1s;">🍻</div>
-    <div class="absolute bottom-20 left-20 text-5xl opacity-15 animate-float" style="animation-delay: 2s;">🥂</div>
-    <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-float" style="animation-delay: 0.5s;">🍾</div>
-    <div class="absolute top-1/2 left-5 text-4xl opacity-10 animate-bubble" style="animation-delay: 1.5s;">🫧</div>
-    <div class="absolute top-1/3 right-10 text-4xl opacity-10 animate-bubble" style="animation-delay: 2.5s;">🫧</div>
-  </div>
-
   <div id="app"></div>
 
   <script>
@@ -188,15 +181,12 @@
     let audioCtx = null;
 
     function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new AudioCtx();
-      }
+      if (!audioCtx) audioCtx = new AudioCtx();
     }
 
     function playSound(type) {
       initAudio();
       if (!audioCtx) return;
-
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       oscillator.connect(gainNode);
@@ -220,11 +210,18 @@
           oscillator.start(audioCtx.currentTime);
           oscillator.stop(audioCtx.currentTime + 0.3);
           break;
+        case 'error':
+          oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.2);
+          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.2);
+          break;
         case 'dice':
           oscillator.type = 'square';
           oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
           oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
-          oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
           gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
           gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
           oscillator.start(audioCtx.currentTime);
@@ -240,7 +237,6 @@
           oscillator.stop(audioCtx.currentTime + 0.2);
           break;
         case 'join':
-          oscillator.type = 'sine';
           oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
           oscillator.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
           gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
@@ -248,18 +244,15 @@
           oscillator.start(audioCtx.currentTime);
           oscillator.stop(audioCtx.currentTime + 0.2);
           break;
+        case 'kick':
+          oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
+          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.3);
+          break;
       }
-    }
-
-    // 버튼 클릭 핸들러
-    function btnClick(callback, soundType = 'click') {
-      return function(e) {
-        playSound(soundType);
-        const btn = e.currentTarget;
-        btn.classList.add('pressed');
-        setTimeout(() => btn.classList.remove('pressed'), 150);
-        setTimeout(callback, 100);
-      };
     }
 
     // ============================================
@@ -288,7 +281,39 @@
     }
 
     // ============================================
-    // 게임 데이터
+    // 게임 목록
+    // ============================================
+    const GAMES = [
+      {
+        id: 'jurumarble',
+        name: '주루마블',
+        emoji: '🍺',
+        description: '술이 술술 넘어가는 보드게임',
+        color: 'from-amber-500 to-orange-600',
+        bgClass: 'bg-pattern-beer',
+        minPlayers: 2,
+        maxPlayers: 8
+      },
+      {
+        id: 'coming-soon-1',
+        name: '준비 중',
+        emoji: '🎯',
+        description: '새로운 게임이 곧 추가됩니다!',
+        color: 'from-gray-500 to-gray-600',
+        disabled: true
+      },
+      {
+        id: 'coming-soon-2',
+        name: '준비 중',
+        emoji: '🎪',
+        description: '새로운 게임이 곧 추가됩니다!',
+        color: 'from-gray-500 to-gray-600',
+        disabled: true
+      }
+    ];
+
+    // ============================================
+    // 주루마블 게임 데이터
     // ============================================
     const TILES = [
       { id: 0, name: "출발", type: "start", emoji: "🚀", description: "게임 시작! 모두 화이팅!" },
@@ -335,13 +360,16 @@
     // ============================================
     let state = {
       screen: 'home',
+      selectedGame: null,
       roomCode: null,
       playerId: null,
       playerName: '',
       isHost: false,
       room: null,
       localDiceValue: 1,
-      hasSession: false,
+      showLeaveConfirm: false,
+      showKickConfirm: null,
+      kicked: false,
     };
 
     let roomRef = null;
@@ -352,10 +380,11 @@
     // ============================================
     function saveSession() {
       if (state.roomCode && state.playerId && state.playerName) {
-        localStorage.setItem('jurumarble_session', JSON.stringify({
+        localStorage.setItem('partygame_session', JSON.stringify({
           roomCode: state.roomCode,
           playerId: state.playerId,
           playerName: state.playerName,
+          gameId: state.selectedGame?.id,
           timestamp: Date.now()
         }));
       }
@@ -363,10 +392,9 @@
 
     function loadSession() {
       try {
-        const data = localStorage.getItem('jurumarble_session');
+        const data = localStorage.getItem('partygame_session');
         if (data) {
           const session = JSON.parse(data);
-          // 24시간 이내의 세션만 유효
           if (Date.now() - session.timestamp < 24 * 60 * 60 * 1000) {
             return session;
           }
@@ -376,7 +404,7 @@
     }
 
     function clearSession() {
-      localStorage.removeItem('jurumarble_session');
+      localStorage.removeItem('partygame_session');
     }
 
     // ============================================
@@ -419,6 +447,7 @@
       
       const roomData = {
         code: roomCode,
+        gameId: state.selectedGame.id,
         hostId: playerId,
         status: 'waiting',
         players: {
@@ -491,6 +520,7 @@
       state.roomCode = code;
       state.playerId = playerId;
       state.isHost = false;
+      state.selectedGame = GAMES.find(g => g.id === room.gameId);
       state.screen = 'lobby';
       
       saveSession();
@@ -508,29 +538,25 @@
       if (!room) {
         alert('방이 종료되었습니다.');
         clearSession();
-        state.hasSession = false;
         render();
         return;
       }
 
-      // 플레이어가 아직 방에 있는지 확인
       if (!room.players[session.playerId]) {
         alert('방에서 제외되었습니다.');
         clearSession();
-        state.hasSession = false;
         render();
         return;
       }
 
       playSound('join');
-      
-      // 연결 상태 업데이트
       await db.ref(`rooms/${session.roomCode}/players/${session.playerId}/connected`).set(true);
 
       state.roomCode = session.roomCode;
       state.playerId = session.playerId;
       state.playerName = session.playerName;
       state.isHost = room.hostId === session.playerId;
+      state.selectedGame = GAMES.find(g => g.id === session.gameId);
       state.screen = room.status === 'playing' ? 'game' : 'lobby';
       
       subscribeToRoom(session.roomCode);
@@ -544,30 +570,90 @@
       
       const callback = roomRef.on('value', (snapshot) => {
         const room = snapshot.val();
-        if (room) {
-          const wasShowingMission = state.room?.showMission;
-          state.room = room;
-          
-          if (room.status === 'playing' && state.screen === 'lobby') {
-            playSound('success');
-            state.screen = 'game';
+        
+        // 방이 삭제되었거나 내가 추방당한 경우
+        if (!room || !room.players || !room.players[state.playerId]) {
+          if (!state.kicked) {
+            state.kicked = true;
+            playSound('kick');
+            alert('방에서 나가졌습니다.');
+            clearSession();
+            leaveRoomImmediate();
           }
-          
-          if (room.diceValue) {
-            state.localDiceValue = room.diceValue;
-          }
-          
-          // 미션 모달이 새로 열렸을 때 효과음
-          if (!wasShowingMission && room.showMission) {
-            playSound('mission');
-          }
-          
-          render();
+          return;
         }
+        
+        const wasShowingMission = state.room?.showMission;
+        state.room = room;
+        state.isHost = room.hostId === state.playerId;
+        
+        if (room.status === 'playing' && state.screen === 'lobby') {
+          playSound('success');
+          state.screen = 'game';
+        }
+        
+        if (room.diceValue) {
+          state.localDiceValue = room.diceValue;
+        }
+        
+        if (!wasShowingMission && room.showMission) {
+          playSound('mission');
+        }
+        
+        render();
       });
 
       unsubscribe = () => roomRef.off('value', callback);
       db.ref(`rooms/${code}/players/${state.playerId}/connected`).onDisconnect().set(false);
+    }
+
+    async function leaveRoom() {
+      state.showLeaveConfirm = false;
+      playSound('click');
+      
+      if (state.roomCode && state.playerId) {
+        // Firebase에서 플레이어 삭제
+        await db.ref(`rooms/${state.roomCode}/players/${state.playerId}`).remove();
+        
+        // 방장이 나가면 방 삭제 또는 방장 위임
+        if (state.isHost && state.room) {
+          const remainingPlayers = Object.keys(state.room.players).filter(id => id !== state.playerId);
+          if (remainingPlayers.length === 0) {
+            await db.ref(`rooms/${state.roomCode}`).remove();
+          } else {
+            await db.ref(`rooms/${state.roomCode}/hostId`).set(remainingPlayers[0]);
+          }
+        }
+      }
+      
+      leaveRoomImmediate();
+    }
+
+    function leaveRoomImmediate() {
+      if (unsubscribe) unsubscribe();
+      clearSession();
+      state.roomCode = null;
+      state.playerId = null;
+      state.room = null;
+      state.isHost = false;
+      state.selectedGame = null;
+      state.kicked = false;
+      state.screen = 'home';
+      render();
+    }
+
+    async function kickPlayer(playerId) {
+      state.showKickConfirm = null;
+      if (!state.isHost || playerId === state.playerId) return;
+      
+      playSound('kick');
+      await db.ref(`rooms/${state.roomCode}/players/${playerId}`).remove();
+      
+      // 순서 재정렬
+      const players = Object.values(state.room.players).filter(p => p.id !== playerId);
+      for (let i = 0; i < players.length; i++) {
+        await db.ref(`rooms/${state.roomCode}/players/${players[i].id}/order`).set(i);
+      }
     }
 
     async function startGame() {
@@ -673,13 +759,13 @@
       
       switch (state.screen) {
         case 'home': app.innerHTML = renderHome(); break;
+        case 'gameSelect': app.innerHTML = renderGameSelect(); break;
         case 'create': app.innerHTML = renderCreate(); break;
         case 'join': app.innerHTML = renderJoin(); break;
         case 'lobby': app.innerHTML = renderLobby(); break;
         case 'game': app.innerHTML = renderGame(); break;
       }
 
-      // 이벤트 바인딩
       bindEvents();
     }
 
@@ -689,15 +775,26 @@
         const sound = el.dataset.sound || 'click';
         
         el.onclick = (e) => {
+          e.stopPropagation();
           playSound(sound);
           el.classList.add('pressed');
           setTimeout(() => el.classList.remove('pressed'), 150);
           
           setTimeout(() => {
             switch(action) {
+              case 'go-home': state.screen = 'home'; state.selectedGame = null; render(); break;
+              case 'go-gameselect': state.screen = 'gameSelect'; render(); break;
               case 'go-create': state.screen = 'create'; render(); break;
               case 'go-join': state.screen = 'join'; render(); break;
-              case 'go-home': state.screen = 'home'; render(); break;
+              case 'select-game':
+                const gameId = el.dataset.gameId;
+                const game = GAMES.find(g => g.id === gameId);
+                if (game && !game.disabled) {
+                  state.selectedGame = game;
+                  state.screen = 'gameSelect';
+                  render();
+                }
+                break;
               case 'create-room':
                 state.playerName = document.getElementById('hostName')?.value || '';
                 if (state.playerName.trim()) createRoom();
@@ -710,7 +807,7 @@
                 else alert('닉네임과 방 코드를 확인해주세요!');
                 break;
               case 'rejoin': rejoinRoom(); break;
-              case 'clear-session': clearSession(); state.hasSession = false; render(); break;
+              case 'clear-session': clearSession(); render(); break;
               case 'start-game': startGame(); break;
               case 'roll-dice': rollDice(); break;
               case 'close-mission': closeMission(false); break;
@@ -720,6 +817,15 @@
                 el.innerText = '✓';
                 setTimeout(() => el.innerText = '📋', 1000);
                 break;
+              case 'show-leave-confirm': state.showLeaveConfirm = true; render(); break;
+              case 'hide-leave-confirm': state.showLeaveConfirm = false; render(); break;
+              case 'leave-room': leaveRoom(); break;
+              case 'show-kick-confirm':
+                state.showKickConfirm = el.dataset.playerId;
+                render();
+                break;
+              case 'hide-kick-confirm': state.showKickConfirm = null; render(); break;
+              case 'kick-player': kickPlayer(state.showKickConfirm); break;
             }
           }, 100);
         };
@@ -728,48 +834,52 @@
 
     function renderHome() {
       const session = loadSession();
-      state.hasSession = !!session;
 
       return `
         <div class="min-h-screen flex items-center justify-center p-8 relative z-10">
-          <div class="text-center">
-            <div class="mb-8 relative animate-fade-scale">
-              <div class="text-9xl animate-float filter drop-shadow-lg">🍺</div>
-              <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-4 bg-black/20 rounded-full blur-md"></div>
+          <div class="text-center max-w-4xl mx-auto">
+            <div class="mb-8 animate-fade-scale">
+              <span class="text-8xl">🎮</span>
             </div>
             
-            <h1 class="title-font text-7xl text-amber-400 mb-2 drop-shadow-lg animate-fade-scale delay-100" 
-                style="text-shadow: 0 4px 8px rgba(0,0,0,0.5), 0 0 40px rgba(244,168,54,0.3);">
-              주루마블
+            <h1 class="title-font text-6xl text-white mb-2 animate-fade-scale delay-100" 
+                style="text-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+              파티게임
             </h1>
-            <p class="text-xl text-amber-200/70 mb-12 animate-fade-scale delay-200">술이 술술 넘어가는 온라인 보드게임</p>
+            <p class="text-xl text-indigo-200/70 mb-12 animate-fade-scale delay-200">친구들과 함께하는 온라인 파티게임</p>
             
-            <div class="flex flex-col gap-4 max-w-sm mx-auto">
-              ${session ? `
+            ${session ? `
+              <div class="mb-8 animate-slide-up delay-200">
                 <button data-action="rejoin" data-sound="success"
-                  class="btn-green w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-left delay-200">
+                  class="btn-primary px-8 py-4 text-white font-bold text-xl rounded-2xl">
                   🔄 다시 참여하기
                 </button>
-                <p class="text-amber-300/60 text-sm animate-fade-scale delay-300">
+                <p class="text-indigo-300/60 text-sm mt-2">
                   ${session.playerName}님 · 방 코드: ${session.roomCode}
-                  <button data-action="clear-session" class="ml-2 text-red-400 hover:text-red-300">✕ 취소</button>
+                  <button data-action="clear-session" class="ml-2 text-red-400 hover:text-red-300">✕</button>
                 </p>
-              ` : ''}
-              
-              <button data-action="go-create" data-sound="click"
-                class="btn-beer w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-left ${session ? 'delay-400' : 'delay-300'}">
-                🎮 방 만들기
-              </button>
-              <button data-action="go-join"
-                class="btn-secondary w-full py-5 px-8 text-amber-300 font-bold text-xl rounded-2xl animate-slide-right ${session ? 'delay-500' : 'delay-400'}">
-                🚪 참가하기
-              </button>
+              </div>
+            ` : ''}
+
+            <h2 class="text-2xl font-bold text-white mb-6 animate-fade-scale delay-300">게임 선택</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              ${GAMES.map((game, i) => `
+                <div data-action="select-game" data-game-id="${game.id}" data-sound="${game.disabled ? 'error' : 'success'}"
+                  class="game-card rounded-2xl p-6 cursor-pointer animate-slide-up ${game.disabled ? 'opacity-50 cursor-not-allowed' : ''}"
+                  style="animation-delay: ${0.3 + i * 0.1}s; opacity: 0;">
+                  <div class="text-6xl mb-4">${game.emoji}</div>
+                  <h3 class="text-xl font-bold text-white mb-2">${game.name}</h3>
+                  <p class="text-indigo-300/70 text-sm">${game.description}</p>
+                  ${!game.disabled ? `<p class="text-indigo-400 text-xs mt-2">${game.minPlayers}-${game.maxPlayers}명</p>` : ''}
+                </div>
+              `).join('')}
             </div>
 
             ${!isFirebaseReady ? `
-              <div class="mt-8 p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 max-w-sm mx-auto backdrop-blur animate-fade-scale delay-500">
+              <div class="mt-8 p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 max-w-md mx-auto animate-fade-scale delay-500">
                 <p class="font-bold">⚠️ Firebase 설정 필요</p>
-                <p class="text-sm mt-1 text-red-300/80">코드 상단의 firebaseConfig를 설정해주세요!</p>
+                <p class="text-sm mt-1">코드 상단의 firebaseConfig를 설정해주세요!</p>
               </div>
             ` : ''}
           </div>
@@ -777,29 +887,66 @@
       `;
     }
 
-    function renderCreate() {
+    function renderGameSelect() {
+      const game = state.selectedGame;
+      if (!game) { state.screen = 'home'; render(); return ''; }
+
       return `
-        <div class="min-h-screen flex items-center justify-center p-8 relative z-10">
-          <div class="card-wood rounded-3xl p-8 max-w-md w-full animate-fade-scale">
-            <button data-action="go-home" class="text-amber-400/70 hover:text-amber-300 mb-4 flex items-center gap-2">
+        <div class="min-h-screen ${game.bgClass || 'bg-pattern'} flex items-center justify-center p-8 relative z-10">
+          <div class="text-center">
+            <button data-action="go-home" class="absolute top-6 left-6 btn-ghost px-4 py-2 text-white rounded-xl">
+              ← 게임 목록
+            </button>
+
+            <div class="mb-8 animate-fade-scale">
+              <span class="text-9xl animate-float">${game.emoji}</span>
+            </div>
+            
+            <h1 class="title-font text-7xl text-white mb-2 animate-fade-scale delay-100" 
+                style="text-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+              ${game.name}
+            </h1>
+            <p class="text-xl text-white/70 mb-12 animate-fade-scale delay-200">${game.description}</p>
+            
+            <div class="flex flex-col gap-4 max-w-sm mx-auto">
+              <button data-action="go-create" data-sound="click"
+                class="btn-beer w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-left delay-300">
+                🎮 방 만들기
+              </button>
+              <button data-action="go-join"
+                class="btn-secondary w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-right delay-400">
+                🚪 참가하기
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCreate() {
+      const game = state.selectedGame;
+      return `
+        <div class="min-h-screen ${game?.bgClass || 'bg-pattern'} flex items-center justify-center p-8 relative z-10">
+          <div class="card-dark rounded-3xl p-8 max-w-md w-full animate-fade-scale">
+            <button data-action="go-gameselect" class="text-indigo-400/70 hover:text-indigo-300 mb-4 flex items-center gap-2">
               <span>←</span> <span>뒤로</span>
             </button>
             
             <div class="text-center mb-6">
-              <span class="text-5xl">🍺</span>
-              <h2 class="title-font text-4xl text-amber-400 mt-2">방 만들기</h2>
+              <span class="text-5xl">${game?.emoji || '🎮'}</span>
+              <h2 class="title-font text-3xl text-white mt-2">방 만들기</h2>
             </div>
             
             <div class="space-y-4">
               <div class="animate-slide-up delay-100">
-                <label class="block text-amber-300 font-bold mb-2">닉네임</label>
+                <label class="block text-indigo-300 font-bold mb-2">닉네임</label>
                 <input type="text" id="hostName" maxlength="10" placeholder="닉네임을 입력하세요"
-                  class="input-wood w-full px-4 py-3 rounded-xl focus:outline-none text-lg text-gray-800"
+                  class="input-dark w-full px-4 py-3 rounded-xl text-lg"
                   value="${state.playerName}">
               </div>
               
               <button data-action="create-room" data-sound="success"
-                class="btn-beer w-full py-4 text-white font-bold text-xl rounded-2xl animate-slide-up delay-200">
+                class="btn-primary w-full py-4 text-white font-bold text-xl rounded-2xl animate-slide-up delay-200">
                 🎲 방 생성하기
               </button>
             </div>
@@ -809,34 +956,35 @@
     }
 
     function renderJoin() {
+      const game = state.selectedGame;
       return `
-        <div class="min-h-screen flex items-center justify-center p-8 relative z-10">
-          <div class="card-wood rounded-3xl p-8 max-w-md w-full animate-fade-scale">
-            <button data-action="go-home" class="text-amber-400/70 hover:text-amber-300 mb-4 flex items-center gap-2">
+        <div class="min-h-screen ${game?.bgClass || 'bg-pattern'} flex items-center justify-center p-8 relative z-10">
+          <div class="card-dark rounded-3xl p-8 max-w-md w-full animate-fade-scale">
+            <button data-action="go-gameselect" class="text-indigo-400/70 hover:text-indigo-300 mb-4 flex items-center gap-2">
               <span>←</span> <span>뒤로</span>
             </button>
             
             <div class="text-center mb-6">
-              <span class="text-5xl">🚪</span>
-              <h2 class="title-font text-4xl text-amber-400 mt-2">방 참가하기</h2>
+              <span class="text-5xl">${game?.emoji || '🎮'}</span>
+              <h2 class="title-font text-3xl text-white mt-2">방 참가하기</h2>
             </div>
             
             <div class="space-y-4">
               <div class="animate-slide-up delay-100">
-                <label class="block text-amber-300 font-bold mb-2">닉네임</label>
+                <label class="block text-indigo-300 font-bold mb-2">닉네임</label>
                 <input type="text" id="guestName" maxlength="10" placeholder="닉네임을 입력하세요"
-                  class="input-wood w-full px-4 py-3 rounded-xl focus:outline-none text-lg text-gray-800"
+                  class="input-dark w-full px-4 py-3 rounded-xl text-lg"
                   value="${state.playerName}">
               </div>
               
               <div class="animate-slide-up delay-200">
-                <label class="block text-amber-300 font-bold mb-2">방 코드</label>
+                <label class="block text-indigo-300 font-bold mb-2">방 코드</label>
                 <input type="text" id="roomCode" maxlength="6" placeholder="6자리 코드"
-                  class="input-wood w-full px-4 py-3 rounded-xl focus:outline-none text-lg text-center tracking-[0.3em] uppercase text-gray-800 font-mono">
+                  class="input-dark w-full px-4 py-3 rounded-xl text-lg text-center tracking-[0.3em] uppercase font-mono">
               </div>
               
               <button data-action="join-room" data-sound="join"
-                class="btn-beer w-full py-4 text-white font-bold text-xl rounded-2xl animate-slide-up delay-300">
+                class="btn-primary w-full py-4 text-white font-bold text-xl rounded-2xl animate-slide-up delay-300">
                 🚀 입장하기
               </button>
             </div>
@@ -846,40 +994,54 @@
     }
 
     function renderLobby() {
-      if (!state.room) return '<div class="min-h-screen flex items-center justify-center relative z-10"><span class="text-amber-300 text-2xl">로딩 중...</span></div>';
+      if (!state.room) return '<div class="min-h-screen flex items-center justify-center"><span class="text-white text-2xl">로딩 중...</span></div>';
       
+      const game = state.selectedGame;
       const players = Object.values(state.room.players || {}).sort((a, b) => a.order - b.order);
       
       return `
-        <div class="min-h-screen flex items-center justify-center p-8 relative z-10">
-          <div class="card-wood rounded-3xl p-8 max-w-lg w-full animate-fade-scale">
+        <div class="min-h-screen ${game?.bgClass || 'bg-pattern'} flex items-center justify-center p-8 relative z-10">
+          <div class="card-dark rounded-3xl p-8 max-w-lg w-full animate-fade-scale">
+            <div class="flex justify-between items-start mb-4">
+              <div></div>
+              <button data-action="show-leave-confirm" class="btn-ghost px-3 py-1 text-red-400 hover:text-red-300 rounded-lg text-sm">
+                🚪 나가기
+              </button>
+            </div>
+            
             <div class="text-center mb-6">
-              <span class="text-5xl">🎉</span>
-              <h2 class="title-font text-4xl text-amber-400 mt-2">대기실</h2>
+              <span class="text-5xl">${game?.emoji || '🎮'}</span>
+              <h2 class="title-font text-3xl text-white mt-2">대기실</h2>
               <div class="flex items-center justify-center gap-3 mt-4">
-                <span class="text-amber-300/70">방 코드</span>
-                <span class="text-3xl font-black text-amber-400 tracking-[0.2em] font-mono bg-black/30 px-4 py-1 rounded-lg">${state.roomCode}</span>
-                <button data-action="copy-code" class="text-amber-400/70 hover:text-amber-300 text-xl">📋</button>
+                <span class="text-indigo-300/70">방 코드</span>
+                <span class="text-2xl font-black text-indigo-400 tracking-[0.2em] font-mono bg-black/30 px-4 py-1 rounded-lg">${state.roomCode}</span>
+                <button data-action="copy-code" class="text-indigo-400/70 hover:text-indigo-300 text-xl">📋</button>
               </div>
             </div>
             
             <div class="mb-6">
-              <p class="text-amber-300/70 text-center mb-3">참가자 (${players.length}/8)</p>
+              <p class="text-indigo-300/70 text-center mb-3">참가자 (${players.length}/8)</p>
               <div class="grid grid-cols-2 gap-3">
                 ${players.map((p, i) => `
-                  <div class="flex items-center gap-3 p-3 rounded-xl transition-all ${p.id === state.playerId ? 'bg-amber-500/20 ring-2 ring-amber-500' : 'bg-black/20'} ${!p.connected ? 'opacity-50' : ''}">
+                  <div class="player-item flex items-center gap-3 p-3 rounded-xl transition-all ${p.id === state.playerId ? 'bg-indigo-500/20 ring-2 ring-indigo-500' : 'bg-black/20'} ${!p.connected ? 'opacity-50' : ''}">
                     <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg player-token"
                       style="background-color: ${PLAYER_COLORS[i]}">
                       ${p.name[0]}
                     </div>
                     <div class="flex-1 min-w-0">
-                      <p class="font-bold text-amber-100 truncate">${p.name}</p>
+                      <p class="font-bold text-white truncate">${p.name}</p>
                       <div class="flex items-center gap-1">
                         ${p.id === state.room.hostId ? '<span class="text-xs text-amber-400">👑 방장</span>' : ''}
                         ${p.id === state.playerId ? '<span class="text-xs text-green-400">← 나</span>' : ''}
-                        ${!p.connected ? '<span class="text-xs text-red-400">⚠️ 연결 끊김</span>' : ''}
+                        ${!p.connected ? '<span class="text-xs text-red-400">⚠️</span>' : ''}
                       </div>
                     </div>
+                    ${state.isHost && p.id !== state.playerId ? `
+                      <button data-action="show-kick-confirm" data-player-id="${p.id}" 
+                        class="kick-btn text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded hover:bg-red-500/20">
+                        추방
+                      </button>
+                    ` : ''}
                   </div>
                 `).join('')}
               </div>
@@ -890,15 +1052,18 @@
                 ${players.length < 2 ? 'disabled' : ''}
                 class="w-full py-4 font-bold text-xl rounded-2xl transition-all ${players.length < 2 
                   ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                  : 'btn-green text-white'}">
+                  : 'btn-primary text-white'}">
                 ${players.length < 2 ? '⏳ 최소 2명 필요' : '🎮 게임 시작!'}
               </button>
             ` : `
-              <div class="text-center py-4 text-amber-300/70 bg-black/20 rounded-xl">
+              <div class="text-center py-4 text-indigo-300/70 bg-black/20 rounded-xl">
                 <span class="animate-pulse">⏳ 방장이 게임을 시작하면 자동으로 시작됩니다...</span>
               </div>
             `}
           </div>
+          
+          ${state.showLeaveConfirm ? renderLeaveConfirmModal() : ''}
+          ${state.showKickConfirm ? renderKickConfirmModal() : ''}
         </div>
       `;
     }
@@ -906,6 +1071,7 @@
     function renderGame() {
       if (!state.room) return '';
       
+      const game = state.selectedGame;
       const room = state.room;
       const players = Object.values(room.players).sort((a, b) => a.order - b.order);
       const currentPlayer = players[room.currentTurn];
@@ -914,12 +1080,16 @@
       const gap = 4;
 
       return `
-        <div class="min-h-screen p-4 lg:p-6 relative z-10">
+        <div class="min-h-screen ${game?.bgClass || 'bg-pattern'} p-4 lg:p-6 relative z-10">
           <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-4">
+            <div class="flex justify-between items-center mb-4">
+              <div></div>
               <h1 class="title-font text-4xl lg:text-5xl text-amber-400" style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-                🍺 주루마블 🍺
+                ${game?.emoji || '🎮'} ${game?.name || '게임'} ${game?.emoji || '🎮'}
               </h1>
+              <button data-action="show-leave-confirm" class="btn-ghost px-4 py-2 text-red-400 hover:text-red-300 rounded-xl">
+                🚪 나가기
+              </button>
             </div>
             
             <div class="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-6">
@@ -930,8 +1100,8 @@
                 <div class="absolute rounded-2xl flex items-center justify-center bg-gradient-to-br from-amber-900/50 to-amber-950/50 border border-amber-700/30"
                   style="left: ${tileSize + gap + 12}px; top: ${tileSize + gap + 12}px; width: ${(tileSize + gap) * 5 - gap}px; height: ${(tileSize + gap) * 5 - gap}px;">
                   <div class="text-center">
-                    <div class="text-5xl mb-2 ${room.rolling ? 'animate-pour' : ''}">🍺</div>
-                    <div class="title-font text-2xl text-amber-400">주루마블</div>
+                    <div class="text-5xl mb-2 ${room.rolling ? 'animate-pour' : ''}">${game?.emoji || '🎮'}</div>
+                    <div class="title-font text-2xl text-amber-400">${game?.name || '게임'}</div>
                     ${room.rolling ? '<p class="text-amber-300/70 text-sm mt-2 animate-pulse">주사위 굴리는 중...</p>' : ''}
                   </div>
                 </div>
@@ -997,7 +1167,6 @@
                         </div>
                         <span class="flex-1 font-medium ${p.id === currentPlayer?.id ? 'text-amber-400' : 'text-amber-100'}">
                           ${p.name} ${p.id === state.playerId ? '<span class="text-green-400 text-xs">(나)</span>' : ''}
-                          ${!p.connected ? '<span class="text-red-400 text-xs">⚠️</span>' : ''}
                         </span>
                         <span class="text-amber-300/50 text-sm">${p.position}칸</span>
                       </div>
@@ -1017,6 +1186,7 @@
           </div>
 
           ${room.showMission && room.currentTileId !== null ? renderMissionModal() : ''}
+          ${state.showLeaveConfirm ? renderLeaveConfirmModal() : ''}
         </div>
       `;
     }
@@ -1096,6 +1266,49 @@
                   ⏳ ${currentPlayer?.name}님이 확인 중...
                 </div>
               `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLeaveConfirmModal() {
+      return `
+        <div class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div class="card-dark rounded-2xl p-6 max-w-sm w-full text-center animate-bounce-in">
+            <div class="text-5xl mb-4">🚪</div>
+            <h3 class="text-xl font-bold text-white mb-2">정말 나가시겠어요?</h3>
+            <p class="text-indigo-300/70 text-sm mb-6">나가면 다시 참여할 수 없어요!</p>
+            <div class="flex gap-3">
+              <button data-action="hide-leave-confirm" class="flex-1 py-3 btn-secondary text-white font-bold rounded-xl">
+                취소
+              </button>
+              <button data-action="leave-room" data-sound="kick" class="flex-1 py-3 btn-danger text-white font-bold rounded-xl">
+                나가기
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderKickConfirmModal() {
+      const player = state.room?.players?.[state.showKickConfirm];
+      if (!player) return '';
+
+      return `
+        <div class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div class="card-dark rounded-2xl p-6 max-w-sm w-full text-center animate-bounce-in">
+            <div class="text-5xl mb-4">⚠️</div>
+            <h3 class="text-xl font-bold text-white mb-2">${player.name}님을 추방할까요?</h3>
+            <p class="text-indigo-300/70 text-sm mb-6">추방된 플레이어는 다시 참여할 수 없어요.</p>
+            <div class="flex gap-3">
+              <button data-action="hide-kick-confirm" class="flex-1 py-3 btn-secondary text-white font-bold rounded-xl">
+                취소
+              </button>
+              <button data-action="kick-player" data-sound="kick" class="flex-1 py-3 btn-danger text-white font-bold rounded-xl">
+                추방하기
+              </button>
             </div>
           </div>
         </div>
