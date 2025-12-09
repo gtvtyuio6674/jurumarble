@@ -14,7 +14,6 @@
     * { font-family: 'Noto Sans KR', sans-serif; }
     .title-font { font-family: 'Black Han Sans', sans-serif; }
     
-    /* 메인 배경 - 파티 분위기 */
     .bg-party {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       position: relative;
@@ -27,21 +26,17 @@
       background: 
         radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.15) 0%, transparent 40%),
         radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.1) 0%, transparent 30%),
-        radial-gradient(circle at 60% 60%, rgba(128, 0, 255, 0.1) 0%, transparent 30%);
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.1) 0%, transparent 30%);
       pointer-events: none;
     }
 
-    /* 주루마블 배경 - 술집 분위기 */
     .bg-beer {
       background-color: #2C2416;
       background-image: 
         radial-gradient(ellipse at 20% 30%, rgba(244, 168, 54, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(244, 168, 54, 0.1) 0%, transparent 50%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F4A836' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        radial-gradient(ellipse at 80% 70%, rgba(244, 168, 54, 0.1) 0%, transparent 50%);
     }
 
-    /* 룰렛 배경 */
     .bg-roulette {
       background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
       background-image: 
@@ -49,7 +44,6 @@
         radial-gradient(ellipse at 70% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
     }
 
-    /* 애니메이션 */
     @keyframes slide-in-left { 0% { transform: translateX(-100px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
     @keyframes slide-in-right { 0% { transform: translateX(100px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
     @keyframes slide-in-up { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
@@ -60,13 +54,13 @@
     @keyframes float-reverse { 0%, 100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-20px) rotate(-2deg); } }
     @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px var(--glow-color, rgba(244, 168, 54, 0.4)); } 50% { box-shadow: 0 0 40px var(--glow-color, rgba(244, 168, 54, 0.7)); } }
     @keyframes sparkle { 0%, 100% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } }
-    @keyframes confetti { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
     @keyframes dice-roll { 0% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(20deg) scale(1.15); } 50% { transform: rotate(-20deg) scale(1.1); } 75% { transform: rotate(10deg) scale(1.15); } 100% { transform: rotate(0deg) scale(1); } }
     @keyframes pour { 0% { transform: rotate(-30deg); } 50% { transform: rotate(-45deg); } 100% { transform: rotate(-30deg); } }
     @keyframes move-token { 0% { transform: scale(1); } 50% { transform: scale(1.3) translateY(-10px); } 100% { transform: scale(1); } }
     @keyframes result-pop { 0% { transform: scale(0) rotate(-180deg); opacity: 0; } 50% { transform: scale(1.2) rotate(10deg); } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
     @keyframes rainbow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
-    @keyframes neon-flicker { 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; } 20%, 24%, 55% { text-shadow: none; } }
+    @keyframes golden-glow { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3); } 50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5); } }
+    @keyframes card-flip { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(90deg); } 100% { transform: rotateY(0deg); } }
 
     .animate-slide-left { animation: slide-in-left 0.5s ease-out forwards; }
     .animate-slide-right { animation: slide-in-right 0.5s ease-out forwards; }
@@ -83,38 +77,21 @@
     .animate-move { animation: move-token 0.5s ease-out; }
     .animate-result-pop { animation: result-pop 0.6s ease-out forwards; }
     .animate-rainbow { animation: rainbow 3s linear infinite; }
-    .animate-neon { animation: neon-flicker 2s infinite; }
+    .animate-golden-glow { animation: golden-glow 1.5s ease-in-out infinite; }
+    .animate-card-flip { animation: card-flip 0.6s ease-out; }
 
     .delay-100 { animation-delay: 0.1s; opacity: 0; }
     .delay-200 { animation-delay: 0.2s; opacity: 0; }
     .delay-300 { animation-delay: 0.3s; opacity: 0; }
     .delay-400 { animation-delay: 0.4s; opacity: 0; }
     .delay-500 { animation-delay: 0.5s; opacity: 0; }
-    .delay-600 { animation-delay: 0.6s; opacity: 0; }
 
-    /* 카드 스타일 */
-    .card-glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .card-wood {
-      background: linear-gradient(145deg, #4A3728 0%, #3D2E1F 50%, #2C2416 100%);
-      border: 3px solid #5D4634;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .card-dark {
-      background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 50%, #16162a 100%);
-      border: 2px solid #3d3d5c;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .card-purple {
-      background: linear-gradient(145deg, #3d1b5c 0%, #2d1b4e 50%, #1a0a2e 100%);
-      border: 2px solid #6b3fa0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
+    .card-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+    .card-wood { background: linear-gradient(145deg, #4A3728 0%, #3D2E1F 50%, #2C2416 100%); border: 3px solid #5D4634; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .card-dark { background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 50%, #16162a 100%); border: 2px solid #3d3d5c; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .card-purple { background: linear-gradient(145deg, #3d1b5c 0%, #2d1b4e 50%, #1a0a2e 100%); border: 2px solid #6b3fa0; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .card-golden { background: linear-gradient(145deg, #b8860b 0%, #daa520 50%, #ffd700 100%); border: 3px solid #ffec8b; }
 
-    /* 게임 카드 */
     .game-card {
       background: linear-gradient(145deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
       border: 2px solid rgba(255,255,255,0.2);
@@ -131,16 +108,13 @@
       transform: rotate(45deg) translateX(-100%);
       transition: transform 0.6s;
     }
-    .game-card:hover::before {
-      transform: rotate(45deg) translateX(100%);
-    }
+    .game-card:hover::before { transform: rotate(45deg) translateX(100%); }
     .game-card:hover {
       transform: translateY(-10px) scale(1.03);
       border-color: rgba(255,255,255,0.5);
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--card-glow, rgba(99, 102, 241, 0.3));
     }
 
-    /* 타일 스타일 */
     .tile-drink { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); }
     .tile-game { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
     .tile-bonus { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); }
@@ -149,88 +123,39 @@
     .tile-free { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); }
     .tile-start { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
 
-    /* 버튼 스타일 */
-    .btn-primary {
-      background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-      border: 2px solid #4338ca;
-      box-shadow: 0 4px 0 #3730a3, 0 6px 15px rgba(99, 102, 241, 0.4);
-      transition: all 0.15s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #3730a3, 0 10px 25px rgba(99, 102, 241, 0.5); }
+    .btn-primary { background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%); border: 2px solid #4338ca; box-shadow: 0 4px 0 #3730a3, 0 6px 15px rgba(99, 102, 241, 0.4); transition: all 0.15s; }
+    .btn-primary:hover { transform: translateY(-2px); }
     .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 #3730a3; }
 
-    .btn-beer {
-      background: linear-gradient(180deg, #F4A836 0%, #D4891C 100%);
-      border: 2px solid #B8731A;
-      box-shadow: 0 4px 0 #8B5A14, 0 6px 15px rgba(244, 168, 54, 0.4);
-      transition: all 0.15s;
-    }
+    .btn-beer { background: linear-gradient(180deg, #F4A836 0%, #D4891C 100%); border: 2px solid #B8731A; box-shadow: 0 4px 0 #8B5A14, 0 6px 15px rgba(244, 168, 54, 0.4); transition: all 0.15s; }
     .btn-beer:hover { transform: translateY(-2px); }
     .btn-beer:active { transform: translateY(2px); box-shadow: 0 2px 0 #8B5A14; }
 
-    .btn-purple {
-      background: linear-gradient(180deg, #a855f7 0%, #9333ea 100%);
-      border: 2px solid #7e22ce;
-      box-shadow: 0 4px 0 #6b21a8, 0 6px 15px rgba(168, 85, 247, 0.4);
-      transition: all 0.15s;
-    }
+    .btn-purple { background: linear-gradient(180deg, #a855f7 0%, #9333ea 100%); border: 2px solid #7e22ce; box-shadow: 0 4px 0 #6b21a8, 0 6px 15px rgba(168, 85, 247, 0.4); transition: all 0.15s; }
     .btn-purple:hover { transform: translateY(-2px); }
     .btn-purple:active { transform: translateY(2px); box-shadow: 0 2px 0 #6b21a8; }
 
-    .btn-danger {
-      background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-      border: 2px solid #b91c1c;
-      box-shadow: 0 4px 0 #991b1b;
-      transition: all 0.15s;
-    }
+    .btn-danger { background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%); border: 2px solid #b91c1c; box-shadow: 0 4px 0 #991b1b; transition: all 0.15s; }
     .btn-danger:hover { transform: translateY(-2px); }
     .btn-danger:active { transform: translateY(2px); box-shadow: 0 2px 0 #991b1b; }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      border: 2px solid rgba(255,255,255,0.3);
-      transition: all 0.15s;
-    }
+    .btn-secondary { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); transition: all 0.15s; }
     .btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
 
-    .btn-ghost {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.15s;
-    }
+    .btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.15s; }
     .btn-ghost:hover { background: rgba(255,255,255,0.15); }
 
-    /* 입력 필드 */
-    .input-dark {
-      background: rgba(0,0,0,0.3);
-      border: 2px solid rgba(255,255,255,0.2);
-      color: white;
-      transition: all 0.2s;
-    }
+    .input-dark { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); color: white; transition: all 0.2s; }
     .input-dark:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.3); outline: none; }
     .input-dark::placeholder { color: rgba(255,255,255,0.4); }
 
-    .input-beer {
-      background: rgba(0,0,0,0.3);
-      border: 2px solid rgba(244, 168, 54, 0.3);
-      color: white;
-    }
+    .input-beer { background: rgba(0,0,0,0.3); border: 2px solid rgba(244, 168, 54, 0.3); color: white; }
     .input-beer:focus { border-color: #F4A836; box-shadow: 0 0 0 3px rgba(244,168,54,0.3); outline: none; }
 
-    .player-token {
-      box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
-      border: 2px solid rgba(255,255,255,0.5);
-    }
+    .player-token { box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3); border: 2px solid rgba(255,255,255,0.5); }
 
-    /* 룰렛 스타일 */
-    .roulette-wheel {
-      transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-    }
-    .roulette-pointer {
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
-    }
+    .roulette-wheel { transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
 
-    /* 스크롤바 */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
@@ -238,15 +163,8 @@
     .kick-btn { opacity: 0; transition: opacity 0.2s; }
     .player-item:hover .kick-btn { opacity: 1; }
 
-    /* 반짝이 효과 */
     .sparkle-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .sparkle {
-      position: absolute;
-      width: 10px; height: 10px;
-      background: white;
-      border-radius: 50%;
-      animation: sparkle 3s ease-in-out infinite;
-    }
+    .sparkle { position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; animation: sparkle 3s ease-in-out infinite; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -258,7 +176,6 @@
     // ============================================
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
-
     function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
 
     function playSound(type) {
@@ -270,78 +187,15 @@
       gainNode.connect(audioCtx.destination);
 
       const sounds = {
-        click: () => {
-          oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.1);
-          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
-        },
-        success: () => {
-          oscillator.frequency.setValueAtTime(523, audioCtx.currentTime);
-          oscillator.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
-          oscillator.frequency.setValueAtTime(784, audioCtx.currentTime + 0.2);
-          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.3);
-        },
-        spin: () => {
-          oscillator.type = 'sawtooth';
-          oscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5);
-          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.5);
-        },
-        win: () => {
-          const notes = [523, 659, 784, 1047];
-          notes.forEach((freq, i) => {
-            setTimeout(() => {
-              const osc = audioCtx.createOscillator();
-              const gain = audioCtx.createGain();
-              osc.connect(gain); gain.connect(audioCtx.destination);
-              osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-              gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-              gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-              osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-            }, i * 100);
-          });
-        },
-        dice: () => {
-          oscillator.type = 'square';
-          oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
-          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
-        },
-        mission: () => {
-          oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.15);
-          gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.2);
-        },
-        join: () => {
-          oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-          oscillator.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
-          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.2);
-        },
-        kick: () => {
-          oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
-          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.3);
-        },
-        tick: () => {
-          oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime);
-          gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.05);
-        }
+        click: () => { oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.1); gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1); },
+        success: () => { oscillator.frequency.setValueAtTime(523, audioCtx.currentTime); oscillator.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1); oscillator.frequency.setValueAtTime(784, audioCtx.currentTime + 0.2); gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.3); },
+        spin: () => { oscillator.type = 'sawtooth'; oscillator.frequency.setValueAtTime(100, audioCtx.currentTime); oscillator.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5); gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.5); },
+        win: () => { [523, 659, 784, 1047].forEach((freq, i) => { setTimeout(() => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination); osc.frequency.setValueAtTime(freq, audioCtx.currentTime); gain.gain.setValueAtTime(0.3, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }, i * 100); }); },
+        dice: () => { oscillator.type = 'square'; oscillator.frequency.setValueAtTime(200, audioCtx.currentTime); oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05); gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1); },
+        mission: () => { oscillator.frequency.setValueAtTime(400, audioCtx.currentTime); oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.15); gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.2); },
+        join: () => { oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); oscillator.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1); gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.2); },
+        kick: () => { oscillator.frequency.setValueAtTime(400, audioCtx.currentTime); oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3); gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.3); },
+        golden: () => { oscillator.type = 'sine'; [880, 1108, 1318, 1760].forEach((freq, i) => { setTimeout(() => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination); osc.frequency.setValueAtTime(freq, audioCtx.currentTime); gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15); osc.start(); osc.stop(audioCtx.currentTime + 0.15); }, i * 80); }); }
       };
       if (sounds[type]) sounds[type]();
     }
@@ -375,36 +229,31 @@
     // 게임 목록
     // ============================================
     const GAMES = [
-      {
-        id: 'jurumarble',
-        name: '주루마블',
-        emoji: '🍺',
-        description: '술이 술술 넘어가는 보드게임',
-        color: 'from-amber-500 to-orange-600',
-        glowColor: 'rgba(244, 168, 54, 0.4)',
-        bgClass: 'bg-beer',
-        minPlayers: 2,
-        maxPlayers: 8
-      },
-      {
-        id: 'roulette',
-        name: '룰렛',
-        emoji: '🎡',
-        description: '운명의 원판 돌리기!',
-        color: 'from-purple-500 to-pink-600',
-        glowColor: 'rgba(168, 85, 247, 0.4)',
-        bgClass: 'bg-roulette',
-        minPlayers: 1,
-        maxPlayers: 8
-      },
-      {
-        id: 'coming-soon',
-        name: '준비 중',
-        emoji: '🎯',
-        description: '새로운 게임이 곧 추가됩니다!',
-        color: 'from-gray-500 to-gray-600',
-        disabled: true
-      }
+      { id: 'jurumarble', name: '주루마블', emoji: '🍺', description: '술이 술술 넘어가는 보드게임', color: 'from-amber-500 to-orange-600', glowColor: 'rgba(244, 168, 54, 0.4)', bgClass: 'bg-beer', minPlayers: 2, maxPlayers: 8, multiplayer: true },
+      { id: 'roulette', name: '룰렛', emoji: '🎡', description: '운명의 원판 돌리기!', color: 'from-purple-500 to-pink-600', glowColor: 'rgba(168, 85, 247, 0.4)', bgClass: 'bg-roulette', solo: true },
+      { id: 'coming-soon', name: '준비 중', emoji: '🎯', description: '새로운 게임이 곧 추가됩니다!', color: 'from-gray-500 to-gray-600', disabled: true }
+    ];
+
+    // 황금열쇠 카드
+    const GOLDEN_KEYS = [
+      { emoji: '🍺', text: '모두 한 잔씩!', type: 'all-drink' },
+      { emoji: '🎉', text: '이번 턴 면제! 아무것도 안해도 됨', type: 'skip' },
+      { emoji: '💸', text: '벌금 1000원 내기', type: 'penalty' },
+      { emoji: '🔄', text: '왼쪽 사람과 자리 바꾸기', type: 'swap' },
+      { emoji: '🍻', text: '지목한 사람과 건배 후 같이 한 잔', type: 'cheers' },
+      { emoji: '👑', text: '다음 벌칙 면제권 획득!', type: 'immunity' },
+      { emoji: '🎲', text: '주사위 한 번 더 굴리기', type: 'extra-roll' },
+      { emoji: '⏮️', text: '3칸 뒤로 가기', type: 'back-3' },
+      { emoji: '⏭️', text: '3칸 앞으로 가기', type: 'forward-3' },
+      { emoji: '🃏', text: '오른쪽 사람 대신 벌칙 받기', type: 'take-penalty' },
+      { emoji: '💰', text: '다른 사람들에게 100원씩 받기', type: 'collect' },
+      { emoji: '🎤', text: '노래 한 소절 부르기 (못하면 2잔)', type: 'sing' },
+      { emoji: '🤸', text: '지목한 사람 2잔 마시게 하기', type: 'point-drink' },
+      { emoji: '😈', text: '모두 눈치게임! 꼴찌 2잔', type: 'nunchi' },
+      { emoji: '🔀', text: '전원 자리 섞기 (랜덤)', type: 'shuffle' },
+      { emoji: '🍾', text: '축하합니다! 아무일도 없음', type: 'nothing' },
+      { emoji: '☠️', text: '혼자 3잔 원샷!', type: 'solo-3' },
+      { emoji: '💀', text: '출발점으로 돌아가기', type: 'go-start' },
     ];
 
     // 주루마블 타일
@@ -416,7 +265,7 @@
       { id: 4, name: "흑기사", type: "drink", emoji: "🦸‍♂️", description: "흑기사를 지목! 없으면 두 잔!" },
       { id: 5, name: "뒤로 1칸", type: "move", emoji: "⬅️", description: "한 칸 뒤로!" },
       { id: 6, name: "007", type: "game", emoji: "🔫", description: "007빵! 지면 벌주!" },
-      { id: 7, name: "황금열쇠", type: "special", emoji: "🔑", description: "벌금 500원 또는 한 잔!" },
+      { id: 7, name: "황금열쇠", type: "special", emoji: "🔑", description: "황금열쇠를 뽑으세요!" },
       { id: 8, name: "다같이 원샷", type: "drink", emoji: "🥂", description: "모두 원샷!" },
       { id: 9, name: "눈치게임", type: "game", emoji: "👀", description: "마지막 사람 벌주!" },
       { id: 10, name: "랜덤게임", type: "game", emoji: "🎰", description: "랜덤 미니게임!" },
@@ -426,12 +275,12 @@
       { id: 14, name: "귀요미", type: "game", emoji: "🥰", description: "귀요미 1~10!" },
       { id: 15, name: "31게임", type: "game", emoji: "🔢", description: "31 외치면 벌주!" },
       { id: 16, name: "지목", type: "drink", emoji: "👉", description: "한 명 지목!" },
-      { id: 17, name: "만두", type: "game", emoji: "🥟", description: "바빵바빵!" },
+      { id: 17, name: "황금열쇠", type: "special", emoji: "🔑", description: "황금열쇠를 뽑으세요!" },
       { id: 18, name: "맥뚜", type: "drink", emoji: "🍺", description: "뚜껑 튕기기!" },
       { id: 19, name: "손병호", type: "game", emoji: "✋", description: "손가락 걸기!" },
       { id: 20, name: "아파트", type: "game", emoji: "🏢", description: "아파트 게임!" },
       { id: 21, name: "2잔 마셔", type: "drink", emoji: "🍷", description: "2잔 마셔라!" },
-      { id: 22, name: "기부천사", type: "special", emoji: "😇", description: "면죄부 선물!" },
+      { id: 22, name: "황금열쇠", type: "special", emoji: "🔑", description: "황금열쇠를 뽑으세요!" },
       { id: 23, name: "Back", type: "move", emoji: "🔙", description: "처음으로! 6잔!" },
     ];
 
@@ -454,12 +303,14 @@
       showLeaveConfirm: false,
       showKickConfirm: null,
       kicked: false,
-      // 룰렛 전용
+      // 룰렛 (솔로)
       rouletteSlots: 4,
       rouletteNames: ['', '', '', ''],
       rouletteSpinning: false,
       rouletteResult: null,
       rouletteAngle: 0,
+      // 황금열쇠
+      goldenKeyCard: null,
     };
 
     let roomRef = null;
@@ -503,7 +354,7 @@
     }
 
     // ============================================
-    // Firebase 함수
+    // Firebase 함수 (주루마블용)
     // ============================================
     async function createRoom() {
       if (!isFirebaseReady) { alert('Firebase 설정 필요!'); return; }
@@ -515,9 +366,7 @@
         code: roomCode, gameId: state.selectedGame.id, hostId: playerId, status: 'waiting',
         players: { [playerId]: { id: playerId, name: state.playerName, position: 0, order: 0, connected: true } },
         currentTurn: 0, diceValue: 1, rolling: false, showMission: false, currentTileId: null,
-        missionRandomGame: null, lastAction: null,
-        rouletteSlots: 4, rouletteNames: ['','','',''], rouletteSpinning: false, rouletteResult: null, rouletteAngle: 0,
-        createdAt: Date.now()
+        missionRandomGame: null, goldenKeyCard: null, lastAction: null, createdAt: Date.now()
       };
       await db.ref('rooms/' + roomCode).set(roomData);
       state.roomCode = roomCode; state.playerId = playerId; state.isHost = true; state.screen = 'lobby';
@@ -567,23 +416,13 @@
           return;
         }
         const wasShowingMission = state.room?.showMission;
-        const wasSpinning = state.room?.rouletteSpinning;
+        const hadGoldenKey = state.room?.goldenKeyCard;
         state.room = room; state.isHost = room.hostId === state.playerId;
         if (room.status === 'playing' && state.screen === 'lobby') { playSound('success'); state.screen = 'game'; }
         if (room.diceValue) state.localDiceValue = room.diceValue;
         if (!wasShowingMission && room.showMission) playSound('mission');
-        // 룰렛 결과 동기화
-        if (room.rouletteSpinning && !wasSpinning) { state.rouletteSpinning = true; playSound('spin'); }
-        if (!room.rouletteSpinning && wasSpinning && room.rouletteResult !== null) {
-          state.rouletteSpinning = false;
-          state.rouletteResult = room.rouletteResult;
-          state.rouletteAngle = room.rouletteAngle;
-          setTimeout(() => playSound('win'), 100);
-        }
-        state.rouletteSlots = room.rouletteSlots || 4;
-        state.rouletteNames = room.rouletteNames || ['','','',''];
-        state.rouletteAngle = room.rouletteAngle || 0;
-        if (room.rouletteResult !== undefined) state.rouletteResult = room.rouletteResult;
+        if (!hadGoldenKey && room.goldenKeyCard) playSound('golden');
+        state.goldenKeyCard = room.goldenKeyCard;
         render();
       });
       unsubscribe = () => roomRef.off('value', callback);
@@ -606,7 +445,7 @@
     function leaveRoomImmediate() {
       if (unsubscribe) unsubscribe();
       clearSession();
-      state = { ...state, roomCode: null, playerId: null, room: null, isHost: false, selectedGame: null, kicked: false, screen: 'home', rouletteResult: null, rouletteSpinning: false };
+      state = { ...state, roomCode: null, playerId: null, room: null, isHost: false, selectedGame: null, kicked: false, screen: 'home', goldenKeyCard: null };
       render();
     }
 
@@ -644,9 +483,10 @@
           const newPos = (currentPlayer.position + final) % TILES.length;
           const tile = TILES[newPos];
           let randomGame = tile.name === '랜덤게임' ? RANDOM_GAMES[Math.floor(Math.random() * RANDOM_GAMES.length)] : null;
+          let goldenKey = tile.name === '황금열쇠' ? GOLDEN_KEYS[Math.floor(Math.random() * GOLDEN_KEYS.length)] : null;
           await db.ref(`rooms/${state.roomCode}`).update({
             diceValue: final, rolling: false, [`players/${currentPlayer.id}/position`]: newPos,
-            showMission: true, currentTileId: newPos, missionRandomGame: randomGame,
+            showMission: true, currentTileId: newPos, missionRandomGame: randomGame, goldenKeyCard: goldenKey,
             lastAction: { playerId: currentPlayer.id, playerName: currentPlayer.name, value: final, newPosition: newPos, timestamp: Date.now() }
           });
         }
@@ -660,59 +500,87 @@
       if (currentPlayer.id !== state.playerId) return;
       playSound('click');
       const tile = TILES[room.currentTileId];
-      if (tile?.type === 'move') {
+      
+      // 황금열쇠 효과 처리
+      const goldenKey = room.goldenKeyCard;
+      let extraRollFromGolden = false;
+      if (goldenKey) {
+        if (goldenKey.type === 'extra-roll') extraRollFromGolden = true;
+        if (goldenKey.type === 'back-3') {
+          const newPos = (currentPlayer.position - 3 + TILES.length) % TILES.length;
+          await db.ref(`rooms/${state.roomCode}/players/${currentPlayer.id}/position`).set(newPos);
+        }
+        if (goldenKey.type === 'forward-3') {
+          const newPos = (currentPlayer.position + 3) % TILES.length;
+          await db.ref(`rooms/${state.roomCode}/players/${currentPlayer.id}/position`).set(newPos);
+        }
+        if (goldenKey.type === 'go-start') {
+          await db.ref(`rooms/${state.roomCode}/players/${currentPlayer.id}/position`).set(0);
+        }
+      }
+      
+      // 일반 이동 타일 처리
+      if (tile?.type === 'move' && !goldenKey) {
         let move = tile.name === '뒤로 1칸' ? -1 : tile.name === '뒤로 3칸' ? -3 : -currentPlayer.position;
         const newPos = (currentPlayer.position + move + TILES.length) % TILES.length;
         await db.ref(`rooms/${state.roomCode}/players/${currentPlayer.id}/position`).set(newPos);
       }
-      await db.ref(`rooms/${state.roomCode}`).update({ showMission: false, currentTileId: null, missionRandomGame: null });
-      if (!extraRoll && tile?.type !== 'bonus') {
+      
+      await db.ref(`rooms/${state.roomCode}`).update({ showMission: false, currentTileId: null, missionRandomGame: null, goldenKeyCard: null });
+      
+      if (!extraRoll && !extraRollFromGolden && tile?.type !== 'bonus') {
         const nextTurn = (room.currentTurn + 1) % players.length;
         await db.ref(`rooms/${state.roomCode}/currentTurn`).set(nextTurn);
       }
     }
 
-    // 룰렛 함수들
-    async function updateRouletteSlots(count) {
+    // ============================================
+    // 룰렛 (솔로 모드)
+    // ============================================
+    function updateRouletteSlots(count) {
       const newNames = [...state.rouletteNames];
       while (newNames.length < count) newNames.push('');
       while (newNames.length > count) newNames.pop();
-      await db.ref(`rooms/${state.roomCode}`).update({ rouletteSlots: count, rouletteNames: newNames });
+      state.rouletteSlots = count;
+      state.rouletteNames = newNames;
+      render();
     }
 
-    async function updateRouletteName(index, name) {
-      const newNames = [...state.rouletteNames];
-      newNames[index] = name;
-      await db.ref(`rooms/${state.roomCode}/rouletteNames`).set(newNames);
+    function updateRouletteName(index, name) {
+      state.rouletteNames[index] = name;
     }
 
-    async function spinRoulette() {
-      if (!state.isHost || state.rouletteSpinning) return;
+    function spinRoulette() {
+      if (state.rouletteSpinning) return;
       const names = state.rouletteNames.filter(n => n.trim());
       if (names.length < 2) { alert('최소 2개 이상 입력!'); return; }
       
       playSound('spin');
+      state.rouletteSpinning = true;
+      state.rouletteResult = null;
+      
       const slots = state.rouletteSlots;
       const resultIndex = Math.floor(Math.random() * slots);
       const spins = 5 + Math.random() * 3;
       const slotAngle = 360 / slots;
       const finalAngle = spins * 360 + (360 - resultIndex * slotAngle - slotAngle / 2);
       
-      await db.ref(`rooms/${state.roomCode}`).update({
-        rouletteSpinning: true, rouletteResult: null, rouletteAngle: finalAngle
-      });
+      state.rouletteAngle = finalAngle;
+      render();
       
-      setTimeout(async () => {
-        await db.ref(`rooms/${state.roomCode}`).update({
-          rouletteSpinning: false, rouletteResult: resultIndex
-        });
+      setTimeout(() => {
+        state.rouletteSpinning = false;
+        state.rouletteResult = resultIndex;
+        playSound('win');
+        render();
       }, 5000);
     }
 
-    async function resetRoulette() {
-      await db.ref(`rooms/${state.roomCode}`).update({
-        rouletteSpinning: false, rouletteResult: null, rouletteAngle: 0
-      });
+    function resetRoulette() {
+      state.rouletteSpinning = false;
+      state.rouletteResult = null;
+      state.rouletteAngle = 0;
+      render();
     }
 
     // ============================================
@@ -727,6 +595,7 @@
         case 'join': app.innerHTML = renderJoin(); break;
         case 'lobby': app.innerHTML = renderLobby(); break;
         case 'game': app.innerHTML = renderGame(); break;
+        case 'roulette': app.innerHTML = renderRouletteSolo(); break;
       }
       bindEvents();
     }
@@ -745,9 +614,18 @@
               case 'go-create': state.screen = 'create'; render(); break;
               case 'go-join': state.screen = 'join'; render(); break;
               case 'go-gameselect': state.screen = 'gameSelect'; render(); break;
+              case 'go-roulette': state.selectedGame = GAMES.find(g => g.id === 'roulette'); state.screen = 'roulette'; render(); break;
               case 'select-game':
                 const game = GAMES.find(g => g.id === el.dataset.gameId);
-                if (game && !game.disabled) { state.selectedGame = game; state.screen = 'gameSelect'; render(); }
+                if (game && !game.disabled) {
+                  state.selectedGame = game;
+                  if (game.solo) {
+                    state.screen = 'roulette';
+                  } else {
+                    state.screen = 'gameSelect';
+                  }
+                  render();
+                }
                 break;
               case 'create-room':
                 state.playerName = document.getElementById('hostName')?.value || '';
@@ -773,21 +651,14 @@
               case 'kick-player': kickPlayer(state.showKickConfirm); break;
               case 'spin-roulette': spinRoulette(); break;
               case 'reset-roulette': resetRoulette(); break;
-              case 'roulette-slots':
-                const count = parseInt(el.dataset.count);
-                updateRouletteSlots(count);
-                break;
+              case 'roulette-slots': updateRouletteSlots(parseInt(el.dataset.count)); break;
             }
           }, 50);
         };
       });
       
-      // 룰렛 이름 입력
       document.querySelectorAll('[data-roulette-input]').forEach(el => {
-        el.oninput = (e) => {
-          const idx = parseInt(el.dataset.rouletteInput);
-          updateRouletteName(idx, e.target.value);
-        };
+        el.oninput = (e) => updateRouletteName(parseInt(el.dataset.rouletteInput), e.target.value);
       });
     }
 
@@ -801,7 +672,6 @@
         <div class="min-h-screen bg-party flex items-center justify-center p-6 relative">
           <div class="sparkle-container">${sparkles}</div>
           
-          <!-- 떠다니는 이모지 -->
           <div class="absolute top-10 left-10 text-6xl opacity-30 animate-float">🎮</div>
           <div class="absolute top-20 right-16 text-5xl opacity-25 animate-float-reverse" style="animation-delay: 1s;">🎲</div>
           <div class="absolute bottom-20 left-16 text-5xl opacity-25 animate-float" style="animation-delay: 0.5s;">🎯</div>
@@ -810,7 +680,6 @@
           <div class="absolute top-1/2 right-1/4 text-4xl opacity-20 animate-float-reverse" style="animation-delay: 2.5s;">🌟</div>
 
           <div class="text-center max-w-5xl mx-auto relative z-10">
-            <!-- 로고 -->
             <div class="mb-6 animate-fade-scale">
               <div class="text-8xl mb-4 animate-float">🎮</div>
               <h1 class="title-font text-7xl text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 animate-rainbow"
@@ -822,8 +691,7 @@
             
             ${session ? `
               <div class="mb-10 animate-slide-down delay-200">
-                <button data-action="rejoin" data-sound="success"
-                  class="btn-primary px-10 py-4 text-white font-bold text-xl rounded-2xl">
+                <button data-action="rejoin" data-sound="success" class="btn-primary px-10 py-4 text-white font-bold text-xl rounded-2xl">
                   🔄 다시 참여하기
                 </button>
                 <p class="text-purple-300/60 text-sm mt-3">
@@ -847,7 +715,7 @@
                   <p class="text-white/60 text-sm mb-3">${game.description}</p>
                   ${!game.disabled ? `
                     <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r ${game.color} text-white">
-                      ${game.minPlayers}-${game.maxPlayers}명
+                      ${game.solo ? '솔로' : `${game.minPlayers}-${game.maxPlayers}명`}
                     </span>
                   ` : '<span class="text-gray-500 text-xs">Coming Soon</span>'}
                 </div>
@@ -856,7 +724,8 @@
 
             ${!isFirebaseReady ? `
               <div class="mt-10 p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 max-w-md mx-auto animate-fade-scale delay-600">
-                <p class="font-bold">⚠️ Firebase 설정 필요</p>
+                <p class="font-bold">⚠️ Firebase 설정 필요 (멀티플레이용)</p>
+                <p class="text-sm mt-1">룰렛은 바로 플레이 가능!</p>
               </div>
             ` : ''}
           </div>
@@ -870,40 +739,25 @@
       
       return `
         <div class="min-h-screen ${game.bgClass} flex items-center justify-center p-8 relative overflow-hidden">
-          ${game.id === 'jurumarble' ? `
-            <div class="absolute top-10 left-10 text-6xl opacity-20 animate-float">🍺</div>
-            <div class="absolute top-20 right-20 text-5xl opacity-15 animate-float" style="animation-delay: 1s;">🍻</div>
-            <div class="absolute bottom-20 left-20 text-5xl opacity-15 animate-float" style="animation-delay: 2s;">🥂</div>
-            <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-float" style="animation-delay: 0.5s;">🍾</div>
-          ` : game.id === 'roulette' ? `
-            <div class="absolute top-10 left-10 text-6xl opacity-20 animate-float">🎡</div>
-            <div class="absolute top-20 right-20 text-5xl opacity-15 animate-float-reverse" style="animation-delay: 1s;">✨</div>
-            <div class="absolute bottom-20 left-20 text-5xl opacity-15 animate-float" style="animation-delay: 2s;">🌟</div>
-            <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-float-reverse" style="animation-delay: 0.5s;">💫</div>
-          ` : ''}
+          <div class="absolute top-10 left-10 text-6xl opacity-20 animate-float">🍺</div>
+          <div class="absolute top-20 right-20 text-5xl opacity-15 animate-float" style="animation-delay: 1s;">🍻</div>
+          <div class="absolute bottom-20 left-20 text-5xl opacity-15 animate-float" style="animation-delay: 2s;">🥂</div>
+          <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-float" style="animation-delay: 0.5s;">🍾</div>
 
-          <button data-action="go-home" class="absolute top-6 left-6 btn-ghost px-4 py-2 text-white rounded-xl z-20">
-            ← 게임 목록
-          </button>
+          <button data-action="go-home" class="absolute top-6 left-6 btn-ghost px-4 py-2 text-white rounded-xl z-20">← 게임 목록</button>
 
           <div class="text-center relative z-10">
             <div class="mb-8 animate-fade-scale">
               <span class="text-9xl animate-float">${game.emoji}</span>
             </div>
-            
-            <h1 class="title-font text-7xl text-white mb-4 animate-fade-scale delay-100" 
-                style="text-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-              ${game.name}
-            </h1>
+            <h1 class="title-font text-7xl text-white mb-4 animate-fade-scale delay-100">${game.name}</h1>
             <p class="text-xl text-white/70 mb-12 animate-fade-scale delay-200">${game.description}</p>
             
             <div class="flex flex-col gap-4 max-w-sm mx-auto">
-              <button data-action="go-create"
-                class="${game.id === 'jurumarble' ? 'btn-beer' : 'btn-purple'} w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-left delay-300">
+              <button data-action="go-create" class="btn-beer w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-left delay-300">
                 🎮 방 만들기
               </button>
-              <button data-action="go-join"
-                class="btn-secondary w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-right delay-400">
+              <button data-action="go-join" class="btn-secondary w-full py-5 px-8 text-white font-bold text-xl rounded-2xl animate-slide-right delay-400">
                 🚪 참가하기
               </button>
             </div>
@@ -916,7 +770,7 @@
       const game = state.selectedGame;
       return `
         <div class="min-h-screen ${game?.bgClass || 'bg-party'} flex items-center justify-center p-8">
-          <div class="${game?.id === 'jurumarble' ? 'card-wood' : 'card-purple'} rounded-3xl p-8 max-w-md w-full animate-fade-scale">
+          <div class="card-wood rounded-3xl p-8 max-w-md w-full animate-fade-scale">
             <button data-action="go-gameselect" class="text-white/70 hover:text-white mb-4">← 뒤로</button>
             <div class="text-center mb-6">
               <span class="text-5xl">${game?.emoji || '🎮'}</span>
@@ -926,11 +780,9 @@
               <div>
                 <label class="block text-white/80 font-bold mb-2">닉네임</label>
                 <input type="text" id="hostName" maxlength="10" placeholder="닉네임"
-                  class="${game?.id === 'jurumarble' ? 'input-beer' : 'input-dark'} w-full px-4 py-3 rounded-xl text-lg"
-                  value="${state.playerName}">
+                  class="input-beer w-full px-4 py-3 rounded-xl text-lg" value="${state.playerName}">
               </div>
-              <button data-action="create-room" data-sound="success"
-                class="${game?.id === 'jurumarble' ? 'btn-beer' : 'btn-purple'} w-full py-4 text-white font-bold text-xl rounded-2xl">
+              <button data-action="create-room" data-sound="success" class="btn-beer w-full py-4 text-white font-bold text-xl rounded-2xl">
                 🎲 방 생성하기
               </button>
             </div>
@@ -943,7 +795,7 @@
       const game = state.selectedGame;
       return `
         <div class="min-h-screen ${game?.bgClass || 'bg-party'} flex items-center justify-center p-8">
-          <div class="${game?.id === 'jurumarble' ? 'card-wood' : 'card-purple'} rounded-3xl p-8 max-w-md w-full animate-fade-scale">
+          <div class="card-wood rounded-3xl p-8 max-w-md w-full animate-fade-scale">
             <button data-action="go-gameselect" class="text-white/70 hover:text-white mb-4">← 뒤로</button>
             <div class="text-center mb-6">
               <span class="text-5xl">${game?.emoji || '🎮'}</span>
@@ -953,16 +805,14 @@
               <div>
                 <label class="block text-white/80 font-bold mb-2">닉네임</label>
                 <input type="text" id="guestName" maxlength="10" placeholder="닉네임"
-                  class="${game?.id === 'jurumarble' ? 'input-beer' : 'input-dark'} w-full px-4 py-3 rounded-xl text-lg"
-                  value="${state.playerName}">
+                  class="input-beer w-full px-4 py-3 rounded-xl text-lg" value="${state.playerName}">
               </div>
               <div>
                 <label class="block text-white/80 font-bold mb-2">방 코드</label>
                 <input type="text" id="roomCode" maxlength="6" placeholder="6자리 코드"
-                  class="${game?.id === 'jurumarble' ? 'input-beer' : 'input-dark'} w-full px-4 py-3 rounded-xl text-lg text-center tracking-[0.3em] uppercase font-mono">
+                  class="input-beer w-full px-4 py-3 rounded-xl text-lg text-center tracking-[0.3em] uppercase font-mono">
               </div>
-              <button data-action="join-room" data-sound="join"
-                class="${game?.id === 'jurumarble' ? 'btn-beer' : 'btn-purple'} w-full py-4 text-white font-bold text-xl rounded-2xl">
+              <button data-action="join-room" data-sound="join" class="btn-beer w-full py-4 text-white font-bold text-xl rounded-2xl">
                 🚀 입장하기
               </button>
             </div>
@@ -978,7 +828,7 @@
       
       return `
         <div class="min-h-screen ${game?.bgClass || 'bg-party'} flex items-center justify-center p-8">
-          <div class="${game?.id === 'jurumarble' ? 'card-wood' : 'card-purple'} rounded-3xl p-8 max-w-lg w-full animate-fade-scale">
+          <div class="card-wood rounded-3xl p-8 max-w-lg w-full animate-fade-scale">
             <div class="flex justify-between items-start mb-4">
               <div></div>
               <button data-action="show-leave-confirm" class="btn-ghost px-3 py-1 text-red-400 hover:text-red-300 rounded-lg text-sm">🚪 나가기</button>
@@ -989,7 +839,7 @@
               <h2 class="title-font text-3xl text-white mt-2">대기실</h2>
               <div class="flex items-center justify-center gap-3 mt-4">
                 <span class="text-white/70">방 코드</span>
-                <span class="text-2xl font-black text-white tracking-[0.2em] font-mono bg-black/30 px-4 py-1 rounded-lg">${state.roomCode}</span>
+                <span class="text-2xl font-black text-amber-400 tracking-[0.2em] font-mono bg-black/30 px-4 py-1 rounded-lg">${state.roomCode}</span>
                 <button data-action="copy-code" class="text-white/70 hover:text-white text-xl">📋</button>
               </div>
             </div>
@@ -998,14 +848,13 @@
               <p class="text-white/70 text-center mb-3">참가자 (${players.length}/${game?.maxPlayers || 8})</p>
               <div class="grid grid-cols-2 gap-3">
                 ${players.map((p, i) => `
-                  <div class="player-item flex items-center gap-3 p-3 rounded-xl ${p.id === state.playerId ? 'bg-white/20 ring-2 ring-white/50' : 'bg-black/20'} ${!p.connected ? 'opacity-50' : ''}">
+                  <div class="player-item flex items-center gap-3 p-3 rounded-xl ${p.id === state.playerId ? 'bg-amber-500/20 ring-2 ring-amber-500' : 'bg-black/20'} ${!p.connected ? 'opacity-50' : ''}">
                     <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg player-token" style="background-color: ${PLAYER_COLORS[i]}">${p.name[0]}</div>
                     <div class="flex-1 min-w-0">
                       <p class="font-bold text-white truncate">${p.name}</p>
                       <div class="flex items-center gap-1">
                         ${p.id === state.room.hostId ? '<span class="text-xs text-amber-400">👑</span>' : ''}
                         ${p.id === state.playerId ? '<span class="text-xs text-green-400">← 나</span>' : ''}
-                        ${!p.connected ? '<span class="text-xs text-red-400">⚠️</span>' : ''}
                       </div>
                     </div>
                     ${state.isHost && p.id !== state.playerId ? `<button data-action="show-kick-confirm" data-player-id="${p.id}" class="kick-btn text-red-400 hover:text-red-300 text-sm">추방</button>` : ''}
@@ -1017,7 +866,7 @@
             ${state.isHost ? `
               <button data-action="start-game" data-sound="success"
                 ${players.length < (game?.minPlayers || 2) ? 'disabled' : ''}
-                class="w-full py-4 font-bold text-xl rounded-2xl ${players.length < (game?.minPlayers || 2) ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : (game?.id === 'jurumarble' ? 'btn-beer' : 'btn-purple') + ' text-white'}">
+                class="w-full py-4 font-bold text-xl rounded-2xl ${players.length < (game?.minPlayers || 2) ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'btn-beer text-white'}">
                 ${players.length < (game?.minPlayers || 2) ? `⏳ 최소 ${game?.minPlayers || 2}명 필요` : '🎮 게임 시작!'}
               </button>
             ` : `<div class="text-center py-4 text-white/70 bg-black/20 rounded-xl animate-pulse">⏳ 방장이 시작하면...</div>`}
@@ -1030,10 +879,7 @@
 
     function renderGame() {
       if (!state.room) return '';
-      const game = state.selectedGame;
-      if (game?.id === 'jurumarble') return renderJurumarble();
-      if (game?.id === 'roulette') return renderRoulette();
-      return '';
+      return renderJurumarble();
     }
 
     function renderJurumarble() {
@@ -1045,7 +891,6 @@
 
       return `
         <div class="min-h-screen bg-beer p-4 lg:p-6 relative">
-          <!-- 배경 장식 -->
           <div class="absolute top-10 left-10 text-5xl opacity-15 animate-float">🍺</div>
           <div class="absolute bottom-10 right-10 text-5xl opacity-15 animate-float" style="animation-delay:1s;">🍻</div>
           
@@ -1057,7 +902,6 @@
             </div>
             
             <div class="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-6">
-              <!-- 보드 -->
               <div class="relative rounded-3xl p-3 shadow-2xl card-wood" style="width:${(tileSize+gap)*7+24}px;height:${(tileSize+gap)*7+24}px;">
                 <div class="absolute rounded-2xl flex items-center justify-center bg-gradient-to-br from-amber-900/50 to-amber-950/50 border border-amber-700/30"
                   style="left:${tileSize+gap+12}px;top:${tileSize+gap+12}px;width:${(tileSize+gap)*5-gap}px;height:${(tileSize+gap)*5-gap}px;">
@@ -1084,9 +928,8 @@
                 }).join('')}
               </div>
 
-              <!-- 컨트롤 -->
               <div class="card-wood rounded-3xl p-5 shadow-xl w-full xl:w-80">
-                <div class="text-center mb-5 p-4 rounded-2xl ${isMyTurn ? 'bg-amber-500/20' : 'bg-black/20'}" style="${isMyTurn ? '--glow-color:rgba(244,168,54,0.5)' : ''}">
+                <div class="text-center mb-5 p-4 rounded-2xl ${isMyTurn ? 'bg-amber-500/20' : 'bg-black/20'}">
                   <p class="text-amber-300/70 text-sm mb-1">현재 차례</p>
                   <p class="text-2xl font-black ${isMyTurn ? 'text-amber-400' : 'text-amber-100'}">${currentPlayer?.name || ''}</p>
                   ${isMyTurn ? '<p class="text-amber-400 text-sm mt-1">🎲 주사위!</p>' : '<p class="text-amber-300/50 text-sm mt-1">대기 중...</p>'}
@@ -1122,14 +965,12 @@
       `;
     }
 
-    function renderRoulette() {
-      const room = state.room;
-      const players = Object.values(room.players).sort((a,b) => a.order - b.order);
+    function renderRouletteSolo() {
       const slots = state.rouletteSlots;
       const names = state.rouletteNames;
-      const spinning = room.rouletteSpinning;
-      const result = room.rouletteResult;
-      const angle = room.rouletteAngle || 0;
+      const spinning = state.rouletteSpinning;
+      const result = state.rouletteResult;
+      const angle = state.rouletteAngle;
 
       const slotAngle = 360 / slots;
       const wheelSegments = Array(slots).fill(0).map((_, i) => {
@@ -1154,18 +995,16 @@
           <div class="absolute top-10 left-10 text-5xl opacity-15 animate-float">🎡</div>
           <div class="absolute bottom-10 right-10 text-5xl opacity-15 animate-float-reverse">✨</div>
           
-          <div class="max-w-6xl mx-auto relative z-10">
+          <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-center mb-6">
-              <div></div>
+              <button data-action="go-home" class="btn-ghost px-4 py-2 text-white rounded-xl">← 돌아가기</button>
               <h1 class="title-font text-4xl lg:text-5xl text-purple-300" style="text-shadow: 0 0 20px rgba(168,85,247,0.5);">🎡 룰렛 🎡</h1>
-              <button data-action="show-leave-confirm" class="btn-ghost px-4 py-2 text-red-400 rounded-xl">🚪</button>
+              <div></div>
             </div>
 
             <div class="flex flex-col lg:flex-row items-center justify-center gap-8">
-              <!-- 룰렛 휠 -->
               <div class="relative">
-                <!-- 포인터 -->
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-20 roulette-pointer">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-20">
                   <div class="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[40px] border-l-transparent border-r-transparent border-t-yellow-400" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></div>
                 </div>
                 
@@ -1181,75 +1020,45 @@
                 </div>
               </div>
 
-              <!-- 컨트롤 패널 -->
               <div class="card-purple rounded-3xl p-6 w-full lg:w-96">
                 ${result !== null && !spinning ? `
                   <div class="text-center mb-6 animate-result-pop">
                     <div class="text-6xl mb-2">🎉</div>
                     <p class="text-purple-300 text-lg">당첨!</p>
-                    <p class="text-4xl font-black text-white mt-2 animate-neon" style="color: ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]};">${names[result] || '???'}</p>
+                    <p class="text-4xl font-black text-white mt-2" style="color: ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]}; text-shadow: 0 0 20px ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]};">${names[result] || '???'}</p>
                   </div>
                 ` : ''}
 
-                ${state.isHost ? `
-                  <div class="mb-6">
-                    <label class="block text-purple-300 font-bold mb-2">칸 수 (${slots}개)</label>
-                    <div class="flex gap-2 flex-wrap">
-                      ${[2,3,4,5,6,8,10,12].map(n => `
-                        <button data-action="roulette-slots" data-count="${n}" ${spinning ? 'disabled' : ''}
-                          class="px-3 py-1 rounded-lg text-sm font-bold ${slots === n ? 'bg-purple-500 text-white' : 'bg-black/30 text-purple-300 hover:bg-purple-500/30'} ${spinning ? 'opacity-50' : ''}">${n}</button>
-                      `).join('')}
-                    </div>
-                  </div>
-                  
-                  <div class="mb-6 max-h-48 overflow-y-auto space-y-2">
-                    ${Array(slots).fill(0).map((_, i) => `
-                      <div class="flex items-center gap-2">
-                        <div class="w-4 h-4 rounded" style="background-color: ${ROULETTE_COLORS[i % ROULETTE_COLORS.length]}"></div>
-                        <input type="text" data-roulette-input="${i}" maxlength="20" placeholder="${i+1}번"
-                          class="input-dark flex-1 px-3 py-2 rounded-lg text-sm" value="${names[i] || ''}" ${spinning ? 'disabled' : ''}>
-                      </div>
+                <div class="mb-6">
+                  <label class="block text-purple-300 font-bold mb-2">칸 수 (${slots}개)</label>
+                  <div class="flex gap-2 flex-wrap">
+                    ${[2,3,4,5,6,8,10,12].map(n => `
+                      <button data-action="roulette-slots" data-count="${n}" ${spinning ? 'disabled' : ''}
+                        class="px-3 py-1 rounded-lg text-sm font-bold ${slots === n ? 'bg-purple-500 text-white' : 'bg-black/30 text-purple-300 hover:bg-purple-500/30'} ${spinning ? 'opacity-50' : ''}">${n}</button>
                     `).join('')}
                   </div>
-
-                  <div class="flex gap-3">
-                    <button data-action="spin-roulette" data-sound="spin" ${spinning ? 'disabled' : ''}
-                      class="flex-1 btn-purple py-4 text-white font-bold text-xl rounded-2xl ${spinning ? 'opacity-50 cursor-not-allowed animate-pulse' : ''}">
-                      ${spinning ? '🎡 돌아가는 중...' : '🎡 돌리기!'}
-                    </button>
-                    ${result !== null ? `<button data-action="reset-roulette" class="btn-secondary px-4 py-4 text-white rounded-2xl">↻</button>` : ''}
-                  </div>
-                ` : `
-                  <div class="text-center py-8">
-                    <p class="text-purple-300/70 mb-4">방장이 룰렛을 돌립니다</p>
-                    <div class="space-y-2">
-                      ${Array(slots).fill(0).map((_, i) => `
-                        <div class="flex items-center gap-2 justify-center">
-                          <div class="w-3 h-3 rounded" style="background-color: ${ROULETTE_COLORS[i % ROULETTE_COLORS.length]}"></div>
-                          <span class="text-white">${names[i] || `${i+1}번`}</span>
-                        </div>
-                      `).join('')}
+                </div>
+                
+                <div class="mb-6 max-h-48 overflow-y-auto space-y-2">
+                  ${Array(slots).fill(0).map((_, i) => `
+                    <div class="flex items-center gap-2">
+                      <div class="w-4 h-4 rounded" style="background-color: ${ROULETTE_COLORS[i % ROULETTE_COLORS.length]}"></div>
+                      <input type="text" data-roulette-input="${i}" maxlength="20" placeholder="${i+1}번"
+                        class="input-dark flex-1 px-3 py-2 rounded-lg text-sm" value="${names[i] || ''}" ${spinning ? 'disabled' : ''}>
                     </div>
-                  </div>
-                `}
+                  `).join('')}
+                </div>
 
-                <!-- 참가자 -->
-                <div class="mt-6 pt-4 border-t border-purple-700/30">
-                  <p class="text-purple-300/70 text-sm mb-2">참가자</p>
-                  <div class="flex flex-wrap gap-2">
-                    ${players.map((p,i) => `
-                      <div class="flex items-center gap-1 px-2 py-1 rounded-lg bg-black/20 ${p.id === state.playerId ? 'ring-1 ring-purple-400' : ''}">
-                        <div class="w-5 h-5 rounded-full text-[10px] flex items-center justify-center text-white font-bold" style="background-color:${PLAYER_COLORS[i]}">${p.name[0]}</div>
-                        <span class="text-white text-sm">${p.name}</span>
-                        ${p.id === state.room.hostId ? '<span class="text-amber-400 text-xs">👑</span>' : ''}
-                      </div>
-                    `).join('')}
-                  </div>
+                <div class="flex gap-3">
+                  <button data-action="spin-roulette" data-sound="spin" ${spinning ? 'disabled' : ''}
+                    class="flex-1 btn-purple py-4 text-white font-bold text-xl rounded-2xl ${spinning ? 'opacity-50 cursor-not-allowed animate-pulse' : ''}">
+                    ${spinning ? '🎡 돌아가는 중...' : '🎡 돌리기!'}
+                  </button>
+                  ${result !== null ? `<button data-action="reset-roulette" class="btn-secondary px-4 py-4 text-white rounded-2xl">↻</button>` : ''}
                 </div>
               </div>
             </div>
           </div>
-          ${state.showLeaveConfirm ? renderLeaveModal() : ''}
         </div>
       `;
     }
@@ -1266,6 +1075,40 @@
       const players = Object.values(room.players).sort((a,b) => a.order - b.order);
       const currentPlayer = players[room.currentTurn];
       const isMyTurn = currentPlayer?.id === state.playerId;
+      const goldenKey = room.goldenKeyCard;
+      
+      // 황금열쇠인 경우
+      if (goldenKey) {
+        return `
+          <div class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+            <div class="relative animate-bounce-in">
+              <div class="absolute -inset-6 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 rounded-3xl blur-xl opacity-70 animate-golden-glow"></div>
+              <div class="relative card-golden rounded-3xl p-8 max-w-sm w-full text-center animate-card-flip">
+                <div class="text-8xl mb-4">${goldenKey.emoji}</div>
+                <h2 class="text-3xl font-black text-amber-900 mb-2">🔑 황금열쇠 🔑</h2>
+                <p class="text-amber-800 mb-4">
+                  <span class="font-bold">${currentPlayer?.name}</span>님이 뽑았습니다!
+                </p>
+                <div class="bg-amber-900/20 rounded-2xl p-4 mb-6 border-2 border-amber-600">
+                  <p class="text-amber-900 text-xl font-bold">${goldenKey.text}</p>
+                </div>
+                
+                ${isMyTurn ? `
+                  <button data-action="${goldenKey.type === 'extra-roll' ? 'extra-roll' : 'close-mission'}" data-sound="success"
+                    class="w-full py-3 bg-gradient-to-r from-amber-600 to-yellow-500 text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg border-2 border-amber-400">
+                    ${goldenKey.type === 'extra-roll' ? '🎲 한 번 더 굴리기!' : '✨ 확인!'}
+                  </button>
+                ` : `
+                  <div class="py-3 bg-amber-900/20 text-amber-800 rounded-xl border-2 border-amber-600">
+                    ⏳ ${currentPlayer?.name}님이 확인 중...
+                  </div>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
       const colors = { drink: 'from-amber-600 to-orange-700', game: 'from-emerald-600 to-green-700', bonus: 'from-blue-600 to-indigo-700', move: 'from-purple-600 to-pink-700', special: 'from-yellow-500 to-amber-600', free: 'from-gray-500 to-gray-600', start: 'from-emerald-600 to-green-700' };
       const color = colors[tile.type] || colors.drink;
       let desc = tile.description;
