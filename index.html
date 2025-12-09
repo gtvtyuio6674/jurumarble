@@ -38,10 +38,10 @@
     }
 
     .bg-roulette {
-      background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+      background: linear-gradient(135deg, #0d0015 0%, #1a0a2e 50%, #0d0015 100%);
       background-image: 
-        radial-gradient(ellipse at 30% 20%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
     }
 
     @keyframes slide-in-left { 0% { transform: translateX(-100px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
@@ -89,7 +89,7 @@
     .card-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
     .card-wood { background: linear-gradient(145deg, #4A3728 0%, #3D2E1F 50%, #2C2416 100%); border: 3px solid #5D4634; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
     .card-dark { background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 50%, #16162a 100%); border: 2px solid #3d3d5c; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-    .card-purple { background: linear-gradient(145deg, #3d1b5c 0%, #2d1b4e 50%, #1a0a2e 100%); border: 2px solid #6b3fa0; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .card-purple { background: linear-gradient(145deg, #1a0a2e 0%, #150820 50%, #0d0015 100%); border: 2px solid #4c2882; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .card-golden { background: linear-gradient(145deg, #b8860b 0%, #daa520 50%, #ffd700 100%); border: 3px solid #ffec8b; }
 
     .game-card {
@@ -145,9 +145,9 @@
     .btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.15s; }
     .btn-ghost:hover { background: rgba(255,255,255,0.15); }
 
-    .input-dark { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); color: white; transition: all 0.2s; }
-    .input-dark:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.3); outline: none; }
-    .input-dark::placeholder { color: rgba(255,255,255,0.4); }
+    .input-dark { background: rgba(0,0,0,0.5); border: 2px solid rgba(139,92,246,0.3); color: white; transition: all 0.2s; }
+    .input-dark:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,0.2); outline: none; }
+    .input-dark::placeholder { color: rgba(255,255,255,0.3); }
 
     .input-beer { background: rgba(0,0,0,0.3); border: 2px solid rgba(244, 168, 54, 0.3); color: white; }
     .input-beer:focus { border-color: #F4A836; box-shadow: 0 0 0 3px rgba(244,168,54,0.3); outline: none; }
@@ -286,7 +286,7 @@
 
     const RANDOM_GAMES = ["훈민정음!", "딸기게임!", "초성퀴즈!", "업다운!", "진실or거짓!", "물음표게임!"];
     const PLAYER_COLORS = ['#EAB308', '#3B82F6', '#22C55E', '#EF4444', '#A855F7', '#F97316', '#06B6D4', '#EC4899'];
-    const ROULETTE_COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#84cc16', '#06b6d4', '#a855f7'];
+    const ROULETTE_COLORS = ['#c53030', '#c05621', '#b7791f', '#276749', '#0d9488', '#2b6cb0', '#6b46c1', '#b83280', '#c53030', '#5a7a23', '#0891b2', '#7c3aed'];
 
     // ============================================
     // 상태 관리
@@ -565,15 +565,25 @@
       const slotAngle = 360 / slots;
       const finalAngle = spins * 360 + (360 - resultIndex * slotAngle - slotAngle / 2);
       
-      state.rouletteAngle = finalAngle;
-      render();
+      render(); // 먼저 spinning 상태로 렌더링
+      
+      // DOM이 그려진 후 약간의 딜레이를 주고 회전 시작
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const wheel = document.querySelector('.roulette-wheel');
+          if (wheel) {
+            wheel.style.transform = `rotate(${finalAngle}deg)`;
+          }
+        }, 50);
+      });
       
       setTimeout(() => {
         state.rouletteSpinning = false;
         state.rouletteResult = resultIndex;
+        state.rouletteAngle = finalAngle;
         playSound('win');
         render();
-      }, 5000);
+      }, 5100);
     }
 
     function resetRoulette() {
@@ -998,7 +1008,7 @@
           <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-center mb-6">
               <button data-action="go-home" class="btn-ghost px-4 py-2 text-white rounded-xl">← 돌아가기</button>
-              <h1 class="title-font text-4xl lg:text-5xl text-purple-300" style="text-shadow: 0 0 20px rgba(168,85,247,0.5);">🎡 룰렛 🎡</h1>
+              <h1 class="title-font text-4xl lg:text-5xl text-purple-400" style="text-shadow: 0 0 15px rgba(139,92,246,0.3);">🎡 룰렛 🎡</h1>
               <div></div>
             </div>
 
@@ -1009,7 +1019,7 @@
                 </div>
                 
                 <div class="relative w-[320px] h-[320px]">
-                  <svg viewBox="0 0 300 300" class="w-full h-full roulette-wheel" style="transform: rotate(${angle}deg);">
+                  <svg viewBox="0 0 300 300" class="w-full h-full roulette-wheel" style="transform: rotate(${spinning ? 0 : angle}deg);">
                     ${wheelSegments.map((seg, i) => `
                       <path d="${seg.path}" fill="${seg.color}" stroke="#1a0a2e" stroke-width="2"/>
                       <text x="${seg.textX}" y="${seg.textY}" fill="white" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(${seg.textAngle}, ${seg.textX}, ${seg.textY})">${seg.name.slice(0,6)}</text>
@@ -1025,7 +1035,7 @@
                   <div class="text-center mb-6 animate-result-pop">
                     <div class="text-6xl mb-2">🎉</div>
                     <p class="text-purple-300 text-lg">당첨!</p>
-                    <p class="text-4xl font-black text-white mt-2" style="color: ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]}; text-shadow: 0 0 20px ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]};">${names[result] || '???'}</p>
+                    <p class="text-4xl font-black text-white mt-2" style="color: ${ROULETTE_COLORS[result % ROULETTE_COLORS.length]}; text-shadow: 0 0 10px rgba(0,0,0,0.5);">${names[result] || '???'}</p>
                   </div>
                 ` : ''}
 
