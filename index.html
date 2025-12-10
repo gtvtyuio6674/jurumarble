@@ -148,6 +148,11 @@ const ROULETTE_COLORS=['#c53030','#c05621','#b7791f','#276749','#0d9488','#2b6cb
 let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:''};
 let roomRef=null;
 
+// 유효한 슬롯 개수 (내용이 있는 것만)
+function getValidSlots(){
+  return state.rouletteSlots.filter(s=>s&&s.trim().length>0);
+}
+
 function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase()}
 function getTilePos(idx){const s=8;if(idx<s)return{x:s-idx,y:0};if(idx<s*2)return{x:0,y:idx-s};if(idx<s*3)return{x:idx-s*2,y:s};return{x:s,y:s*4-idx}}
 function getOffset(i){const o=[[-8,-8],[8,-8],[-8,8],[8,8],[0,-12],[0,12],[-12,0],[12,0]];return o[i%8]}
@@ -172,9 +177,12 @@ function renderLobby(){
   return '<div class="min-h-screen '+colors.bg+' p-4"><div class="max-w-2xl mx-auto"><div class="card-dark rounded-3xl p-6 animate-fade-scale"><div class="flex justify-between items-start mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg">🚪 나가기</button><div class="text-center"><span class="text-4xl">'+g.emoji+'</span><h2 class="title-font text-2xl text-white">'+g.name+'</h2></div><div></div></div><div class="bg-black/30 rounded-2xl p-4 mb-4 text-center"><p class="text-white/50 text-sm">방 코드</p><p class="title-font text-4xl text-white tracking-wider">'+state.roomCode+'</p><button data-action="copy-code" class="mt-2 text-indigo-400 text-sm">📋 복사</button></div><div class="mb-4"><p class="text-white/70 text-sm mb-2">플레이어 ('+players.length+'/'+g.max+')</p><div class="grid grid-cols-2 gap-2">'+players.map((p,i)=>'<div class="player-item flex items-center gap-2 bg-black/20 rounded-xl p-2 '+(p.id===state.odPlyerId?'ring-2 ring-indigo-500':'')+'"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background:'+PLAYER_COLORS[i]+'">'+p.name[0]+'</div><span class="flex-1 text-white text-sm truncate">'+p.name+'</span>'+(p.id===state.room.hostId?'<span class="text-yellow-400 text-xs">👑</span>':'')+(isHost&&p.id!==state.odPlyerId?'<button data-action="kick" data-pid="'+p.id+'" class="kick-btn text-red-400 text-xs px-1 rounded hover:bg-red-500/20">강퇴</button>':'')+'</div>').join('')+'</div></div>'+(isHost?'<button data-action="start-game" '+(canStart?'':'disabled')+' class="'+colors.btn+' w-full text-white text-xl font-bold py-4 rounded-2xl '+(canStart?'':'opacity-50 cursor-not-allowed')+'">'+(canStart?'🎮 게임 시작':'⏳ '+g.min+'명 이상 필요')+'</button>':'<div class="text-center text-white/50 py-4">호스트 대기 중...</div>')+'</div></div>'+(state.showLeave?renderLeaveModal():'')+'</div>'}
 
 function renderRoulette(){
-  const slots=state.rouletteSlots.filter(s=>s.trim());
-  const segAngle=slots.length>0?360/slots.length:360;
-  return '<div class="min-h-screen bg-roulette p-4 relative overflow-hidden"><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-6"><button data-action="go-home" class="btn-ghost text-white/70 px-4 py-2 rounded-xl">← 뒤로</button><h1 class="title-font text-4xl text-purple-400">🎡 룰렛 🎡</h1><div></div></div><div class="flex flex-col lg:flex-row gap-6 items-center"><div class="relative flex flex-col items-center"><div class="absolute -top-2 left-1/2 -translate-x-1/2 z-20 text-4xl" style="filter:drop-shadow(0 0 10px rgba(255,255,255,0.8));">▼</div><div class="relative w-72 h-72 lg:w-80 lg:h-80"><svg viewBox="0 0 200 200" class="roulette-wheel w-full h-full" id="roulette-wheel" style="transform:rotate('+state.rouletteAngle+'deg)"><circle cx="100" cy="100" r="98" fill="#1a1a2e" stroke="#4c1d95" stroke-width="4"/>'+(slots.length>0?slots.map((s,i)=>{const st=i*segAngle-90,en=st+segAngle,la=segAngle>180?1:0;const x1=100+95*Math.cos(st*Math.PI/180),y1=100+95*Math.sin(st*Math.PI/180),x2=100+95*Math.cos(en*Math.PI/180),y2=100+95*Math.sin(en*Math.PI/180);const ma=(st+segAngle/2)*Math.PI/180,tx=100+60*Math.cos(ma),ty=100+60*Math.sin(ma);return'<path d="M100,100 L'+x1+','+y1+' A95,95 0 '+la+',1 '+x2+','+y2+' Z" fill="'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'" stroke="#1a1a2e" stroke-width="1"/><text x="'+tx+'" y="'+ty+'" fill="white" font-size="'+(slots.length>8?8:10)+'" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate('+(st+segAngle/2+90)+','+tx+','+ty+')">'+(s.length>6?s.slice(0,6)+'…':s)+'</text>'}).join(''):'<text x="100" y="100" fill="white" font-size="12" text-anchor="middle">항목을 입력하세요</text>')+'<circle cx="100" cy="100" r="20" fill="#2d1b4e" stroke="#7c3aed" stroke-width="3"/><circle cx="100" cy="100" r="8" fill="#a855f7"/></svg></div><div class="mt-4 w-full text-center min-h-[80px] flex items-center justify-center">'+(state.rouletteResult?'<div class="animate-result-pop"><p class="text-purple-300 text-sm mb-1">🎉 당첨! 🎉</p><p class="title-font text-3xl animate-winner" style="color:'+state.rouletteResultColor+'">'+state.rouletteResult+'</p></div>':'<p class="text-white/30 text-sm">'+(state.rouletteSpinning?'🌀 돌아가는 중...':'결과가 여기에 표시됩니다')+'</p>')+'</div><button data-action="spin" '+(state.rouletteSpinning||slots.length<2?'disabled':'')+' class="mt-4 w-full btn-purple text-white text-xl font-bold py-4 rounded-2xl '+(state.rouletteSpinning||slots.length<2?'opacity-50 cursor-not-allowed':'')+'">'+(state.rouletteSpinning?'🌀 돌아가는 중...':'🎯 돌리기!')+'</button></div><div class="card-purple rounded-2xl p-4 flex-1 w-full max-w-md"><h3 class="text-purple-300 font-bold mb-4" id="slot-count">🎰 항목 ('+slots.length+'개)</h3><div class="space-y-2 max-h-64 overflow-y-auto mb-4">'+state.rouletteSlots.map((s,i)=>'<div class="flex gap-2 items-center"><div class="w-4 h-4 rounded" style="background:'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'"></div><input type="text" data-slot="'+i+'" value="'+s+'" placeholder="항목 '+(i+1)+'" class="input-dark flex-1 px-3 py-2 rounded-lg text-sm"><button data-action="remove-slot" data-idx="'+i+'" class="text-red-400 hover:text-red-300 px-2 '+(state.rouletteSlots.length<=2?'opacity-30 cursor-not-allowed':'')+'">✕</button></div>').join('')+'</div><button data-action="add-slot" class="w-full btn-secondary text-purple-300 py-2 rounded-xl">+ 항목 추가</button></div></div></div></div>'}
+  const validSlots=getValidSlots();
+  const validCount=validSlots.length;
+  const canSpin=!state.rouletteSpinning&&validCount>=2;
+  const segAngle=validCount>0?360/validCount:360;
+  
+  return '<div class="min-h-screen bg-roulette p-4 relative overflow-hidden"><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-6"><button data-action="go-home" class="btn-ghost text-white/70 px-4 py-2 rounded-xl">← 뒤로</button><h1 class="title-font text-4xl text-purple-400">🎡 룰렛 🎡</h1><div></div></div><div class="flex flex-col lg:flex-row gap-6 items-center"><div class="relative flex flex-col items-center"><div class="absolute -top-2 left-1/2 -translate-x-1/2 z-20 text-4xl" style="filter:drop-shadow(0 0 10px rgba(255,255,255,0.8));">▼</div><div class="relative w-72 h-72 lg:w-80 lg:h-80"><svg viewBox="0 0 200 200" class="roulette-wheel w-full h-full" id="roulette-wheel" style="transform:rotate('+state.rouletteAngle+'deg)"><circle cx="100" cy="100" r="98" fill="#1a1a2e" stroke="#4c1d95" stroke-width="4"/>'+(validCount>0?validSlots.map((s,i)=>{const st=i*segAngle-90,en=st+segAngle,la=segAngle>180?1:0;const x1=100+95*Math.cos(st*Math.PI/180),y1=100+95*Math.sin(st*Math.PI/180),x2=100+95*Math.cos(en*Math.PI/180),y2=100+95*Math.sin(en*Math.PI/180);const ma=(st+segAngle/2)*Math.PI/180,tx=100+60*Math.cos(ma),ty=100+60*Math.sin(ma);return'<path d="M100,100 L'+x1+','+y1+' A95,95 0 '+la+',1 '+x2+','+y2+' Z" fill="'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'" stroke="#1a1a2e" stroke-width="1"/><text x="'+tx+'" y="'+ty+'" fill="white" font-size="'+(validCount>8?8:10)+'" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate('+(st+segAngle/2+90)+','+tx+','+ty+')">'+(s.length>6?s.slice(0,6)+'…':s)+'</text>'}).join(''):'<text x="100" y="100" fill="white" font-size="12" text-anchor="middle">항목을 입력하세요</text>')+'<circle cx="100" cy="100" r="20" fill="#2d1b4e" stroke="#7c3aed" stroke-width="3"/><circle cx="100" cy="100" r="8" fill="#a855f7"/></svg></div><div class="mt-4 w-full text-center min-h-[80px] flex items-center justify-center">'+(state.rouletteResult?'<div class="animate-result-pop"><p class="text-purple-300 text-sm mb-1">🎉 당첨! 🎉</p><p class="title-font text-3xl animate-winner" style="color:'+state.rouletteResultColor+'">'+state.rouletteResult+'</p></div>':'<p class="text-white/30 text-sm">'+(state.rouletteSpinning?'🌀 돌아가는 중...':(validCount<2?'⚠️ 항목 2개 이상 입력하세요':'결과가 여기에 표시됩니다'))+'</p>')+'</div><button data-action="spin" '+(canSpin?'':'disabled')+' class="mt-4 w-full btn-purple text-white text-xl font-bold py-4 rounded-2xl '+(canSpin?'':'opacity-50 cursor-not-allowed')+'">'+(state.rouletteSpinning?'🌀 돌아가는 중...':'🎯 돌리기!')+'</button></div><div class="card-purple rounded-2xl p-4 flex-1 w-full max-w-md"><h3 class="text-purple-300 font-bold mb-4" id="slot-count">🎰 항목 ('+validCount+'개)</h3><div class="space-y-2 max-h-64 overflow-y-auto mb-4">'+state.rouletteSlots.map((s,i)=>{const isValid=s&&s.trim().length>0;return'<div class="flex gap-2 items-center"><div class="w-4 h-4 rounded '+(isValid?'':'opacity-30')+'" style="background:'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'"></div><input type="text" data-slot="'+i+'" value="'+s+'" placeholder="항목 '+(i+1)+'" class="input-dark flex-1 px-3 py-2 rounded-lg text-sm"><button data-action="remove-slot" data-idx="'+i+'" class="text-red-400 hover:text-red-300 px-2 '+(state.rouletteSlots.length<=2?'opacity-30 cursor-not-allowed':'')+'">✕</button></div>'}).join('')+'</div><button data-action="add-slot" class="w-full btn-secondary text-purple-300 py-2 rounded-xl">+ 항목 추가</button></div></div></div></div>'}
 
 function renderGame(){if(!state.room)return'';if(state.game?.id==='liar')return renderLiarGame();return renderJurumarble()}
 
@@ -241,7 +249,15 @@ function renderLeaveModal(){
 
 function bindEvents(){
   document.querySelectorAll('[data-action]').forEach(el=>{el.onclick=e=>{e.stopPropagation();handleAction(el.dataset.action,el.dataset)}});
-  document.querySelectorAll('[data-slot]').forEach(el=>{el.oninput=e=>{state.rouletteSlots[parseInt(el.dataset.slot)]=e.target.value;updateWheelVisual()}});
+  document.querySelectorAll('[data-slot]').forEach(el=>{
+    el.oninput=e=>{
+      const idx=parseInt(el.dataset.slot);
+      if(!isNaN(idx)&&idx>=0&&idx<state.rouletteSlots.length){
+        state.rouletteSlots[idx]=e.target.value;
+        updateWheelVisual();
+      }
+    }
+  });
   const guessInput=document.getElementById('liar-guess');
   if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value}
 
@@ -249,21 +265,47 @@ function updateWheelVisual(){
   const wheel=document.getElementById('roulette-wheel');
   const countEl=document.getElementById('slot-count');
   if(!wheel)return;
-  const slots=state.rouletteSlots.filter(s=>s.trim());
-  const segAngle=slots.length>0?360/slots.length:360;
+  
+  const validSlots=getValidSlots();
+  const validCount=validSlots.length;
+  const segAngle=validCount>0?360/validCount:360;
+  
   let svg='<circle cx="100" cy="100" r="98" fill="#1a1a2e" stroke="#4c1d95" stroke-width="4"/>';
-  if(slots.length>0){
-    slots.forEach((s,i)=>{
+  if(validCount>0){
+    validSlots.forEach((s,i)=>{
       const st=i*segAngle-90,en=st+segAngle,la=segAngle>180?1:0;
       const x1=100+95*Math.cos(st*Math.PI/180),y1=100+95*Math.sin(st*Math.PI/180);
       const x2=100+95*Math.cos(en*Math.PI/180),y2=100+95*Math.sin(en*Math.PI/180);
       const ma=(st+segAngle/2)*Math.PI/180,tx=100+60*Math.cos(ma),ty=100+60*Math.sin(ma);
       svg+='<path d="M100,100 L'+x1+','+y1+' A95,95 0 '+la+',1 '+x2+','+y2+' Z" fill="'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'" stroke="#1a1a2e" stroke-width="1"/>';
-      svg+='<text x="'+tx+'" y="'+ty+'" fill="white" font-size="'+(slots.length>8?8:10)+'" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate('+(st+segAngle/2+90)+','+tx+','+ty+')">'+(s.length>6?s.slice(0,6)+'…':s)+'</text>'});
-  }else{svg+='<text x="100" y="100" fill="white" font-size="12" text-anchor="middle">항목을 입력하세요</text>'}
+      svg+='<text x="'+tx+'" y="'+ty+'" fill="white" font-size="'+(validCount>8?8:10)+'" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate('+(st+segAngle/2+90)+','+tx+','+ty+')">'+(s.length>6?s.slice(0,6)+'…':s)+'</text>'
+    });
+  }else{
+    svg+='<text x="100" y="100" fill="white" font-size="12" text-anchor="middle">항목을 입력하세요</text>';
+  }
   svg+='<circle cx="100" cy="100" r="20" fill="#2d1b4e" stroke="#7c3aed" stroke-width="3"/><circle cx="100" cy="100" r="8" fill="#a855f7"/>';
   wheel.innerHTML=svg;
-  if(countEl)countEl.textContent='🎰 항목 ('+slots.length+'개)'}
+  
+  if(countEl)countEl.textContent='🎰 항목 ('+validCount+'개)';
+  
+  // 버튼 상태 업데이트
+  const spinBtn=document.querySelector('[data-action="spin"]');
+  if(spinBtn){
+    const canSpin=!state.rouletteSpinning&&validCount>=2;
+    spinBtn.disabled=!canSpin;
+    spinBtn.className='mt-4 w-full btn-purple text-white text-xl font-bold py-4 rounded-2xl '+(canSpin?'':'opacity-50 cursor-not-allowed');
+  }
+  
+  // 결과 영역 안내 메시지 업데이트
+  if(!state.rouletteResult&&!state.rouletteSpinning){
+    const resultArea=document.querySelector('.min-h-\\[80px\\] p');
+    if(resultArea&&validCount<2){
+      resultArea.textContent='⚠️ 항목 2개 이상 입력하세요';
+    }else if(resultArea){
+      resultArea.textContent='결과가 여기에 표시됩니다';
+    }
+  }
+}
 
 function handleAction(a,d){
   if(a!=='spin'&&a!=='flip-card')playSound('click');
@@ -280,7 +322,16 @@ function handleAction(a,d){
     case 'roll-dice':rollDice();break;
     case 'close-mission':closeMission();break;
     case 'add-slot':state.rouletteSlots.push('');render();break;
-    case 'remove-slot':if(state.rouletteSlots.length>2){state.rouletteSlots.splice(parseInt(d.idx),1);render()}break;
+    case 'remove-slot':
+      // 배열 길이가 2보다 크면 삭제 가능
+      if(state.rouletteSlots.length>2){
+        const idx=parseInt(d.idx);
+        if(!isNaN(idx)&&idx>=0&&idx<state.rouletteSlots.length){
+          state.rouletteSlots.splice(idx,1);
+          render();
+        }
+      }
+      break;
     case 'spin':spinRoulette();break;
     case 'show-update':state.showUpdate=true;render();break;
     case 'close-update':state.showUpdate=false;render();break;
@@ -388,8 +439,9 @@ function closeMission(){
 
 function spinRoulette(){
   if(state.rouletteSpinning)return;
-  const slots=state.rouletteSlots.filter(s=>s.trim());
-  if(slots.length<2)return alert('최소 2개 이상 입력하세요!');
+  const validSlots=getValidSlots();
+  if(validSlots.length<2)return alert('최소 2개 이상 입력하세요!');
+  
   playSound('spin');
   state.rouletteSpinning=true;
   state.rouletteResult=null;
@@ -407,15 +459,15 @@ function spinRoulette(){
     const wheel=document.getElementById('roulette-wheel');
     if(wheel){
       wheel.classList.remove('reset');
-      const segAngle=360/slots.length;
-      const winIdx=Math.floor(Math.random()*slots.length);
+      const segAngle=360/validSlots.length;
+      const winIdx=Math.floor(Math.random()*validSlots.length);
       const spins=5+Math.floor(Math.random()*3);
       const finalAngle=spins*360+(360-winIdx*segAngle-segAngle/2);
       state.rouletteAngle=finalAngle;
       wheel.style.transform='rotate('+finalAngle+'deg)';
       setTimeout(()=>{
         state.rouletteSpinning=false;
-        state.rouletteResult=slots[winIdx];
+        state.rouletteResult=validSlots[winIdx];
         state.rouletteResultColor=ROULETTE_COLORS[winIdx%ROULETTE_COLORS.length];
         playSound('win');
         render()},4100)}},50)}
