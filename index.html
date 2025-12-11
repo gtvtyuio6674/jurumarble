@@ -151,6 +151,7 @@
     .tile-special{background:linear-gradient(135deg,#F59E0B,#D97706)}.tile-free{background:linear-gradient(135deg,#6B7280,#4B5563)}
     .tile-start{background:linear-gradient(135deg,#10B981,#059669)}.tile-performance{background:linear-gradient(135deg,#EC4899,#DB2777)}
     .tile-island{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
+    .tile-toIsland{background:linear-gradient(135deg,#f97316,#ea580c)}
     
     /* 버튼 스타일 */
     .btn-primary{background:linear-gradient(180deg,#8b5cf6,#7c3aed);border:2px solid #6d28d9;box-shadow:0 4px 0 #5b21b6,0 0 20px rgba(139,92,246,0.3)}
@@ -257,14 +258,14 @@ const GOLDEN_KEYS=[
 
 const TILES=[
   {id:0,name:"출발",type:"start",emoji:"🚀",desc:"출발!"},
-  {id:1,name:"음성채팅",type:"drink",emoji:"🎙️",desc:"음성채팅 인사!"},
+  {id:1,name:"첫인상",type:"drink",emoji:"👋",desc:"옆 사람 첫인상 말하기!"},
   {id:2,name:"애교 대사",type:"performance",emoji:"🥰",desc:"애교 대사 1개!"},
   {id:3,name:"3.6.9",type:"game",emoji:"👏",desc:"369 게임!"},
   {id:4,name:"초성퀴즈",type:"game",emoji:"🔤",desc:"초성퀴즈!"},
   {id:5,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:6,name:"무인도",type:"island",emoji:"🏝️",desc:"1,2가 나와야 탈출!"},
-  {id:7,name:"007",type:"game",emoji:"🔫",desc:"007빵!"},
-  {id:8,name:"이모티콘",type:"drink",emoji:"💬",desc:"웃긴 이모티콘!"},
+  {id:6,name:"무인도행",type:"toIsland",emoji:"🚢",desc:"무인도로 직행!"},
+  {id:7,name:"웃음참기",type:"game",emoji:"😂",desc:"30초 웃음참기!"},
+  {id:8,name:"솔직토크",type:"drink",emoji:"🤫",desc:"비밀 하나 공개!"},
   {id:9,name:"눈치게임",type:"game",emoji:"👀",desc:"눈치게임!"},
   {id:10,name:"뒤로 2칸",type:"move",emoji:"⬅️",desc:"두 칸 뒤로!"},
   {id:11,name:"TMI 공개",type:"game",emoji:"💬",desc:"오늘의 TMI!"},
@@ -272,21 +273,21 @@ const TILES=[
   {id:13,name:"칭찬타임",type:"drink",emoji:"💕",desc:"옆 사람 칭찬!"},
   {id:14,name:"성대모사",type:"performance",emoji:"🎭",desc:"성대모사!"},
   {id:15,name:"업다운",type:"game",emoji:"🔢",desc:"숫자 업다운!"},
-  {id:16,name:"지목 벌칙",type:"drink",emoji:"👉",desc:"한 명 지목!"},
+  {id:16,name:"이상형",type:"drink",emoji:"💘",desc:"이상형 타입 고백!"},
   {id:17,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:18,name:"이모지설명",type:"performance",emoji:"😉",desc:"이모지 영화설명!"},
+  {id:18,name:"무인도",type:"island",emoji:"🏝️",desc:"1,2가 나와야 탈출!"},
   {id:19,name:"손병호",type:"game",emoji:"✋",desc:"손가락 걸기!"},
   {id:20,name:"주사위 더",type:"bonus",emoji:"🎲",desc:"한 번 더!"},
   {id:21,name:"밸런스게임",type:"drink",emoji:"⚖️",desc:"밸런스 게임!"},
-  {id:22,name:"랜덤칭찬",type:"performance",emoji:"👍",desc:"랜덤 유저 칭찬!"},
-  {id:23,name:"아파트",type:"game",emoji:"🏢",desc:"아파트 게임!"},
-  {id:24,name:"노래맞추기",type:"game",emoji:"🎵",desc:"노래 1초 맞추기!"},
+  {id:22,name:"눈싸움",type:"game",emoji:"👁️",desc:"눈싸움! 먼저 깜빡이면 벌칙!"},
+  {id:23,name:"밈 챌린지",type:"performance",emoji:"🤪",desc:"유행하는 밈 따라하기!"},
+  {id:24,name:"박수게임",type:"game",emoji:"👏",desc:"369 박수치기!"},
   {id:25,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:26,name:"프사 평가",type:"drink",emoji:"🖼️",desc:"프로필 평가!"},
+  {id:26,name:"연락공개",type:"drink",emoji:"📱",desc:"최근 연락한 사람 공개!"},
   {id:27,name:"고백연기",type:"performance",emoji:"💌",desc:"고백연기!"},
   {id:28,name:"랜덤게임",type:"game",emoji:"🎰",desc:"랜덤 게임!"},
   {id:29,name:"뒤로 3칸",type:"move",emoji:"⏪",desc:"세 칸 뒤로!"},
-  {id:30,name:"별명짓기",type:"performance",emoji:"😎",desc:"별명 지어주기!"},
+  {id:30,name:"별명짓기",type:"performance",emoji:"😎",desc:"별명 지어주기! (1주일 사용)"},
   {id:31,name:"처음으로",type:"move",emoji:"🔙",desc:"출발점으로!"}
 ];
 
@@ -297,7 +298,7 @@ const RANDOM_GAMES=["훈민정음!","딸기게임!","초성퀴즈!","업다운!"
 const PLAYER_COLORS=['#EAB308','#3B82F6','#22C55E','#EF4444','#A855F7','#F97316','#06B6D4','#EC4899','#84CC16','#F43F5E','#8B5CF6','#14B8A6'];
 const ROULETTE_COLORS=['#c53030','#c05621','#b7791f','#276749','#0d9488','#2b6cb0','#6b46c1','#b83280','#c53030','#5a7a23','#0891b2','#7c3aed'];
 
-let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false};
+let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0};
 let roomRef=null,maintRef=null,canvasCtx=null,bombInterval=null;
 
 function getValidSlots(){return state.rouletteSlots.filter(s=>s&&s.trim().length>0)}
@@ -368,7 +369,9 @@ function renderAegyoModal(){
 }
 
 function renderChatToggle(){
-  return '<button data-action="toggle-chat" class="chat-toggle w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform">'+(state.showChat?'✕':'💬')+'</button>';
+  const chatCount=state.room?.chats?Object.keys(state.room.chats).length:0;
+  const unreadCount=state.showChat?0:Math.max(0,chatCount-state.lastReadChatCount);
+  return '<button data-action="toggle-chat" class="chat-toggle w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative">'+(state.showChat?'✕':'💬')+(unreadCount>0?'<span class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full text-white text-xs font-bold flex items-center justify-center animate-bounce">'+unreadCount+'</span>':'')+'</button>';
 }
 
 function renderChatPanel(theme){
@@ -509,6 +512,10 @@ function renderMissionModal(){
   
   if(tile.type==='island'&&!state.hasIslandSkip){
     return '<div class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"><div class="bg-gradient-to-b from-cyan-600 to-blue-800 rounded-3xl p-6 max-w-sm w-full animate-bounce-in text-center border-4 border-cyan-400" style="box-shadow:0 0 40px rgba(6,182,212,0.4)"><div class="text-6xl mb-4">🏝️</div><h3 class="title-font text-2xl text-white mb-2">무인도에 갇혔습니다!</h3><div class="bg-black/30 rounded-xl p-4 mb-4"><p class="text-cyan-100 text-lg mb-2">🎲 탈출 조건</p><p class="text-white font-bold text-xl">주사위 1 또는 2가 나와야<br/>탈출할 수 있습니다!</p></div><p class="text-cyan-200 text-sm mb-4">다음 턴에 주사위를 굴려주세요</p>'+(isMyTurn?'<button data-action="close-mission" class="bg-cyan-500 text-white font-bold py-3 px-8 rounded-xl hover:bg-cyan-400">확인</button>':'<div class="text-cyan-200/70 py-3">'+curr?.name+' 확인 중...</div>')+'</div></div>';
+  }
+  
+  if(tile.type==='toIsland'&&!state.hasIslandSkip){
+    return '<div class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"><div class="bg-gradient-to-b from-orange-600 to-red-800 rounded-3xl p-6 max-w-sm w-full animate-bounce-in text-center border-4 border-orange-400" style="box-shadow:0 0 40px rgba(249,115,22,0.4)"><div class="text-6xl mb-4">🚢</div><h3 class="title-font text-2xl text-white mb-2">무인도 직행!</h3><div class="bg-black/30 rounded-xl p-4 mb-4"><p class="text-orange-100 text-lg mb-2">🏝️ 무인도로 이동합니다!</p><p class="text-white font-bold">주사위 1 또는 2가 나와야<br/>탈출할 수 있습니다!</p></div>'+(isMyTurn?'<button data-action="close-mission" class="bg-orange-500 text-white font-bold py-3 px-8 rounded-xl hover:bg-orange-400">확인</button>':'<div class="text-orange-200/70 py-3">'+curr?.name+' 확인 중...</div>')+'</div></div>';
   }
   
   const randomGame=tile.type==='game'&&tile.id===28?RANDOM_GAMES[Math.floor(Math.random()*RANDOM_GAMES.length)]:'';
@@ -682,7 +689,7 @@ function handleAction(a,d){
     case 'show-result':showFinalResult();break;
     case 'new-round':newLiarRound();break;
     case 'send-chat':sendChat();break;
-    case 'toggle-chat':state.showChat=!state.showChat;render();break;
+    case 'toggle-chat':state.showChat=!state.showChat;if(state.showChat){state.lastReadChatCount=state.room?.chats?Object.keys(state.room.chats).length:0}render();break;
     case 'spin-arrow':spinArrow();break;
     case 'reset-arrow':resetArrow();break;
     case 'rescue-vote':rescueVote(d.vote==='yes');break;
@@ -1021,6 +1028,14 @@ function rollDice(){
         state.hasIslandSkip=false;
         showMission=false;
       }else{
+        roomRef.child('players/'+state.odPlyerId+'/islandTurn').set(1);
+      }
+    }else if(tile.type==='toIsland'){
+      if(state.hasIslandSkip){
+        state.hasIslandSkip=false;
+        showMission=false;
+      }else{
+        finalPos=18;
         roomRef.child('players/'+state.odPlyerId+'/islandTurn').set(1);
       }
     }else if(tile.type==='bonus'){
