@@ -109,7 +109,7 @@
     @keyframes result-pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
     @keyframes golden-glow{0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.5)}50%{box-shadow:0 0 40px rgba(255,215,0,0.8)}}
     @keyframes twinkle{0%,100%{opacity:0.3}50%{opacity:1}}
-    @keyframes arrow-spin{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(var(--spin-deg))}}
+    @keyframes arrow-spin{0%{transform:rotate(0deg)}100%{transform:rotate(var(--spin-deg))}}
     @keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(251,191,36,0.5)}50%{box-shadow:0 0 40px rgba(251,191,36,0.8)}}
     @keyframes bomb-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
     @keyframes countdown-pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
@@ -264,8 +264,8 @@ const TILES=[
   {id:4,name:"초성퀴즈",type:"game",emoji:"🔤",desc:"초성퀴즈!"},
   {id:5,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
   {id:6,name:"무인도행",type:"toIsland",emoji:"🚢",desc:"무인도로 직행!"},
-  {id:7,name:"웃음참기",type:"game",emoji:"😂",desc:"30초 웃음참기!"},
-  {id:8,name:"솔직토크",type:"drink",emoji:"🤫",desc:"비밀 하나 공개!"},
+  {id:7,name:"인생샷",type:"performance",emoji:"📸",desc:"옆 사람 인생샷 찍어주기!"},
+  {id:8,name:"무인도",type:"island",emoji:"🏝️",desc:"1,2가 나와야 탈출!"},
   {id:9,name:"눈치게임",type:"game",emoji:"👀",desc:"눈치게임!"},
   {id:10,name:"뒤로 2칸",type:"move",emoji:"⬅️",desc:"두 칸 뒤로!"},
   {id:11,name:"TMI 공개",type:"game",emoji:"💬",desc:"오늘의 TMI!"},
@@ -275,15 +275,15 @@ const TILES=[
   {id:15,name:"업다운",type:"game",emoji:"🔢",desc:"숫자 업다운!"},
   {id:16,name:"이상형",type:"drink",emoji:"💘",desc:"이상형 타입 고백!"},
   {id:17,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:18,name:"무인도",type:"island",emoji:"🏝️",desc:"1,2가 나와야 탈출!"},
+  {id:18,name:"솔직토크",type:"drink",emoji:"🤫",desc:"비밀 하나 공개!"},
   {id:19,name:"손병호",type:"game",emoji:"✋",desc:"손가락 걸기!"},
   {id:20,name:"주사위 더",type:"bonus",emoji:"🎲",desc:"한 번 더!"},
   {id:21,name:"밸런스게임",type:"drink",emoji:"⚖️",desc:"밸런스 게임!"},
-  {id:22,name:"눈싸움",type:"game",emoji:"👁️",desc:"눈싸움! 먼저 깜빡이면 벌칙!"},
+  {id:22,name:"아바타샷",type:"performance",emoji:"🎮",desc:"브챗 아바타 맥심 찍기 or 마시기!"},
   {id:23,name:"밈 챌린지",type:"performance",emoji:"🤪",desc:"유행하는 밈 따라하기!"},
-  {id:24,name:"박수게임",type:"game",emoji:"👏",desc:"369 박수치기!"},
+  {id:24,name:"몸으로말해요",type:"game",emoji:"🙆",desc:"제스처로 단어 설명하기!"},
   {id:25,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:26,name:"연락공개",type:"drink",emoji:"📱",desc:"최근 연락한 사람 공개!"},
+  {id:26,name:"최애자랑",type:"drink",emoji:"⭐",desc:"최애 캐릭터/아이돌 자랑!"},
   {id:27,name:"고백연기",type:"performance",emoji:"💌",desc:"고백연기!"},
   {id:28,name:"랜덤게임",type:"game",emoji:"🎰",desc:"랜덤 게임!"},
   {id:29,name:"뒤로 3칸",type:"move",emoji:"⏪",desc:"세 칸 뒤로!"},
@@ -302,6 +302,21 @@ let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',ro
 let roomRef=null,maintRef=null,canvasCtx=null,bombInterval=null;
 
 function getValidSlots(){return state.rouletteSlots.filter(s=>s&&s.trim().length>0)}
+function updateRouletteWheel(){
+  const svg=document.getElementById('roulette-wheel');
+  if(!svg)return;
+  const validSlots=getValidSlots();
+  const validCount=validSlots.length;
+  const segAngle=validCount>0?360/validCount:360;
+  let paths='<circle cx="100" cy="100" r="98" fill="#1a1a2e" stroke="#6b21a8" stroke-width="4"/>';
+  if(validCount>0){
+    paths+=validSlots.map((s,i)=>{const st=i*segAngle-90,en=st+segAngle,la=segAngle>180?1:0;const x1=100+95*Math.cos(st*Math.PI/180),y1=100+95*Math.sin(st*Math.PI/180),x2=100+95*Math.cos(en*Math.PI/180),y2=100+95*Math.sin(en*Math.PI/180);const ma=(st+segAngle/2)*Math.PI/180,tx=100+60*Math.cos(ma),ty=100+60*Math.sin(ma);return'<path d="M100,100 L'+x1+','+y1+' A95,95 0 '+la+',1 '+x2+','+y2+' Z" fill="'+ROULETTE_COLORS[i%ROULETTE_COLORS.length]+'" stroke="#1a1a2e" stroke-width="1"/><text x="'+tx+'" y="'+ty+'" fill="white" font-size="'+(validCount>8?8:10)+'" font-weight="bold" text-anchor="middle" transform="rotate('+(st+segAngle/2+90)+','+tx+','+ty+')">'+(s.length>6?s.slice(0,6)+'…':s)+'</text>'}).join('');
+  }else{
+    paths+='<text x="100" y="100" fill="white" font-size="12" text-anchor="middle">항목 입력</text>';
+  }
+  paths+='<circle cx="100" cy="100" r="22" fill="#2d1b4e" stroke="#9333ea" stroke-width="3"/><circle cx="100" cy="100" r="10" fill="#a855f7"/>';
+  svg.innerHTML=paths;
+}
 function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase()}
 function getTilePos(idx){const s=8;if(idx<s)return{x:s-idx,y:0};if(idx<s*2)return{x:0,y:idx-s};if(idx<s*3)return{x:idx-s*2,y:s};return{x:s,y:s*4-idx}}
 function getOffset(i){const o=[[-10,-10],[10,-10],[-10,10],[10,10],[0,-14],[0,14],[-14,0],[14,0]];return o[i%8]}
@@ -574,7 +589,11 @@ function renderLiarDiscuss(room,players,isLiar,isHost){
   const seconds=remaining%60;
   const timeStr=minutes+':'+(seconds<10?'0':'')+seconds;
   const progress=(remaining/(room.discussTime*60))*100;
-  return '<div><div class="card-liar rounded-2xl p-4 mb-4 max-w-lg mx-auto text-center"><div class="text-3xl mb-2">💬</div><p class="text-red-400 text-xl font-bold mb-2">토론 시간!</p><div class="bg-black/30 rounded-xl p-3 mb-3"><div class="flex justify-between items-center mb-2"><span class="text-white/50 text-sm">남은 시간</span><span class="text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white')+'">'+timeStr+'</span></div><div class="w-full h-3 bg-black/50 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-1000" style="width:'+progress+'%"></div></div></div><div class="bg-black/30 rounded-xl p-3 mb-3"><p class="text-white/50 text-sm">주제</p><p class="text-white text-2xl font-bold">'+room.topic+'</p>'+(!isLiar?'<p class="text-green-400 mt-1">제시어: <strong>'+room.word+'</strong></p>':'<p class="text-red-400 mt-1 text-sm">🤥 당신은 라이어입니다!</p>')+'</div><p class="text-white/60 text-sm mb-4">누가 라이어인지 토론하세요!</p>'+(isHost&&remaining<=0?'<button data-action="start-vote" class="btn-liar text-white font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform animate-pulse">🗳️ 투표 시작</button>':'')+(remaining>0?'<p class="text-yellow-400 text-sm">⏰ 시간이 끝나면 투표가 시작됩니다</p>':'')+'</div></div>';
+  const skipVotes=room.skipVotes||{};
+  const skipCount=Object.keys(skipVotes).length;
+  const mySkipped=skipVotes[state.odPlyerId];
+  const allSkipped=skipCount>=players.length;
+  return '<div><div class="card-liar rounded-2xl p-4 mb-4 max-w-lg mx-auto text-center"><div class="text-3xl mb-2">💬</div><p class="text-red-400 text-xl font-bold mb-2">토론 시간!</p><div class="bg-black/30 rounded-xl p-3 mb-3"><div class="flex justify-between items-center mb-2"><span class="text-white/50 text-sm">남은 시간</span><span class="timer-text text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white')+'">'+timeStr+'</span></div><div class="w-full h-3 bg-black/50 rounded-full overflow-hidden"><div class="timer-bar h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-1000" style="width:'+progress+'%"></div></div></div><div class="bg-black/30 rounded-xl p-3 mb-3"><p class="text-white/50 text-sm">주제</p><p class="text-white text-2xl font-bold">'+room.topic+'</p>'+(!isLiar?'<p class="text-green-400 mt-1">제시어: <strong>'+room.word+'</strong></p>':'<p class="text-red-400 mt-1 text-sm">🤥 당신은 라이어입니다!</p>')+'</div><p class="text-white/60 text-sm mb-3">누가 라이어인지 토론하세요!</p><div class="flex gap-2 justify-center mb-3"><button data-action="skip-discuss" class="px-4 py-2 rounded-xl text-sm '+(mySkipped?'bg-green-500 text-white':'bg-white/20 text-white hover:bg-white/30')+'">'+(mySkipped?'✓ 스킵완료':'⏭️ 스킵 ('+skipCount+'/'+players.length+')')+'</button></div>'+(isHost&&(remaining<=0||allSkipped)?'<button data-action="start-vote" class="btn-liar text-white font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform animate-pulse">🗳️ 투표 시작</button>':'')+(remaining>0&&!allSkipped?'<p class="text-yellow-400 text-sm">⏰ 모든 인원이 스킵하거나 시간이 끝나면 투표</p>':'')+'</div></div>';
 }
 
 function renderLiarVote(room,players,isHost){
@@ -613,7 +632,7 @@ function bindEvents(){
     el.onclick=e=>{e.stopPropagation();handleAction(el.dataset.action,el.dataset)}
   });
   document.querySelectorAll('[data-slot]').forEach(el=>{
-    el.oninput=e=>{const idx=parseInt(el.dataset.slot);if(!isNaN(idx))state.rouletteSlots[idx]=e.target.value}
+    el.oninput=e=>{const idx=parseInt(el.dataset.slot);if(!isNaN(idx)){state.rouletteSlots[idx]=e.target.value;const svg=document.getElementById('roulette-wheel');if(svg)updateRouletteWheel()}}
   });
   const guessInput=document.getElementById('liar-guess');
   if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value;
@@ -663,10 +682,26 @@ function initDrawCanvas(){
   }
   if(!isDrawer)return;
   let lastX=0,lastY=0;
-  canvas.onmousedown=e=>{state.isDrawing=true;const rect=canvas.getBoundingClientRect();lastX=(e.clientX-rect.left)*(canvas.width/rect.width);lastY=(e.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY)};
-  canvas.onmousemove=e=>{if(!state.isDrawing)return;const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);const y=(e.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
+  const cursor=document.createElement('div');
+  cursor.className='draw-cursor';
+  cursor.style.cssText='position:absolute;pointer-events:none;border-radius:50%;border:2px solid #22c55e;opacity:0.8;transform:translate(-50%,-50%);display:none;';
+  canvas.parentElement.appendChild(cursor);
+  const updateCursor=(e)=>{
+    const rect=canvas.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    cursor.style.left=x+'px';
+    cursor.style.top=y+'px';
+    cursor.style.width=state.drawSize+'px';
+    cursor.style.height=state.drawSize+'px';
+    cursor.style.background=state.isEraser?'rgba(255,255,255,0.5)':state.drawColor+'40';
+    cursor.style.borderColor=state.isEraser?'#ec4899':'#22c55e';
+  };
+  canvas.onmouseenter=()=>{cursor.style.display='block'};
+  canvas.onmouseleave=()=>{cursor.style.display='none';state.isDrawing=false;saveCanvas()};
+  canvas.onmousedown=e=>{state.isDrawing=true;const rect=canvas.getBoundingClientRect();lastX=(e.clientX-rect.left)*(canvas.width/rect.width);lastY=(e.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY);updateCursor(e)};
+  canvas.onmousemove=e=>{updateCursor(e);if(!state.isDrawing)return;const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);const y=(e.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
   canvas.onmouseup=()=>{state.isDrawing=false;saveCanvas()};
-  canvas.onmouseleave=()=>{state.isDrawing=false;saveCanvas()};
   canvas.ontouchstart=e=>{e.preventDefault();state.isDrawing=true;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];lastX=(touch.clientX-rect.left)*(canvas.width/rect.width);lastY=(touch.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY)};
   canvas.ontouchmove=e=>{e.preventDefault();if(!state.isDrawing||!e.touches[0])return;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];const x=(touch.clientX-rect.left)*(canvas.width/rect.width);const y=(touch.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
   canvas.ontouchend=()=>{state.isDrawing=false;saveCanvas()};
@@ -722,7 +757,8 @@ function handleAction(a,d){
     case 'close-aegyo':state.showAegyo=false;render();break;
     case 'flip-card':flipLiarCard();break;
     case 'start-discuss':playSound('discuss');const discussEnd=Date.now()+(state.room.discussTime||5)*60*1000;updateRoom({phase:'discuss',discussEndTime:discussEnd});startLiarTimer(discussEnd);break;
-    case 'start-vote':playSound('vote');updateRoom({phase:'vote',votes:{}});state.liarVote=null;break;
+    case 'start-vote':playSound('vote');updateRoom({phase:'vote',votes:{},skipVotes:{}});state.liarVote=null;break;
+    case 'skip-discuss':if(roomRef)roomRef.child('skipVotes/'+state.odPlyerId).set(true);playSound('click');break;
     case 'vote':playSound('vote');state.liarVote=d.target;if(roomRef)roomRef.child('votes/'+state.odPlyerId).set(d.target);render();break;
     case 'reveal-votes':revealVotes();break;
     case 'liar-guess':liarGuessWord();break;
@@ -859,15 +895,17 @@ function joinRoom(code){
   roomRef.once('value').then(snap=>{
     const val=snap.val();
     if(!val)return alert('방을 찾을 수 없습니다!');
-    if(val.status!=='waiting')return alert('이미 게임이 시작되었습니다!');
     const g=GAMES.find(x=>x.id===val.gameId);
     if(!g)return alert('알 수 없는 게임입니다!');
+    if(val.status!=='waiting'&&g.id==='jurumarble')return alert('주루마블은 중간참여가 불가능합니다!');
     const cnt=Object.keys(val.players||{}).length;
     if(cnt>=g.max)return alert('방이 가득 찼습니다!');
     state.game=g;
+    const isLateJoin=val.status==='playing';
     roomRef.child('players/'+state.odPlyerId).set({
       id:state.odPlyerId,name:state.playerName,order:cnt,position:0,islandTurn:0,finished:false,finishOrder:0
     }).then(()=>{
+      if(isLateJoin)state.screen='game';
       subscribeRoom();
       playSound('join');
     }).catch(err=>{
@@ -916,6 +954,7 @@ function subscribeRoom(){
 
 function leaveRoom(){
   if(!roomRef)return;
+  clearAllTimers();
   const isHost=state.room?.hostId===state.odPlyerId;
   if(isHost){
     roomRef.remove();
@@ -1096,7 +1135,7 @@ function rollDice(){
         state.hasIslandSkip=false;
         showMission=false;
       }else{
-        finalPos=18;
+        finalPos=8;
         roomRef.child('players/'+state.odPlyerId+'/islandTurn').set(1);
       }
     }else if(tile.type==='bonus'){
@@ -1287,30 +1326,43 @@ function formatTime(seconds){
 let gameTimer=null;
 let liarTimer=null;
 let drawTimer=null;
+let lastRenderTime=0;
+
+function clearAllTimers(){
+  if(liarTimer){clearInterval(liarTimer);liarTimer=null}
+  if(drawTimer){clearInterval(drawTimer);drawTimer=null}
+  if(gameTimer){clearInterval(gameTimer);gameTimer=null}
+}
+
+function throttledRender(){
+  const now=Date.now();
+  if(now-lastRenderTime>500){
+    lastRenderTime=now;
+    render();
+  }
+}
 
 function startLiarTimer(endTime){
   if(liarTimer)clearInterval(liarTimer);
   liarTimer=setInterval(()=>{
-    const now=Date.now();
-    const remaining=Math.max(0,Math.floor((endTime-now)/1000));
+    const remaining=Math.max(0,Math.floor((endTime-Date.now())/1000));
     if(remaining<=0){
       clearInterval(liarTimer);
       liarTimer=null;
     }
-    render();
+    throttledRender();
   },1000);
 }
 
 function startDrawTimer(endTime){
   if(drawTimer)clearInterval(drawTimer);
   drawTimer=setInterval(()=>{
-    const now=Date.now();
-    const remaining=Math.max(0,Math.floor((endTime-now)/1000));
+    const remaining=Math.max(0,Math.floor((endTime-Date.now())/1000));
     if(remaining<=0){
       clearInterval(drawTimer);
       drawTimer=null;
     }
-    render();
+    throttledRender();
   },1000);
 }
 
