@@ -370,17 +370,19 @@ function checkMaintenance(){
 }
 
 function render(){
-  if(state.maintenance&&!state.showMaintForm&&!state.showAdmin){
-    document.getElementById('app').innerHTML=renderMaintenanceScreen();
-    bindEvents();
-    return;
-  }
-  let html='';
-  if(state.screen==='home')html=renderHome();
-  else if(state.screen==='lobby')html=renderLobby();
-  else if(state.screen==='roulette')html=renderRoulette();
-  else if(state.screen==='game')html=renderGame();
-  document.getElementById('app').innerHTML=html;
+  try{
+    if(state.maintenance&&!state.showMaintForm&&!state.showAdmin){
+      document.getElementById('app').innerHTML=renderMaintenanceScreen();
+      bindEvents();
+      return;
+    }
+    let html='';
+    if(state.screen==='home')html=renderHome();
+    else if(state.screen==='lobby')html=renderLobby();
+    else if(state.screen==='roulette')html=renderRoulette();
+    else if(state.screen==='game')html=renderGame();
+    document.getElementById('app').innerHTML=html;
+  }catch(e){console.error('Render error:',e)}
   bindEvents();
 }
 
@@ -504,8 +506,12 @@ function renderTruthGame(){
 }
 
 function renderJurumarble(){
-  const room=state.room,players=Object.values(room.players).sort((a,b)=>a.order-b.order);
-  const curr=players[room.turn%players.length];
+  const room=state.room;
+  if(!room||!room.players)return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">로딩중...</p></div>';
+  const players=Object.values(room.players).sort((a,b)=>a.order-b.order);
+  if(players.length===0)return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">플레이어 없음</p></div>';
+  const turnIdx=(room.turn||0)%players.length;
+  const curr=players[turnIdx];
   const isMyTurn=curr?.id===state.odPlyerId;
   const isHost=room.hostId===state.odPlyerId;
   const sz=70,gap=2,side=8,bsz=(side+1)*(sz+gap)+20;
@@ -674,23 +680,25 @@ function renderLiarResult(room,players,isHost){
 }
 
 function bindEvents(){
-  document.querySelectorAll('[data-action]').forEach(el=>{
-    el.onclick=e=>{e.stopPropagation();handleAction(el.dataset.action,el.dataset)}
-  });
-  document.querySelectorAll('[data-slot]').forEach(el=>{
-    el.oninput=e=>{const idx=parseInt(el.dataset.slot);if(!isNaN(idx)){state.rouletteSlots[idx]=e.target.value;const svg=document.getElementById('roulette-wheel');if(svg)updateRouletteWheel()}}
-  });
-  const guessInput=document.getElementById('liar-guess');
-  if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value;
-  const chatInput=document.getElementById('chat-input');
-  if(chatInput){chatInput.onkeydown=e=>{if(e.key==='Enter')sendChat()};state.chatMsg='';chatInput.oninput=e=>state.chatMsg=e.target.value}
-  const chatBox=document.getElementById('chat-box');
-  if(chatBox)chatBox.scrollTop=chatBox.scrollHeight;
-  const drawSizeInput=document.getElementById('draw-size');
-  if(drawSizeInput)drawSizeInput.oninput=e=>state.drawSize=parseInt(e.target.value);
-  const drawGuessInput=document.getElementById('draw-guess');
-  if(drawGuessInput){drawGuessInput.oninput=e=>{state.drawGuess=e.target.value;checkMacro()};drawGuessInput.onkeydown=e=>{if(e.key==='Enter')submitDrawGuess()}}
-  initDrawCanvas();
+  try{
+    document.querySelectorAll('[data-action]').forEach(el=>{
+      el.onclick=e=>{e.stopPropagation();handleAction(el.dataset.action,el.dataset)}
+    });
+    document.querySelectorAll('[data-slot]').forEach(el=>{
+      el.oninput=e=>{const idx=parseInt(el.dataset.slot);if(!isNaN(idx)){state.rouletteSlots[idx]=e.target.value;const svg=document.getElementById('roulette-wheel');if(svg)updateRouletteWheel()}}
+    });
+    const guessInput=document.getElementById('liar-guess');
+    if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value;
+    const chatInput=document.getElementById('chat-input');
+    if(chatInput){chatInput.onkeydown=e=>{if(e.key==='Enter')sendChat()};state.chatMsg='';chatInput.oninput=e=>state.chatMsg=e.target.value}
+    const chatBox=document.getElementById('chat-box');
+    if(chatBox)chatBox.scrollTop=chatBox.scrollHeight;
+    const drawSizeInput=document.getElementById('draw-size');
+    if(drawSizeInput)drawSizeInput.oninput=e=>state.drawSize=parseInt(e.target.value);
+    const drawGuessInput=document.getElementById('draw-guess');
+    if(drawGuessInput){drawGuessInput.oninput=e=>{state.drawGuess=e.target.value;checkMacro()};drawGuessInput.onkeydown=e=>{if(e.key==='Enter')submitDrawGuess()}}
+    initDrawCanvas();
+  }catch(e){console.error('BindEvents error:',e)}
 }
 
 function checkMacro(){
