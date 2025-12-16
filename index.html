@@ -342,7 +342,7 @@ const RANDOM_GAMES=["훈민정음!","딸기게임!","초성퀴즈!","업다운!"
 const PLAYER_COLORS=['#EAB308','#3B82F6','#22C55E','#EF4444','#A855F7','#F97316','#06B6D4','#EC4899','#84CC16','#F43F5E','#8B5CF6','#14B8A6'];
 const ROULETTE_COLORS=['#c53030','#c05621','#b7791f','#276749','#0d9488','#2b6cb0','#6b46c1','#b83280','#c53030','#5a7a23','#0891b2','#7c3aed'];
 
-let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,bgMusicVolume:50,bgMusicMuted:false,bgMusicUrl:'https://youtu.be/--D3PU0KFUI?si=_KvXHWggs4Ofn_0e'};
+let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,};
 let roomRef=null,maintRef=null,canvasCtx=null,bombInterval=null,ytPlayer=null;
 
 function getValidSlots(){return state.rouletteSlots.filter(s=>s&&s.trim().length>0)}
@@ -374,62 +374,6 @@ function checkMaintenance(){
     state.maintenance=val&&val.active?val:null;
     render();
   });
-}
-
-function onYouTubeIframeAPIReady(){
-  console.log('[DEBUG] YouTube API ready');
-}
-
-function getYouTubeVideoId(url){
-  const match=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-  return match?match[1]:null;
-}
-
-function initYouTubePlayer(){
-  if(ytPlayer)return;
-  const videoId=getYouTubeVideoId(state.bgMusicUrl);
-  if(!videoId)return;
-  console.log('[DEBUG] Initializing YouTube player with video:',videoId);
-  ytPlayer=new YT.Player('yt-player',{
-    height:'0',width:'0',
-    videoId:videoId,
-    playerVars:{autoplay:1,loop:1,playlist:videoId,controls:0},
-    events:{
-      onReady:e=>{
-        console.log('[DEBUG] YouTube player ready');
-        const vol=state.bgMusicMuted?0:state.bgMusicVolume;
-        e.target.setVolume(vol);
-        if(state.screen==='lobby')e.target.playVideo();
-      },
-      onStateChange:e=>{
-        if(e.data===YT.PlayerState.ENDED)e.target.playVideo();
-      }
-    }
-  });
-}
-
-function updateBgMusicState(){
-  if(!ytPlayer||!ytPlayer.setVolume)return;
-  const vol=state.bgMusicMuted?0:state.bgMusicVolume;
-  ytPlayer.setVolume(vol);
-  if(state.screen==='lobby'){
-    try{ytPlayer.playVideo()}catch(e){}
-  }else{
-    try{ytPlayer.pauseVideo()}catch(e){}
-  }
-}
-
-function toggleBgMute(){
-  state.bgMusicMuted=!state.bgMusicMuted;
-  localStorage.setItem('bgMusicMuted',state.bgMusicMuted);
-  updateBgMusicState();
-  render();
-}
-
-function setBgVolume(vol){
-  state.bgMusicVolume=Math.max(0,Math.min(100,vol));
-  localStorage.setItem('bgMusicVolume',state.bgMusicVolume);
-  updateBgMusicState();
 }
 
 function render(){
@@ -510,12 +454,6 @@ function renderChatPanel(theme){
   const cardClass=theme==='liar'?'card-liar':theme==='truth'?'card-truth':theme==='draw'?'card-draw':'card-wood';
   const inputClass=theme==='liar'?'input-liar':theme==='truth'?'input-truth':theme==='draw'?'input-draw':'input-beer';
   return '<div class="chat-panel '+(state.showChat?'':'hidden')+'"><div class="'+cardClass+' rounded-2xl p-4 h-full flex flex-col"><div class="text-white/80 font-bold text-sm mb-2">💬 채팅</div><div id="chat-box" class="flex-1 overflow-y-auto space-y-2 mb-2 min-h-[200px] max-h-[250px]">'+chats.map(c=>{const p=Object.values(players).find(x=>x.id===c.pid);const pIdx=Object.values(players).sort((a,b)=>a.order-b.order).findIndex(x=>x.id===c.pid);return'<div class="text-sm"><span class="font-bold" style="color:'+PLAYER_COLORS[pIdx>=0?pIdx:0]+'">'+(p?.name||'?')+'</span><span class="text-white/80 ml-1">'+c.msg+'</span></div>'}).join('')+'</div><div class="flex gap-2"><input type="text" id="chat-input" maxlength="100" placeholder="메시지..." class="'+inputClass+' flex-1 px-3 py-2 rounded-lg text-sm"><button data-action="send-chat" class="bg-white/20 text-white px-3 py-2 rounded-lg text-sm hover:bg-white/30">전송</button></div></div></div>';
-}
-
-function renderMusicControl(){
-  const vol=state.bgMusicVolume;
-  const muted=state.bgMusicMuted;
-  return '<div id="yt-player" style="position:absolute;left:-9999px;"></div><div class="music-control" style="position:fixed;bottom:20px;left:20px;z-index:50;background:rgba(0,0,0,0.8);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);"><button data-action="toggle-bg-mute" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all" style="font-size:20px">'+(muted?'🔇':'🔊')+'</button><div class="flex items-center gap-2"><span class="text-white/70 text-xs">🎵</span><input type="range" data-action="set-bg-volume" id="bg-volume-slider" min="0" max="100" value="'+vol+'" class="volume-slider" style="width:100px;height:4px;border-radius:2px;background:linear-gradient(to right,#22c55e 0%,#22c55e '+vol+'%,rgba(255,255,255,0.2) '+vol+'%,rgba(255,255,255,0.2) 100%);outline:none;-webkit-appearance:none;appearance:none;cursor:pointer"><span class="text-white/70 text-xs font-bold" style="min-width:35px">'+vol+'%</span></div></div>';
 }
 
 function renderLobby(){
@@ -1595,13 +1533,13 @@ function updateLiarTimer(endTime){
   const timeStr=minutes+':'+(seconds<10?'0':'')+seconds;
   const progress=(remaining/(state.room?.discussTime*60||300))*100;
   
-  const timeEl=document.getElementById('liar-timer-text');
-  const barEl=document.getElementById('liar-timer-bar');
-  if(timeEl){
-    timeEl.textContent=timeStr;
-    timeEl.className='text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white');
+  const timerTextEl=document.querySelector('.timer-text');
+  const timerBarEl=document.querySelector('.timer-bar');
+  if(timerTextEl){
+    timerTextEl.textContent=timeStr;
+    timerTextEl.className='text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white');
   }
-  if(barEl)barEl.style.width=progress+'%';
+  if(timerBarEl)timerBarEl.style.width=progress+'%';
 }
 
 function updateDrawTimer(endTime){
@@ -1611,13 +1549,16 @@ function updateDrawTimer(endTime){
   const timeStr=minutes+':'+(seconds<10?'0':'')+seconds;
   const progress=(remaining/300)*100;
   
-  const timeEl=document.getElementById('draw-timer-text');
-  const barEl=document.getElementById('draw-timer-bar');
-  if(timeEl){
-    timeEl.textContent=timeStr;
-    timeEl.className='text-3xl font-black '+(remaining<=30?'text-red-500 animate-pulse':'text-green-400');
-  }
-  if(barEl)barEl.style.width=progress+'%';
+  const timeEls=document.querySelectorAll('.text-2xl.font-bold');
+  timeEls.forEach(el=>{
+    if(el.textContent.includes(':')){
+      el.textContent='⏱️'+timeStr;
+      el.className='text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white');
+    }
+  });
+  
+  const barEls=document.querySelectorAll('.h-2.bg-black\\/50 .h-full');
+  barEls.forEach(el=>el.style.width=progress+'%');
 }
 
 function startLiarTimer(endTime){
