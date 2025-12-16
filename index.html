@@ -213,8 +213,29 @@ let db=null,isFirebaseReady=false;
 try{firebase.initializeApp(firebaseConfig);db=firebase.database();isFirebaseReady=true}catch(e){console.log('Firebase 초기화 대기 중...')}
 
 const ADMIN_ID='gtv22700',ADMIN_PW='gtvtyuio6674';
-const SOUNDS={click:'data:audio/wav;base64,UklGRl4AAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YToAAAAPD3J/f39ycg8P',dice:'data:audio/wav;base64,UklGRoAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwAAABwcHB/f39/f3BwUFBQQEBAQEBQUHBwf39/f3BwUFBQYGBwcH9/f39wcFBQUEBAUFBwcH9/f39wcA==',mission:'data:audio/wav;base64,UklGRpAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YWwAAABQUGBwf39/f3BwYFBQQEBAUGBwf39/cGBQQEBQYHB/f39wYFBAQFBgcH9/f3BgUEBAUGBwf39/cGBQQEBQYHB/f39wYFBAQA==',win:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',golden:'data:audio/wav;base64,UklGRuAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YbwAAAAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/cA==',join:'data:audio/wav;base64,UklGRnAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YUwAAABQUGBwf39/cGBQUFBgcH9/f3BgUFBQYHB/f39wYFBQUGBwf39/cGBQUFBgcH9/f3BgUA==',success:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAAAwQFBgcH9/f39wcGBQQDAwQFBgf39/f3BgUEBAUGBwf39/cGBQQFBgcH9/f3BgUEBQYHB/f39wYFBAUGBwf39/cGBQQA==',kick:'data:audio/wav;base64,UklGRnQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVAAAAB/f29fT0BAQFBfb39/f29fT0BAT19vf39vX09AQE9fb39/b19PQEBPXw==',flip:'data:audio/wav;base64,UklGRmQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YUAAAABAQFBYYG9/f39vYFhQQEBIUFhob39/b2hYUEBASFBYaG9/f29oWFBASA==',discuss:'data:audio/wav;base64,UklGRoQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YWAAAABAUGBwf39/cGBQQEBQYHB/f39wYFBAQFBgcH9/f3BgUEBAUGBwf39/cGBQQEBQYHB/f39wYFBA',vote:'data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTgAAABQYHB/f39wYFBQYHB/f39wYFBQYHB/f39wYFBQYHB/f39wYFBA',reveal:'data:audio/wav;base64,UklGRqQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YYAAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',spin:'data:audio/wav;base64,UklGRrgAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZQAAAAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUA==',escape:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',caught:'data:audio/wav;base64,UklGRnQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVAAAAB/f29fT0BAQFBfb39/f29fT0BAT19vf39vX09AQE9fb39/b19PQEBPX29/f29fT0BAQE9fb39/b19PQEA=',arrow:'data:audio/wav;base64,UklGRrgAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZQAAAAgMEBQYHB4f39/f3h4cGhgUEAwICAwQFBgcHh/f394eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCA=',chat:'data:audio/wav;base64,UklGRlgAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTQAAAA4QEhQWGBob3B/f39wcGhgWFBIQDg4QEhQYGhwf39wcGBoYFhQSD8=',wrong:'data:audio/wav;base64,UklGRmQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YUAAAAB/f29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BA',bomb:'data:audio/wav;base64,UklGRsQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YaAAAAB/f39/f39/f39vb29vX19fX09PT09AQEBAMDAwMCAgICAQEBAQEBAQECAgICAwMDBAQEBQUFBgYGBwcHB/f39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEA=='};
-function playSound(type){try{new Audio(SOUNDS[type]||SOUNDS.click).play()}catch(e){}}
+const SOUNDS={
+  click:'data:audio/wav;base64,UklGRpYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXIAAABQYHBwdnd4eHl5eXl4d3Z1dHJwbmtpZmRhX1xaWFZUUlBOTEpIRkRCQD48Ojg2NDIwLiwqKCYkIiAeHBsZGBcWFRQTEhEQDw4NDAsKCQgHBgUEAwIBAA==',
+  dice:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAABQYHB/cGBQQFBgcH9wYFBAUGBwf3BgUEBQYHB/cGBQQFBgcH9wYFBAUGBwf3BgUEBwf39/f39wcFBQYHB/f39wcGBQUGBwf39/cHBgUFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQHB/f39/f3BwUFBgcH9/f3BwYFBQYHB/f39wcGBQUGBwf39/cHBgUFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBA',
+  mission:'data:audio/wav;base64,UklGRoACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwCAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAgMEBQYHB/f39/cHBgUEAwIDBQYHB/f39/f3BwYFBAMCAwUGBwf39/f39wcGBQQDAgMFBgcH9/f39/cHBgUEAwIDBQYHB/f39/f3BwYFBAMCAwUGBwf39/f39wcGBQQDA=',
+  win:'data:audio/wav;base64,UklGRkADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YRwDAAAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDA=',
+  golden:'data:audio/wav;base64,UklGRoADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwDAAAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBA=',
+  join:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
+  success:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAgMEBQYHB4f39/f3h4cGhgUEAwICAwQFBgcHh/f394eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICA=',
+  kick:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAB/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/',
+  flip:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAABAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBA',
+  discuss:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
+  vote:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAABQYHB/f39/cGBQQFBgcH9/f39wYFBAUGBwf39/f3BgUEBQYHB/f39/cGBQQFBgcH9/f39wYFBAUGBwf39/f3BgUEBQYHB/f39/cGBQQA==',
+  reveal:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
+  spin:'data:audio/wav;base64,UklGRoADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwDAAAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQA==',
+  escape:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCA=',
+  caught:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAB/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/',
+  arrow:'data:audio/wav;base64,UklGRsADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwDAAAgMEBQYHB4f39/f3h4cGhgUEAwICAwQFBgcHh/f394eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICA=',
+  chat:'data:audio/wav;base64,UklGRoAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwAAAA4QEhQWGBob3B/f39wcGhgWFBIQDg4QEhQYGhwf39wcGBoYFhQSDg4QEhQWGBob3B/f39wcGhgWFBIQDg=',
+  wrong:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAAB/f29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BA',
+  bomb:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAB/f39/f39/f39vb29vX19fX09PT09AQEBAMDAwMCAgICAQEBAQEBAQECAgICAwMDBAQEBQUFBgYGBwcHB/f39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f38=',
+  final:'data:audio/wav;base64,UklGRoAEAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwEAAAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCA=='
+};
+function playSound(type){try{const a=new Audio(SOUNDS[type]||SOUNDS.click);a.volume=0.5;a.play()}catch(e){}}
 
 const UPDATE_LOGS=[
   {version:'v1.7.0',date:'2025년 12월 11일',changes:['🎨 그림게임 대폭 개선 (지우개, 26색 팔레트, 라운드X)','💣 폭탄 돌리기 10초 카운트다운','🏝️ 무인도 위치 변경 (7→6) 및 탈출 설명 추가','🔑 황금열쇠 전면 개편 (16종)','🔄 역할교체 플레이어 선택 기능','🤖 매크로 감지 자동 추방','🛠️ 점검 중 관리자 접근 가능','🎮 게임별 화려한 배경 추가']},
@@ -263,8 +284,8 @@ const TILES=[
   {id:3,name:"3.6.9",type:"game",emoji:"👏",desc:"369 게임!"},
   {id:4,name:"초성퀴즈",type:"game",emoji:"🔤",desc:"초성퀴즈!"},
   {id:5,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:6,name:"무인도행",type:"toIsland",emoji:"🚢",desc:"무인도로 직행!"},
-  {id:7,name:"인생샷",type:"performance",emoji:"📸",desc:"옆 사람 인생샷 찍어주기!"},
+  {id:6,name:"인생샷",type:"performance",emoji:"📸",desc:"옆 사람 인생샷 찍어주기!"},
+  {id:7,name:"당연하지",type:"game",emoji:"😤",desc:"질문 받고 당연하지 못하면 한잔!"},
   {id:8,name:"무인도",type:"island",emoji:"🏝️",desc:"1,2가 나와야 탈출!"},
   {id:9,name:"눈치게임",type:"game",emoji:"👀",desc:"눈치게임!"},
   {id:10,name:"뒤로 2칸",type:"move",emoji:"⬅️",desc:"두 칸 뒤로!"},
@@ -272,7 +293,7 @@ const TILES=[
   {id:12,name:"쉬어가기",type:"free",emoji:"😴",desc:"쉬어가세요~"},
   {id:13,name:"칭찬타임",type:"drink",emoji:"💕",desc:"옆 사람 칭찬!"},
   {id:14,name:"성대모사",type:"performance",emoji:"🎭",desc:"성대모사!"},
-  {id:15,name:"업다운",type:"game",emoji:"🔢",desc:"숫자 업다운!"},
+  {id:15,name:"무인도행",type:"toIsland",emoji:"🚢",desc:"무인도로 직행!"},
   {id:16,name:"이상형",type:"drink",emoji:"💘",desc:"이상형 타입 고백!"},
   {id:17,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
   {id:18,name:"솔직토크",type:"drink",emoji:"🤫",desc:"비밀 하나 공개!"},
@@ -280,14 +301,14 @@ const TILES=[
   {id:20,name:"주사위 더",type:"bonus",emoji:"🎲",desc:"한 번 더!"},
   {id:21,name:"밸런스게임",type:"drink",emoji:"⚖️",desc:"밸런스 게임!"},
   {id:22,name:"아바타샷",type:"performance",emoji:"🎮",desc:"브챗 아바타 맥심 찍기 or 마시기!"},
-  {id:23,name:"밈 챌린지",type:"performance",emoji:"🤪",desc:"유행하는 밈 따라하기!"},
-  {id:24,name:"몸으로말해요",type:"game",emoji:"🙆",desc:"제스처로 단어 설명하기!"},
+  {id:23,name:"브챗댄스",type:"performance",emoji:"💃",desc:"브챗 춤 영상! (PC/미이용시 애교대사)"},
+  {id:24,name:"닉변게임",type:"game",emoji:"📝",desc:"다음차례가 닉네임 지정! (1주일)"},
   {id:25,name:"황금열쇠",type:"special",emoji:"🔑",desc:"황금열쇠!"},
-  {id:26,name:"최애자랑",type:"drink",emoji:"⭐",desc:"최애 캐릭터/아이돌 자랑!"},
+  {id:26,name:"업다운",type:"game",emoji:"🔢",desc:"숫자 업다운!"},
   {id:27,name:"고백연기",type:"performance",emoji:"💌",desc:"고백연기!"},
   {id:28,name:"랜덤게임",type:"game",emoji:"🎰",desc:"랜덤 게임!"},
   {id:29,name:"뒤로 3칸",type:"move",emoji:"⏪",desc:"세 칸 뒤로!"},
-  {id:30,name:"별명짓기",type:"performance",emoji:"😎",desc:"별명 지어주기! (1주일 사용)"},
+  {id:30,name:"별명짓기",type:"performance",emoji:"😎",desc:"다음차례가 별명 지정! (1주일)"},
   {id:31,name:"처음으로",type:"move",emoji:"🔙",desc:"출발점으로!"}
 ];
 
@@ -354,12 +375,15 @@ function renderMaintenanceScreen(){
   return '<div class="maintenance-screen"><div class="admin-btn" data-action="show-admin"></div><div class="text-center animate-fade-scale"><div class="text-8xl mb-6">'+emoji+'</div><h1 class="title-font text-5xl text-white mb-4 animate-neon">'+typeText+'</h1><div class="card-dark rounded-2xl p-6 max-w-lg mx-4"><p class="text-white/80 text-lg mb-4"><span class="text-yellow-400 font-bold">'+m.reason+'</span>(으)로 인해<br/><span class="text-red-400 font-bold">'+typeText+'</span> 중입니다.</p><div class="bg-black/30 rounded-xl p-4"><p class="text-white font-bold">'+m.dateFrom+' ~ '+m.dateTo+'</p><p class="text-cyan-400 font-bold text-lg">'+m.timeFrom+' ~ '+m.timeTo+'</p></div><p class="text-white/50 text-sm mt-4">잠시 후 다시 접속해주세요!</p></div></div></div>'+(state.showAdmin?renderAdminModal():'')+(state.showMaintForm?renderMaintFormModal():'');
 }
 
+let cachedStars=null;
 function renderStars(){
+  if(cachedStars)return cachedStars;
   let stars='';
   for(let i=0;i<40;i++){
     const size=1+Math.random()*3;
     stars+='<div class="star animate-twinkle" style="left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+size+'px;height:'+size+'px;animation-delay:'+Math.random()*3+'s;"></div>';
   }
+  cachedStars=stars;
   return stars;
 }
 
@@ -474,7 +498,7 @@ function renderJurumarble(){
   const myPlayer=players.find(p=>p.id===state.odPlyerId);
   const isTrappedOnIsland=myPlayer&&myPlayer.islandTurn>0;
   
-  return '<div class="min-h-screen bg-beer p-2 overflow-auto relative">'+renderStars()+'<div class="absolute top-10 right-10 text-8xl opacity-10">🍺</div><div class="max-w-5xl mx-auto"><div class="flex justify-between items-center mb-2 flex-wrap gap-2"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-xl sm:text-2xl text-amber-400">🍺 주루마블 🍺</h1><div class="flex items-center gap-2"><span class="text-amber-200/50 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="card-wood rounded-2xl p-2 mb-3"><div class="flex flex-wrap gap-1 justify-center items-center mb-2">'+players.map((p,i)=>'<div class="flex items-center gap-1 px-2 py-1 rounded-lg '+(curr?.id===p.id?'bg-amber-500/30 ring-2 ring-amber-400':p.finished?'bg-green-500/20':'bg-black/20')+'"><div class="w-5 h-5 rounded-full" style="background:'+PLAYER_COLORS[i]+'"></div><span class="text-white text-xs">'+p.name+(p.finished?' 🏆':'')+(p.islandTurn>0?' 🏝️':'')+'</span></div>').join('')+'</div><p class="text-amber-200 text-center text-sm">'+(gameEnded?'🏆 게임 종료!':curr?.finished?'다음 차례...':'🎲 '+curr?.name+'님 차례')+'</p></div><div class="flex flex-col lg:flex-row gap-3"><div class="flex-1 overflow-x-auto"><div class="relative mx-auto" style="width:'+bsz+'px;height:'+bsz+'px;min-width:'+bsz+'px;">'+TILES.map(t=>{const pos=getTilePos(t.id);const l=pos.x*(sz+gap)+10,tp=pos.y*(sz+gap)+10;return'<div class="absolute rounded-lg tile-'+t.type+' flex flex-col items-center justify-center text-center p-1 border-2 border-black/30 shadow-lg" style="width:'+sz+'px;height:'+sz+'px;left:'+l+'px;top:'+tp+'px;"><span class="text-lg leading-none">'+t.emoji+'</span><span class="text-white text-[8px] font-bold leading-tight">'+t.name+'</span></div>'}).join('')+players.map((p,i)=>{if(p.finished)return'';const pos=getTilePos(p.position);const off=getOffset(i);const pl=pos.x*(sz+gap)+10+sz/2-12+off[0],pt=pos.y*(sz+gap)+10+sz/2-12+off[1];return'<div class="absolute w-6 h-6 rounded-full player-token flex items-center justify-center text-white text-xs font-bold transition-all duration-500 '+(curr?.id===p.id?'ring-2 ring-white':'')+'" style="left:'+pl+'px;top:'+pt+'px;background:'+PLAYER_COLORS[i]+';z-index:'+(10+i)+';">'+p.name[0]+'</div>'}).join('')+'</div></div><div class="lg:w-64 space-y-3"><div class="card-wood rounded-xl p-3"><div class="flex items-center justify-center gap-3 mb-3"><svg viewBox="0 0 100 100" class="w-16 h-16 '+(room.rolling?'animate-dice-roll':'')+'"><rect x="5" y="5" width="90" height="90" rx="15" fill="#FFF8E7" stroke="#8B5A14" stroke-width="3"/>'+diceDots(state.localDice)+'</svg></div><button data-action="roll-dice" '+(isMyTurn&&!room.rolling&&!curr?.finished?'':'disabled')+' class="btn-beer w-full text-white font-bold py-3 rounded-xl text-lg '+(isMyTurn&&!room.rolling&&!curr?.finished?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(room.rolling?'🎲 굴리는 중...':isTrappedOnIsland?'🏝️ 탈출 도전!':'🎲 주사위 굴리기')+'</button></div>'+(state.hasIslandSkip||state.hasJoker?'<div class="card-wood rounded-xl p-3"><p class="text-amber-300 text-sm mb-1">🎴 보유 카드</p>'+(state.hasIslandSkip?'<span class="inline-block bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded text-xs mr-1">👻 무인도 까방권</span>':'')+(state.hasJoker?'<span class="inline-block bg-purple-500/30 text-purple-300 px-2 py-1 rounded text-xs">🃏 조커</span>':'')+'</div>':'')+'<button data-action="show-aegyo" class="btn-secondary w-full text-amber-300 py-2 rounded-xl text-sm hover:bg-white/10">💕 애교대사 보기</button></div></div></div>'+renderChatToggle()+renderChatPanel('beer')+(room.showMission?renderMissionModal():'')+(room.rescueVoting?renderRescueModal():'')+(state.showLeave?renderLeaveModal():'')+(state.showAegyo?renderAegyoModal():'')+(state.showManage?renderManageModal():'')+(state.showSwapSelect?renderSwapSelectModal():'')+(state.showBomb?renderBombModal():'')+(gameEnded?renderGameEndModal(players):'')+'</div>';
+  return '<div class="min-h-screen bg-beer p-2 overflow-auto relative">'+renderStars()+'<div class="absolute top-10 right-10 text-8xl opacity-10">🍺</div><div class="max-w-5xl mx-auto"><div class="flex justify-between items-center mb-2 flex-wrap gap-2"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-xl sm:text-2xl text-amber-400">🍺 주루마블 🍺</h1><div class="flex items-center gap-2"><span class="text-amber-200/50 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="card-wood rounded-2xl p-2 mb-3"><div class="flex flex-wrap gap-1 justify-center items-center mb-2">'+players.map((p,i)=>'<div class="flex items-center gap-1 px-2 py-1 rounded-lg '+(curr?.id===p.id?'bg-amber-500/30 ring-2 ring-amber-400':p.finished?'bg-green-500/20':'bg-black/20')+'"><div class="w-5 h-5 rounded-full" style="background:'+PLAYER_COLORS[i]+'"></div><span class="text-white text-xs">'+p.name+(p.finished?' 🏆':'')+(p.islandTurn>0?' 🏝️':'')+'</span></div>').join('')+'</div><p class="text-amber-200 text-center text-sm">'+(gameEnded?'🏆 게임 종료!':curr?.finished?'다음 차례...':'🎲 '+curr?.name+'님 차례')+'</p></div><div class="flex flex-col lg:flex-row gap-3"><div class="flex-1 overflow-x-auto"><div class="relative mx-auto" style="width:'+bsz+'px;height:'+bsz+'px;min-width:'+bsz+'px;">'+TILES.map(t=>{const pos=getTilePos(t.id);const l=pos.x*(sz+gap)+10,tp=pos.y*(sz+gap)+10;return'<div class="absolute rounded-lg tile-'+t.type+' flex flex-col items-center justify-center text-center p-1 border-2 border-black/30 shadow-lg" style="width:'+sz+'px;height:'+sz+'px;left:'+l+'px;top:'+tp+'px;"><span class="text-lg leading-none">'+t.emoji+'</span><span class="text-white text-[8px] font-bold leading-tight">'+t.name+'</span></div>'}).join('')+players.map((p,i)=>{if(p.finished)return'';const pos=getTilePos(p.position);const off=getOffset(i);const pl=pos.x*(sz+gap)+10+sz/2-12+off[0],pt=pos.y*(sz+gap)+10+sz/2-12+off[1];return'<div class="absolute w-6 h-6 rounded-full player-token flex items-center justify-center text-white text-xs font-bold transition-all duration-500 '+(curr?.id===p.id?'ring-2 ring-white':'')+'" style="left:'+pl+'px;top:'+pt+'px;background:'+PLAYER_COLORS[i]+';z-index:'+(10+i)+';">'+p.name[0]+'</div>'}).join('')+'</div></div><div class="lg:w-64 space-y-3"><div class="card-wood rounded-xl p-3"><div class="flex items-center justify-center gap-3 mb-3"><svg viewBox="0 0 100 100" class="w-16 h-16 '+(room.rolling?'animate-dice-roll':'')+'"><rect x="5" y="5" width="90" height="90" rx="15" fill="#FFF8E7" stroke="#8B5A14" stroke-width="3"/>'+diceDots(state.localDice)+'</svg></div><button data-action="roll-dice" '+(isMyTurn&&!room.rolling&&!curr?.finished?'':'disabled')+' class="btn-beer w-full text-white font-bold py-3 rounded-xl text-lg '+(isMyTurn&&!room.rolling&&!curr?.finished?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(room.rolling?'🎲 굴리는 중...':isTrappedOnIsland?'🏝️ 탈출 도전!':'🎲 주사위 굴리기')+'</button></div>'+(state.hasIslandSkip||state.hasJoker?'<div class="card-wood rounded-xl p-3"><p class="text-amber-300 text-sm mb-1">🎴 보유 카드</p>'+(state.hasIslandSkip?'<span class="inline-block bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded text-xs mr-1">👻 무인도 까방권</span>':'')+(state.hasJoker?'<span class="inline-block bg-purple-500/30 text-purple-300 px-2 py-1 rounded text-xs">🃏 조커</span>':'')+'</div>':'')+'<button data-action="show-aegyo" class="btn-secondary w-full text-amber-300 py-2 rounded-xl text-sm hover:bg-white/10">💕 애교대사 보기</button></div></div></div>'+renderChatToggle()+renderChatPanel('beer')+(room.showMission?renderMissionModal():'')+(room.rescueVoting?renderRescueModal():'')+(state.showLeave?renderLeaveModal():'')+(state.showAegyo?renderAegyoModal():'')+(state.showManage?renderManageModal():'')+(state.showSwapSelect?renderSwapSelectModal():'')+(state.showBomb?renderBombModal():'')+(room.showFinalDrink?renderFinalDrinkModal(players,room.finalDrinkWinner):'')+(gameEnded?renderGameEndModal(players):'')+'</div>';
 }
 
 function renderDrawGame(){
@@ -512,6 +536,12 @@ function renderSwapSelectModal(){
 
 function renderBombModal(){
   return '<div class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"><div class="card-golden rounded-2xl p-6 max-w-sm w-full animate-bounce-in text-center '+(state.bombCountdown<=3&&state.bombCountdown>0?'animate-bomb-shake':'')+'"><div class="text-6xl mb-3">'+(state.bombCountdown<=0?'💥':'💣')+'</div><h3 class="title-font text-2xl text-amber-900 mb-2">'+(state.bombCountdown<=0?'펑!':'폭탄 돌리기!')+'</h3>'+(state.bombCountdown>0?'<p class="text-amber-800 mb-4">원하는 사람 이름 부르면서<br/>10초 안에 계속 돌리세요!</p><div class="text-6xl font-black text-red-600 animate-countdown mb-4" style="text-shadow:0 0 20px rgba(220,38,38,0.5)">'+state.bombCountdown+'</div>':'<p class="text-amber-800 text-lg mb-2">💥 폭발! 💥</p><p class="text-red-600 font-bold text-xl">걸리신 분은 술 한잔! 🍺</p>')+(state.bombCountdown<=0?'<button data-action="close-bomb" class="mt-4 bg-amber-700 text-white font-bold py-3 px-8 rounded-xl hover:bg-amber-800">확인</button>':'')+'</div></div>';
+}
+
+function renderFinalDrinkModal(players,winnerId){
+  const winner=players.find(p=>p.id===winnerId);
+  const losers=players.filter(p=>p.id!==winnerId);
+  return '<div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"><div class="card-golden rounded-3xl p-8 max-w-md w-full animate-bounce-in text-center"><div class="text-7xl mb-4 animate-float">🍻</div><h3 class="title-font text-4xl text-red-600 mb-4 animate-pulse">🎉 파이널 드링크! 🎉</h3><div class="bg-green-100 rounded-xl p-4 mb-4"><p class="text-green-800 text-lg">🏆 1등!</p><p class="text-green-900 font-black text-2xl">'+(winner?.name||'?')+'</p></div><div class="bg-red-100 rounded-xl p-4 mb-4"><p class="text-red-800 text-lg mb-2">🍺 나머지 전원 원샷!</p><div class="flex flex-wrap justify-center gap-2">'+losers.map(p=>'<span class="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm font-bold">'+p.name+'</span>').join('')+'</div></div><p class="text-amber-800 text-sm mb-4">※ 1회성 이벤트! 첫 도착자만 해당</p><button data-action="close-final-drink" class="bg-red-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-red-700 text-xl">🍺 원샷! 🍺</button></div></div>';
 }
 
 function renderGameEndModal(players){
@@ -793,6 +823,7 @@ function handleAction(a,d){
     case 'end-draw-round':endDrawRound();break;
     case 'back-to-lobby':backToLobby();break;
     case 'close-bomb':closeBomb();break;
+    case 'close-final-drink':if(roomRef)roomRef.update({showFinalDrink:false});break;
     case 'reroll-golden-key':rerollGoldenKey();break;
   }
 }
@@ -876,7 +907,8 @@ function createRoom(){
     phase:'role',flippedPlayers:{},chats:{},arrowTarget:null,finishCount:0,
     rescueVoting:false,rescueTarget:null,rescueVotes:{},
     drawPhase:'waiting',drawerId:null,drawWord:'',drawScores:{},guesses:{},canvasData:null,drawCorrect:false,
-    discussTime:5,liarCount:1,discussEndTime:null,drawEndTime:null,drawRoundEnded:false,correctOrder:[]
+    discussTime:5,liarCount:1,discussEndTime:null,drawEndTime:null,drawRoundEnded:false,correctOrder:[],
+    finalDrinkUsed:false
   };
   roomRef=db.ref('rooms/'+state.roomCode);
   roomRef.set(data).then(()=>{
@@ -1015,21 +1047,25 @@ function spinRoulette(){
   state.rouletteSpinning=true;
   state.rouletteResult=null;
   playSound('spin');
-  const spins=5+Math.floor(Math.random()*3);
-  const finalAngle=Math.random()*360;
-  const target=spins*360+finalAngle;
-  state.rouletteAngle=target;
   render();
   setTimeout(()=>{
-    const segAngle=360/valid.length;
-    const norm=(360-(target%360)+90)%360;
-    const idx=Math.floor(norm/segAngle)%valid.length;
-    state.rouletteResult=valid[idx];
-    state.rouletteResultColor=ROULETTE_COLORS[idx%ROULETTE_COLORS.length];
-    state.rouletteSpinning=false;
-    playSound('win');
-    render();
-  },4000);
+    const spins=5+Math.floor(Math.random()*3);
+    const finalAngle=Math.random()*360;
+    const target=spins*360+finalAngle;
+    state.rouletteAngle=target;
+    const wheel=document.getElementById('roulette-wheel');
+    if(wheel)wheel.style.transform='rotate('+target+'deg)';
+    setTimeout(()=>{
+      const segAngle=360/valid.length;
+      const norm=(360-(target%360)+90)%360;
+      const idx=Math.floor(norm/segAngle)%valid.length;
+      state.rouletteResult=valid[idx];
+      state.rouletteResultColor=ROULETTE_COLORS[idx%ROULETTE_COLORS.length];
+      state.rouletteSpinning=false;
+      playSound('win');
+      render();
+    },4000);
+  },50);
 }
 
 function spinArrow(){
@@ -1095,9 +1131,15 @@ function rollDice(){
     if(newPos>=32){
       newPos=32;
       const newFinishCount=(state.room.finishCount||0)+1;
+      const isFirstFinish=newFinishCount===1&&!state.room.finalDrinkUsed;
       roomRef.child('players/'+state.odPlyerId).update({position:newPos,finished:true,finishOrder:newFinishCount});
-      roomRef.update({rolling:false,diceValue:dice,turn:state.room.turn+1,showMission:false,finishCount:newFinishCount});
-      playSound('win');
+      if(isFirstFinish){
+        roomRef.update({rolling:false,diceValue:dice,turn:state.room.turn+1,showMission:false,finishCount:newFinishCount,finalDrinkUsed:true,showFinalDrink:true,finalDrinkWinner:state.odPlyerId});
+        playSound('final');
+      }else{
+        roomRef.update({rolling:false,diceValue:dice,turn:state.room.turn+1,showMission:false,finishCount:newFinishCount});
+        playSound('win');
+      }
       return;
     }
     
