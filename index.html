@@ -371,6 +371,7 @@ function checkMaintenance(){
 
 function render(){
   try{
+    console.log('[DEBUG] render called, screen:',state.screen);
     if(state.maintenance&&!state.showMaintForm&&!state.showAdmin){
       document.getElementById('app').innerHTML=renderMaintenanceScreen();
       bindEvents();
@@ -380,7 +381,10 @@ function render(){
     if(state.screen==='home')html=renderHome();
     else if(state.screen==='lobby')html=renderLobby();
     else if(state.screen==='roulette')html=renderRoulette();
-    else if(state.screen==='game')html=renderGame();
+    else if(state.screen==='game'){
+      console.log('[DEBUG] Rendering game, gameId:',state.game?.id);
+      html=renderGame();
+    }
     document.getElementById('app').innerHTML=html;
   }catch(e){console.error('Render error:',e)}
   bindEvents();
@@ -506,12 +510,21 @@ function renderTruthGame(){
 }
 
 function renderJurumarble(){
+  console.log('[DEBUG] renderJurumarble called');
   const room=state.room;
-  if(!room||!room.players)return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">로딩중...</p></div>';
+  if(!room||!room.players){
+    console.log('[DEBUG] No room or players');
+    return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">로딩중...</p></div>';
+  }
   const players=Object.values(room.players).sort((a,b)=>a.order-b.order);
-  if(players.length===0)return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">플레이어 없음</p></div>';
+  if(players.length===0){
+    console.log('[DEBUG] No players in room');
+    return'<div class="min-h-screen bg-beer flex items-center justify-center"><p class="text-white">플레이어 없음</p></div>';
+  }
+  console.log('[DEBUG] Players:',players.length,'Turn:',room.turn);
   const turnIdx=(room.turn||0)%players.length;
   const curr=players[turnIdx];
+  console.log('[DEBUG] Current player:',curr?.name,'showMission:',room.showMission);
   const isMyTurn=curr?.id===state.odPlyerId;
   const isHost=room.hostId===state.odPlyerId;
   const sz=70,gap=2,side=8,bsz=(side+1)*(sz+gap)+20;
@@ -681,8 +694,15 @@ function renderLiarResult(room,players,isHost){
 
 function bindEvents(){
   try{
-    document.querySelectorAll('[data-action]').forEach(el=>{
-      el.onclick=e=>{e.stopPropagation();handleAction(el.dataset.action,el.dataset)}
+    console.log('[DEBUG] bindEvents called');
+    const buttons=document.querySelectorAll('[data-action]');
+    console.log('[DEBUG] Found buttons:',buttons.length);
+    buttons.forEach(el=>{
+      el.onclick=e=>{
+        console.log('[DEBUG] Button clicked:',el.dataset.action);
+        e.stopPropagation();
+        handleAction(el.dataset.action,el.dataset);
+      }
     });
     document.querySelectorAll('[data-slot]').forEach(el=>{
       el.oninput=e=>{const idx=parseInt(el.dataset.slot);if(!isNaN(idx)){state.rouletteSlots[idx]=e.target.value;const svg=document.getElementById('roulette-wheel');if(svg)updateRouletteWheel()}}
@@ -698,6 +718,7 @@ function bindEvents(){
     const drawGuessInput=document.getElementById('draw-guess');
     if(drawGuessInput){drawGuessInput.oninput=e=>{state.drawGuess=e.target.value;checkMacro()};drawGuessInput.onkeydown=e=>{if(e.key==='Enter')submitDrawGuess()}}
     initDrawCanvas();
+    console.log('[DEBUG] bindEvents completed');
   }catch(e){console.error('BindEvents error:',e)}
 }
 
