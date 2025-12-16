@@ -213,29 +213,45 @@ let db=null,isFirebaseReady=false;
 try{firebase.initializeApp(firebaseConfig);db=firebase.database();isFirebaseReady=true}catch(e){console.log('Firebase 초기화 대기 중...')}
 
 const ADMIN_ID='gtv22700',ADMIN_PW='gtvtyuio6674';
-const SOUNDS={
-  click:'data:audio/wav;base64,UklGRpYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXIAAABQYHBwdnd4eHl5eXl4d3Z1dHJwbmtpZmRhX1xaWFZUUlBOTEpIRkRCQD48Ojg2NDIwLiwqKCYkIiAeHBsZGBcWFRQTEhEQDw4NDAsKCQgHBgUEAwIBAA==',
-  dice:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAABQYHB/cGBQQFBgcH9wYFBAUGBwf3BgUEBQYHB/cGBQQFBgcH9wYFBAUGBwf3BgUEBwf39/f39wcFBQYHB/f39wcGBQUGBwf39/cHBgUFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQHB/f39/f3BwUFBgcH9/f3BwYFBQYHB/f39wcGBQUGBwf39/cHBgUFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBAUGBwf39/cHBgUEBQYHB/f39wcGBQQFBgcH9/f3BwYFBA',
-  mission:'data:audio/wav;base64,UklGRoACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwCAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAgMEBQYHB/f39/cHBgUEAwIDBQYHB/f39/f3BwYFBAMCAwUGBwf39/f39wcGBQQDAgMFBgcH9/f39/cHBgUEAwIDBQYHB/f39/f3BwYFBAMCAwUGBwf39/f39wcGBQQDA=',
-  win:'data:audio/wav;base64,UklGRkADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YRwDAAAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDAYGCAwQFBgcH9/f39/cHBgUEAwGBggMEBQYHB/f39/f3BwYFBAMBgYIDBAUGBwf39/f39wcGBQQDA=',
-  golden:'data:audio/wav;base64,UklGRoADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwDAAAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQGCAwQFBgcH9/f39/cHBgUEAwGBA=',
-  join:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
-  success:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAgMEBQYHB4f39/f3h4cGhgUEAwICAwQFBgcHh/f394eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICA=',
-  kick:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAB/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/',
-  flip:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAABAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBAUGBwd39/f39/d3BgUEBA',
-  discuss:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
-  vote:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAABQYHB/f39/cGBQQFBgcH9/f39wYFBAUGBwf39/f3BgUEBQYHB/f39/cGBQQFBgcH9/f39wYFBAUGBwf39/f3BgUEBQYHB/f39/cGBQQA==',
-  reveal:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDAwQFBgcH9/f39wcGBQQDA=',
-  spin:'data:audio/wav;base64,UklGRoADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwDAAAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQDBAUGBwf39wYFBAMEBQYHB/f3BgUEAwQFBgcH9/cGBQQA==',
-  escape:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCAgMEBQYHB/f39/f3BwYFBAMCA=',
-  caught:'data:audio/wav;base64,UklGRsAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwAAAB/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/f39vb19fT09AQDAwICAgEBAQAAAQECAgMDBAQE9PX19vb39/',
-  arrow:'data:audio/wav;base64,UklGRsADAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YZwDAAAgMEBQYHB4f39/f3h4cGhgUEAwICAwQFBgcHh/f394eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICAwQFBgcHh/f39/eHBoYFBAMCAgMEBQYHB4f39/eHhwaGBQQDAgIDBAUGBweH9/f3h4cGhgUEAwICA=',
-  chat:'data:audio/wav;base64,UklGRoAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwAAAA4QEhQWGBob3B/f39wcGhgWFBIQDg4QEhQYGhwf39wcGBoYFhQSDg4QEhQWGBob3B/f39wcGhgWFBIQDg=',
-  wrong:'data:audio/wav;base64,UklGRqAAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXwAAAB/f29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BAT19vf29fT0BA',
-  bomb:'data:audio/wav;base64,UklGRgACAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdwBAAB/f39/f39/f39vb29vX19fX09PT09AQEBAMDAwMCAgICAQEBAQEBAQECAgICAwMDBAQEBQUFBgYGBwcHB/f39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f3BwcGBgYFBQUEBAQDAwMCAgIBAQEAAAEBAgIDAwQEBQUGBgcHBwf39/f39/f38=',
-  final:'data:audio/wav;base64,UklGRoAEAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YVwEAAAgMEBQYHB/f39/f3BwYFBAMCAYIDBAUGBwf39/f39wcGBQQDAYEBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCBggMEBQYHB/f39/f3BwYFBAMBgQCA=='
-};
-function playSound(type){try{const a=new Audio(SOUNDS[type]||SOUNDS.click);a.volume=0.5;a.play()}catch(e){}}
+let audioCtx=null;
+function getAudioCtx(){
+  if(!audioCtx||audioCtx.state==='closed'){audioCtx=new(window.AudioContext||window.webkitAudioContext)()}
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  return audioCtx;
+}
+function playTone(freq,duration,type='sine',vol=0.3){
+  try{
+    const ctx=getAudioCtx();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime);
+    gain.gain.setValueAtTime(vol,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+duration);
+    osc.start();osc.stop(ctx.currentTime+duration);
+  }catch(e){}
+}
+function playSound(type){
+  try{
+    switch(type){
+      case 'click':playTone(800,0.06,'square',0.12);break;
+      case 'dice':playTone(200,0.08,'square',0.15);setTimeout(()=>playTone(300,0.08,'square',0.15),40);setTimeout(()=>playTone(250,0.08,'square',0.15),80);break;
+      case 'success':case 'win':playTone(523,0.12,'sine',0.25);setTimeout(()=>playTone(659,0.12,'sine',0.25),100);setTimeout(()=>playTone(784,0.18,'sine',0.3),200);break;
+      case 'golden':case 'final':playTone(392,0.1,'sine',0.25);setTimeout(()=>playTone(523,0.1,'sine',0.25),80);setTimeout(()=>playTone(659,0.1,'sine',0.25),160);setTimeout(()=>playTone(784,0.25,'sine',0.35),240);break;
+      case 'wrong':case 'kick':case 'caught':playTone(200,0.15,'sawtooth',0.15);setTimeout(()=>playTone(150,0.2,'sawtooth',0.12),80);break;
+      case 'spin':case 'arrow':for(let i=0;i<8;i++)setTimeout(()=>playTone(300+i*40,0.06,'triangle',0.12),i*60);break;
+      case 'join':playTone(440,0.08,'sine',0.18);setTimeout(()=>playTone(550,0.12,'sine',0.22),60);break;
+      case 'chat':playTone(600,0.04,'sine',0.12);setTimeout(()=>playTone(800,0.06,'sine',0.15),30);break;
+      case 'mission':playTone(400,0.08,'triangle',0.2);setTimeout(()=>playTone(500,0.08,'triangle',0.2),80);setTimeout(()=>playTone(600,0.12,'triangle',0.25),160);break;
+      case 'bomb':playTone(100,0.4,'sawtooth',0.3);setTimeout(()=>playTone(80,0.25,'square',0.25),150);break;
+      case 'escape':playTone(300,0.08,'sine',0.18);setTimeout(()=>playTone(400,0.08,'sine',0.2),60);setTimeout(()=>playTone(600,0.15,'sine',0.25),120);break;
+      case 'vote':case 'discuss':playTone(350,0.06,'triangle',0.15);setTimeout(()=>playTone(450,0.08,'triangle',0.18),50);break;
+      case 'reveal':playTone(250,0.12,'sine',0.18);setTimeout(()=>playTone(350,0.12,'sine',0.2),120);setTimeout(()=>playTone(500,0.2,'sine',0.25),240);break;
+      case 'flip':playTone(500,0.06,'sine',0.15);setTimeout(()=>playTone(700,0.08,'sine',0.18),40);break;
+      default:playTone(600,0.04,'square',0.08);
+    }
+  }catch(e){}
+}
 
 const UPDATE_LOGS=[
   {version:'v1.7.0',date:'2025년 12월 11일',changes:['🎨 그림게임 대폭 개선 (지우개, 26색 팔레트, 라운드X)','💣 폭탄 돌리기 10초 카운트다운','🏝️ 무인도 위치 변경 (7→6) 및 탈출 설명 추가','🔑 황금열쇠 전면 개편 (16종)','🔄 역할교체 플레이어 선택 기능','🤖 매크로 감지 자동 추방','🛠️ 점검 중 관리자 접근 가능','🎮 게임별 화려한 배경 추가']},
@@ -765,7 +781,7 @@ function submitDrawGuess(){
 }
 
 function handleAction(a,d){
-  if(a!=='spin'&&a!=='flip-card'&&a!=='spin-arrow')playSound('click');
+  if(a!=='spin'&&a!=='flip-card'&&a!=='spin-arrow')try{playSound('click')}catch(e){}
   switch(a){
     case 'go-home':state.screen='home';state.game=null;leaveRoom();render();break;
     case 'select-game':const g=GAMES.find(x=>x.id===d.game);if(g){state.game=g;state.screen=g.solo?'roulette':'lobby'}render();break;
