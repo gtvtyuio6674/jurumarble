@@ -255,9 +255,9 @@ function playSound(type){
 }
 
 const UPDATE_LOGS=[
-  {version:'v1.13.0',date:'2025년 12월 17일',changes:['🎵 YouTube 배경음악 시스템 (로비 전용)','🔊 음악 컨트롤 (음소거/볼륨 조절)','🎯 룰렛 결과 계산 로직 수정','💾 음악 설정 자동 저장']},
+  {version:'v1.13.0',date:'2025년 12월 17일',changes:['🎵 배경음악 시스템 (로비 전용)','🔊 음악 컨트롤 (음소거/볼륨 조절)','🎯 룰렛 결과 계산 로직 수정','💾 음악 설정 자동 저장']},
   {version:'v1.12.0',date:'2025년 12월 17일',changes:['🎮 버튼 클릭 버그 수정 (배경 pointer-events)','⏱️ 타이머 시스템 완전 개편 (DOM만 업데이트)','🔊 Web Audio API 실시간 효과음','✨ 성능 최적화 (매초 새로고침 제거)']},
-  {version:'v1.11.0',date:'2025년 12월 16일',changes:['🍻 파이널 드링크 시스템 (첫 도착자 원샷)','🔊 모든 효과음 품질 대폭 개선','🎰 룰렛 회전 애니메이션 수정','⭐ 배경 별 깜빡임 해결','🚪 중간 참여 복구 (주루마블 제외)','🎲 타일 추가: 당연하지, 브챗댄스, 닉변게임']},
+  {version:'v1.11.0',date:'2025년 12월 16일',changes:['🍻 파이널 드링크 시스템 (첫 도착자 빼고원샷)','🔊 모든 효과음 품질 대폭 개선','🎰 룰렛 회전 애니메이션 수정','⭐ 배경 별 깜빡임 해결','🚪 중간 참여 복구 (주루마블 제외)','🎲 타일 추가: 당연하지, 브챗댄스, 닉변게임']},
   {version:'v1.10.0',date:'2025년 12월 15일',changes:['🎨 그림게임 점수판 순위 아이콘','🏆 100점 승리 시스템','⏰ 타이머 진행바 애니메이션','💬 채팅 알림 카운트']},
   {version:'v1.9.0',date:'2025년 12월 14일',changes:['🎭 라이어 복수 지정 시스템','⏭️ 토론 스킵 투표','🎨 UI/UX 개선','📱 모바일 반응형 최적화']},
   {version:'v1.8.0',date:'2025년 12월 13일',changes:['🎲 주루마블 타일 재배치','🏝️ 무인도 탈출 확률 조정','🎴 황금열쇠 밸런스 패치','🐛 버그 수정 다수']},
@@ -342,7 +342,7 @@ const RANDOM_GAMES=["훈민정음!","딸기게임!","초성퀴즈!","업다운!"
 const PLAYER_COLORS=['#EAB308','#3B82F6','#22C55E','#EF4444','#A855F7','#F97316','#06B6D4','#EC4899','#84CC16','#F43F5E','#8B5CF6','#14B8A6'];
 const ROULETTE_COLORS=['#c53030','#c05621','#b7791f','#276749','#0d9488','#2b6cb0','#6b46c1','#b83280','#c53030','#5a7a23','#0891b2','#7c3aed'];
 
-let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,bgMusicVolume:50,bgMusicMuted:false,bgMusicUrl:'https://www.youtube.com/watch?v=jfKfPfyJRdk'};
+let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,bgMusicVolume:50,bgMusicMuted:false,bgMusicUrl:'https://youtu.be/--D3PU0KFUI?si=_KvXHWggs4Ofn_0e'};
 let roomRef=null,maintRef=null,canvasCtx=null,bombInterval=null,ytPlayer=null;
 
 function getValidSlots(){return state.rouletteSlots.filter(s=>s&&s.trim().length>0)}
@@ -527,7 +527,7 @@ function renderLobby(){
   const cardClass=g.id==='jurumarble'?'card-wood':g.id==='liar'?'card-liar':g.id==='truth'?'card-truth':g.id==='draw'?'card-draw':'card-glass';
   
   if(!state.room){
-    return '<div class="min-h-screen '+bgClass+' flex items-center justify-center p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-10 right-10 text-5xl opacity-30 animate-float">'+g.emoji+'</div><div class="absolute bottom-10 left-10 text-4xl opacity-20 animate-float-reverse">✨</div><div class="'+cardClass+' rounded-3xl p-8 w-full max-w-md animate-fade-scale relative z-10"><button data-action="go-home" class="btn-ghost text-white/70 px-3 py-1 rounded-lg mb-4 hover:bg-white/10">← 뒤로</button><div class="text-center mb-6"><span class="text-6xl mb-2 block animate-float">'+g.emoji+'</span><h2 class="title-font text-3xl text-white mt-2">'+g.name+'</h2><p class="text-white/50 text-sm mt-1">'+g.desc+'</p></div><div class="mb-4"><label class="block text-white/70 text-sm mb-2">닉네임 (최대 10자)</label><input type="text" id="pname" maxlength="10" placeholder="닉네임 입력" class="'+inputClass+' w-full px-4 py-3 rounded-xl text-lg"></div><div class="mb-6"><label class="block text-white/70 text-sm mb-2">방 코드 (참가시)</label><input type="text" id="rcode" maxlength="6" placeholder="없으면 새 방 생성" class="'+inputClass+' w-full px-4 py-3 rounded-xl text-center tracking-widest uppercase"></div><button data-action="join-or-create" class="'+btnClass+' w-full text-white text-xl font-bold py-4 rounded-2xl hover:scale-105 transition-transform">🎮 입장하기</button>'+renderMusicControl()+'</div></div>';
+    return '<div class="min-h-screen '+bgClass+' flex items-center justify-center p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-10 right-10 text-5xl opacity-30 animate-float">'+g.emoji+'</div><div class="absolute bottom-10 left-10 text-4xl opacity-20 animate-float-reverse">✨</div><div class="'+cardClass+' rounded-3xl p-8 w-full max-w-md animate-fade-scale relative z-10"><button data-action="go-home" class="btn-ghost text-white/70 px-3 py-1 rounded-lg mb-4 hover:bg-white/10">← 뒤로</button><div class="text-center mb-6"><span class="text-6xl mb-2 block animate-float">'+g.emoji+'</span><h2 class="title-font text-3xl text-white mt-2">'+g.name+'</h2><p class="text-white/50 text-sm mt-1">'+g.desc+'</p></div><div class="mb-4"><label class="block text-white/70 text-sm mb-2">닉네임 (최대 10자)</label><input type="text" id="pname" maxlength="10" placeholder="닉네임 입력" class="'+inputClass+' w-full px-4 py-3 rounded-xl text-lg"></div><div class="mb-6"><label class="block text-white/70 text-sm mb-2">방 코드 (참가시)</label><input type="text" id="rcode" maxlength="6" placeholder="없으면 새 방 생성" class="'+inputClass+' w-full px-4 py-3 rounded-xl text-center tracking-widest uppercase"></div><button data-action="rejoin" class="btn-ghost text-white/70 w-full py-2 rounded-xl mb-2 text-sm hover:bg-white/10" style="display:none" id="rejoin-btn">🔄 재참여</button><button data-action="join-or-create" class="'+btnClass+' w-full text-white text-xl font-bold py-4 rounded-2xl hover:scale-105 transition-transform">🎮 입장하기</button></div></div>';
   }
   
   const players=Object.values(state.room.players||{}).sort((a,b)=>a.order-b.order);
@@ -544,7 +544,7 @@ function renderLobby(){
     settingsHtml='<div class="bg-black/20 rounded-2xl p-3 mb-4 border border-white/10"><p class="text-white/50 text-sm">⚙️ 회의시간: <span class="text-white font-bold">'+discussTime+'분</span> | 라이어: <span class="text-white font-bold">'+liarCount+'명</span></p></div>';
   }
   
-  return '<div class="min-h-screen '+bgClass+' p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-20 animate-float">'+g.emoji+'</div><div class="absolute bottom-20 left-10 text-5xl opacity-15 animate-float-reverse">🎊</div><div class="max-w-2xl mx-auto relative z-10"><div class="'+cardClass+' rounded-3xl p-6 animate-fade-scale"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪 나가기</button><div class="text-center flex-1"><span class="text-4xl">'+g.emoji+'</span><h2 class="title-font text-2xl text-white">'+g.name+'</h2></div><div class="w-20"></div></div><div class="bg-black/20 rounded-2xl p-4 mb-4 text-center border border-white/10"><p class="text-white/50 text-sm">방 코드</p><p class="title-font text-4xl text-white tracking-wider">'+state.roomCode+'</p><button data-action="copy-code" class="mt-2 text-white/60 text-sm hover:text-white">📋 복사하기</button></div>'+settingsHtml+'<div class="mb-4"><p class="text-white/70 text-sm mb-2">플레이어 ('+players.length+'/'+g.max+')</p><div class="grid grid-cols-2 gap-2">'+players.map((p,i)=>'<div class="player-item flex items-center gap-2 bg-black/30 rounded-xl p-2 border border-white/10 '+(p.id===state.odPlyerId?'ring-2 ring-white/50':'')+'"><div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background:'+PLAYER_COLORS[i]+';">'+p.name[0]+'</div><span class="flex-1 text-white text-sm truncate">'+p.name+'</span>'+(p.id===state.room.hostId?'<span class="text-yellow-400 text-xs">👑</span>':'')+(isHost&&p.id!==state.odPlyerId?'<button data-action="kick" data-pid="'+p.id+'" class="text-red-400 text-xs px-2 py-1 rounded hover:bg-red-500/20">추방</button>':'')+'</div>').join('')+'</div></div>'+(isHost?'<button data-action="start-game" '+(canStart?'':'disabled')+' class="'+btnClass+' w-full text-white text-xl font-bold py-4 rounded-2xl '+(canStart?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(canStart?'🎮 게임 시작':'⏳ '+g.min+'명 이상 필요')+'</button>':'<div class="text-center text-white/50 py-4"><div class="animate-pulse">호스트가 게임을 시작할 때까지 대기 중...</div></div>')+'</div></div>'+(state.showLeave?renderLeaveModal():'')+'</div>';
+  return '<div class="min-h-screen '+bgClass+' p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-20 animate-float">'+g.emoji+'</div><div class="absolute bottom-20 left-10 text-5xl opacity-15 animate-float-reverse">🎊</div><div class="max-w-2xl mx-auto relative z-10"><div class="'+cardClass+' rounded-3xl p-6 animate-fade-scale"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪 나가기</button><div class="text-center flex-1"><span class="text-4xl">'+g.emoji+'</span><h2 class="title-font text-2xl text-white">'+g.name+'</h2></div><div class="w-20"></div></div><div class="bg-black/20 rounded-2xl p-4 mb-4 text-center border border-white/10"><p class="text-white/50 text-sm">방 코드</p><p class="title-font text-4xl text-white tracking-wider">'+state.roomCode+'</p><button data-action="copy-code" class="mt-2 text-white/60 text-sm hover:text-white">📋 복사하기</button></div>'+settingsHtml+'<div class="mb-4"><p class="text-white/70 text-sm mb-2">플레이어 ('+players.length+'/'+g.max+')</p><div class="grid grid-cols-2 gap-2">'+players.map((p,i)=>'<div class="player-item flex items-center gap-2 bg-black/30 rounded-xl p-2 border border-white/10 '+(p.id===state.odPlyerId?'ring-2 ring-white/50':'')+'"><div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background:'+PLAYER_COLORS[i]+';">'+p.name[0]+'</div><span class="flex-1 text-white text-sm truncate">'+p.name+'</span>'+(p.id===state.room.hostId?'<span class="text-yellow-400 text-xs">👑</span>':'')+(isHost&&p.id!==state.odPlyerId?'<button data-action="kick" data-pid="'+p.id+'" class="text-red-400 text-xs px-2 py-1 rounded hover:bg-red-500/20">추방</button>':'')+'</div>').join('')+'</div></div>'+(isHost?'<button data-action="start-game" '+(canStart?'':'disabled')+' class="'+btnClass+' w-full text-white text-xl font-bold py-4 rounded-2xl '+(canStart?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(canStart?'🎮 게임 시작':'⏳ '+g.min+'명 이상 필요')+'</button>':'<div class="text-center text-white/50 py-4"><div class="animate-pulse">호스트가 게임을 시작할 때까지 대기 중...</div></div>')+'</div></div>'+(state.showLeave?renderLeaveModal():'')'+renderMusicControl()+(state.showLeave?renderLeaveModal():'')+'</div>';
 }
 
 function renderRoulette(){
@@ -803,6 +803,12 @@ function bindEvents(){
         if(percentText)percentText.textContent=vol+'%';
       }
     }
+    const rejoinBtn=document.getElementById('rejoin-btn');
+    if(rejoinBtn){
+      const lastCode=localStorage.getItem('lastRoomCode');
+      const lastId=localStorage.getItem('lastPlayerId');
+      if(lastCode&&lastId)rejoinBtn.style.display='block';
+    }
     console.log('[DEBUG] bindEvents completed');
   }catch(e){console.error('BindEvents error:',e)}
 }
@@ -841,17 +847,23 @@ function initDrawCanvas(){
     img.src=state.room.canvasData;
   }
   if(!isDrawer)return;
+  canvas.style.cursor='none';
   let lastX=0,lastY=0;
   const cursor=document.createElement('div');
   cursor.className='draw-cursor';
-  cursor.style.cssText='position:absolute;pointer-events:none;border-radius:50%;border:2px solid #22c55e;opacity:0.8;transform:translate(-50%,-50%);display:none;';
-  canvas.parentElement.appendChild(cursor);
+  cursor.style.cssText='position:fixed;pointer-events:none;border-radius:50%;border:2px solid #22c55e;opacity:0.8;transform:translate(-50%,-50%);display:none;z-index:100;';
+  document.body.appendChild(cursor);
   const updateCursor=(e)=>{
     const rect=canvas.getBoundingClientRect();
     const x=e.clientX-rect.left;
     const y=e.clientY-rect.top;
-    cursor.style.left=x+'px';
-    cursor.style.top=y+'px';
+    if(x>=0&&x<=rect.width&&y>=0&&y<=rect.height){
+      cursor.style.left=e.clientX+'px';
+      cursor.style.top=e.clientY+'px';
+      cursor.style.display='block';
+    }else{
+      cursor.style.display='none';
+    }
     cursor.style.width=state.drawSize+'px';
     cursor.style.height=state.drawSize+'px';
     cursor.style.background=state.isEraser?'rgba(255,255,255,0.5)':state.drawColor+'40';
@@ -900,6 +912,7 @@ function handleAction(a,d){
     case 'go-home':state.screen='home';state.game=null;leaveRoom();render();break;
     case 'select-game':const g=GAMES.find(x=>x.id===d.game);if(g){state.game=g;state.screen=g.solo?'roulette':'lobby'}render();break;
     case 'join-or-create':joinOrCreate();break;
+    case 'rejoin':rejoinRoom();break;
     case 'start-game':startGame();break;
     case 'copy-code':navigator.clipboard?.writeText(state.roomCode);break;
     case 'show-leave':state.showLeave=true;render();break;
@@ -1029,6 +1042,9 @@ function joinOrCreate(){
 function createRoom(){
   state.roomCode=genCode();
   state.odPlyerId=genCode();
+  localStorage.setItem('lastRoomCode',state.roomCode);
+  localStorage.setItem('lastPlayerId',state.odPlyerId);
+  localStorage.setItem('lastPlayerName',state.playerName);
   const data={
     hostId:state.odPlyerId,
     gameId:state.game.id,
@@ -1054,6 +1070,9 @@ function createRoom(){
 function joinRoom(code){
   state.roomCode=code;
   state.odPlyerId=genCode();
+  localStorage.setItem('lastRoomCode',state.roomCode);
+  localStorage.setItem('lastPlayerId',state.odPlyerId);
+  localStorage.setItem('lastPlayerName',state.playerName);
   roomRef=db.ref('rooms/'+code);
   roomRef.once('value').then(snap=>{
     const val=snap.val();
@@ -1078,6 +1097,33 @@ function joinRoom(code){
   }).catch(err=>{
     console.error('Room fetch error:',err);
     alert('방 정보를 가져올 수 없습니다!');
+  });
+}
+
+function rejoinRoom(){
+  const code=localStorage.getItem('lastRoomCode');
+  const playerId=localStorage.getItem('lastPlayerId');
+  const playerName=localStorage.getItem('lastPlayerName');
+  if(!code||!playerId||!playerName)return alert('재참여할 방이 없습니다!');
+  if(!isFirebaseReady)return alert('Firebase 연결 중입니다. 잠시 후 다시 시도해주세요!');
+  state.roomCode=code;
+  state.odPlyerId=playerId;
+  state.playerName=playerName;
+  roomRef=db.ref('rooms/'+code);
+  roomRef.once('value').then(snap=>{
+    const val=snap.val();
+    if(!val)return alert('방을 찾을 수 없습니다! (이미 종료되었을 수 있습니다)');
+    const player=val.players?.[playerId];
+    if(!player)return alert('방에서 추방되었거나 나간 것 같습니다!');
+    const g=GAMES.find(x=>x.id===val.gameId);
+    if(!g)return alert('알 수 없는 게임입니다!');
+    state.game=g;
+    if(val.status==='playing')state.screen='game';
+    subscribeRoom();
+    playSound('success');
+  }).catch(err=>{
+    console.error('Rejoin error:',err);
+    alert('재참여 실패! 다시 시도해주세요.');
   });
 }
 
@@ -1229,7 +1275,11 @@ function resetArrow(){
 function rollDice(){
   if(!roomRef||!state.room||state.room.rolling)return;
   const players=Object.values(state.room.players).sort((a,b)=>a.order-b.order);
-  const curr=players[state.room.turn%players.length];
+  const turnIdx=state.room.turn%players.length;
+  const curr=players[turnIdx];
+  
+  console.log('[DICE] Current turn:',state.room.turn,'Player:',curr?.name,'My ID:',state.odPlyerId);
+  
   if(curr.id!==state.odPlyerId||curr.finished)return;
   
   playSound('dice');
@@ -1237,13 +1287,24 @@ function rollDice(){
   
   const rollAnim=setInterval(()=>{
     state.localDice=Math.ceil(Math.random()*6);
-    render();
-  },100);
+    const diceEl=document.querySelector('.animate-dice-roll');
+    if(diceEl){
+      const dotsHtml=diceDots(state.localDice);
+      const rectEl=diceEl.querySelector('rect');
+      if(rectEl){
+        diceEl.innerHTML='';
+        diceEl.appendChild(rectEl);
+        diceEl.innerHTML+=dotsHtml;
+      }
+    }
+  },80);
   
   setTimeout(()=>{
     clearInterval(rollAnim);
     const dice=Math.ceil(Math.random()*6);
     state.localDice=dice;
+    
+    console.log('[DICE] Rolled:',dice,'Position:',curr.position,'Island:',curr.islandTurn);
     
     if(curr.islandTurn>0){
       if(dice===1||dice===2){
@@ -1259,6 +1320,7 @@ function rollDice(){
     }
     
     let newPos=curr.position+dice;
+    console.log('[DICE] New position calculated:',newPos);
     
     if(newPos>=32){
       newPos=32;
@@ -1321,6 +1383,7 @@ function rollDice(){
       showMission=false;
     }
     
+    console.log('[DICE] Final position:',finalPos,'Show mission:',showMission);
     roomRef.child('players/'+state.odPlyerId+'/position').set(finalPos);
     roomRef.update({rolling:false,diceValue:dice,turn:state.room.turn+1,showMission,currentTileId:tile.id,goldenKey});
     
