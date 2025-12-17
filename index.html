@@ -1273,20 +1273,33 @@ function spinRoulette(){
   state.rouletteResult=null;
   playSound('spin');
   render();
+  
   setTimeout(()=>{
-    const spins=5+Math.floor(Math.random()*3);
-    const finalAngle=Math.random()*360;
-    const target=spins*360+finalAngle;
-    state.rouletteAngle=target;
+    const spins=5+Math.floor(Math.random()*3); // 5~7바퀴
+    const segAngle=360/valid.length;
+    const targetIdx=Math.floor(Math.random()*valid.length);
+    const targetAngle=targetIdx*segAngle;
+    
+    // 현재 각도에서 추가 회전 (항상 시계방향)
+    const currentAngle=state.rouletteAngle%360;
+    const additionalRotation=spins*360+targetAngle;
+    const finalAngle=state.rouletteAngle+additionalRotation;
+    
+    console.log('[ROULETTE] Current:',currentAngle.toFixed(2),'Target segment:',targetIdx,'Additional:',additionalRotation.toFixed(2),'Final:',finalAngle.toFixed(2));
+    
+    state.rouletteAngle=finalAngle;
     const wheel=document.getElementById('roulette-wheel');
-    if(wheel)wheel.style.transform='rotate('+target+'deg)';
+    if(wheel)wheel.style.transform='rotate('+finalAngle+'deg)';
+    
     setTimeout(()=>{
-      const segAngle=360/valid.length;
-      const normalizedAngle=target%360;
-      const idx=Math.floor((360-normalizedAngle)/segAngle)%valid.length;
-      console.log('[ROULETTE] Stopped at angle:',normalizedAngle.toFixed(2),'→ Segment:',idx,'→ Result:',valid[idx]);
-      state.rouletteResult=valid[idx];
-      state.rouletteResultColor=ROULETTE_COLORS[idx%ROULETTE_COLORS.length];
+      // 최종 각도에서 어느 칸에 멈췄는지 계산
+      const normalizedAngle=finalAngle%360;
+      const stoppedSegment=Math.floor((360-normalizedAngle+segAngle/2)/segAngle)%valid.length;
+      
+      console.log('[ROULETTE] Stopped angle:',normalizedAngle.toFixed(2),'Segment:',stoppedSegment,'Result:',valid[stoppedSegment]);
+      
+      state.rouletteResult=valid[stoppedSegment];
+      state.rouletteResultColor=ROULETTE_COLORS[stoppedSegment%ROULETTE_COLORS.length];
       state.rouletteSpinning=false;
       playSound('win');
       render();
