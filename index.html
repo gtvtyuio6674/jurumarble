@@ -1269,6 +1269,7 @@ function spinRoulette(){
   if(state.rouletteSpinning)return;
   const valid=getValidSlots();
   if(valid.length<2)return alert('최소 2개 이상 항목을 입력하세요!');
+  
   state.rouletteSpinning=true;
   state.rouletteResult=null;
   playSound('spin');
@@ -1278,33 +1279,38 @@ function spinRoulette(){
     const spins=5+Math.floor(Math.random()*3); // 5~7바퀴
     const segAngle=360/valid.length;
     const targetIdx=Math.floor(Math.random()*valid.length);
-    const targetAngle=targetIdx*segAngle;
     
-    // 현재 각도에서 추가 회전 (항상 시계방향)
-    const currentAngle=state.rouletteAngle%360;
-    const additionalRotation=spins*360+targetAngle;
-    const finalAngle=state.rouletteAngle+additionalRotation;
+    // 세그먼트 targetIdx의 중앙을 화살표(0도)에 정확히 맞추기
+    // 세그먼트 i의 중앙 원래 위치 = -90 + i*segAngle + segAngle/2
+    // 이 중앙이 0도(화살표)에 오려면: angle = 90 - i*segAngle - segAngle/2
+    let targetAngle = 90 - targetIdx*segAngle - segAngle/2;
     
-    console.log('[ROULETTE] Current:',currentAngle.toFixed(2),'Target segment:',targetIdx,'Additional:',additionalRotation.toFixed(2),'Final:',finalAngle.toFixed(2));
+    // 음수 방지
+    while(targetAngle < 0) targetAngle += 360;
     
-    state.rouletteAngle=finalAngle;
-    const wheel=document.getElementById('roulette-wheel');
-    if(wheel)wheel.style.transform='rotate('+finalAngle+'deg)';
+    const additionalRotation = spins*360 + targetAngle;
+    const finalAngle = state.rouletteAngle + additionalRotation;
+    
+    console.log('[ROULETTE] Target segment:',targetIdx,'Target angle:',targetAngle.toFixed(2),'Final:',finalAngle.toFixed(2));
+    
+    state.rouletteAngle = finalAngle;
+    const wheel = document.getElementById('roulette-wheel');
+    if(wheel) wheel.style.transform = 'rotate(' + finalAngle + 'deg)';
     
     setTimeout(()=>{
-      // 최종 각도에서 어느 칸에 멈췄는지 계산
-      const normalizedAngle=finalAngle%360;
-      const stoppedSegment=Math.floor((360-normalizedAngle+segAngle/2)/segAngle)%valid.length;
+      // 검증: 최종 각도에서 화살표가 가리키는 세그먼트
+      const normalized = ((finalAngle % 360) + 360) % 360;
+      const stoppedSegment = Math.floor((90 - normalized + 3600) / segAngle) % valid.length;
       
-      console.log('[ROULETTE] Stopped angle:',normalizedAngle.toFixed(2),'Segment:',stoppedSegment,'Result:',valid[stoppedSegment]);
+      console.log('[ROULETTE] Stopped angle:',normalized.toFixed(2),'Segment:',stoppedSegment,'Result:',valid[stoppedSegment]);
       
-      state.rouletteResult=valid[stoppedSegment];
-      state.rouletteResultColor=ROULETTE_COLORS[stoppedSegment%ROULETTE_COLORS.length];
-      state.rouletteSpinning=false;
+      state.rouletteResult = valid[stoppedSegment];
+      state.rouletteResultColor = ROULETTE_COLORS[stoppedSegment % ROULETTE_COLORS.length];
+      state.rouletteSpinning = false;
       playSound('win');
       render();
-    },4000);
-  },50);
+    }, 4000);
+  }, 50);
 }
 
 function spinArrow(){
