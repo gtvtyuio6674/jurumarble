@@ -97,6 +97,21 @@
       content:'🎨';position:absolute;font-size:180px;opacity:0.05;top:15%;left:-40px;transform:rotate(-20deg);pointer-events:none;
     }
     
+    /* 라이어스 바 배경 - 다크 바 느낌 */
+    .bg-liarsbar{
+      background:linear-gradient(180deg,#0d0208 0%,#1a0f14 30%,#2a1520 60%,#0d0208 100%);
+      position:relative;overflow:hidden;
+    }
+    .bg-liarsbar::before{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at 30% 20%,rgba(139,0,0,0.2) 0%,transparent 50%),
+                 radial-gradient(ellipse at 70% 80%,rgba(75,0,130,0.15) 0%,transparent 50%),
+                 repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.03) 2px,rgba(255,255,255,0.03) 4px);
+    }
+    .bg-liarsbar::after{
+      content:'🎴';position:absolute;font-size:200px;opacity:0.04;bottom:10%;left:-50px;transform:rotate(-15deg);pointer-events:none;
+    }
+    
     .bg-lobby{background:linear-gradient(180deg,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.4) 100%)}
     
     /* 애니메이션 */
@@ -115,6 +130,10 @@
     @keyframes countdown-pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
     @keyframes neon-pulse{0%,100%{text-shadow:0 0 10px currentColor,0 0 20px currentColor}50%{text-shadow:0 0 20px currentColor,0 0 40px currentColor,0 0 60px currentColor}}
     @keyframes sparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+    @keyframes card-deal{0%{transform:translateX(-100vw) rotate(-180deg);opacity:0}100%{transform:translateX(0) rotate(0);opacity:1}}
+    @keyframes gun-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @keyframes chamber-rotate{0%{transform:rotate(0deg)}100%{transform:rotate(60deg)}}
+    @keyframes tension-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
     
     .animate-float{animation:float 4s ease-in-out infinite}
     .animate-float-reverse{animation:float-reverse 5s ease-in-out infinite}
@@ -130,6 +149,10 @@
     .animate-bomb-shake{animation:bomb-shake 0.5s ease-in-out infinite}
     .animate-countdown{animation:countdown-pulse 1s ease-in-out infinite}
     .animate-neon{animation:neon-pulse 2s ease-in-out infinite}
+    .animate-card-deal{animation:card-deal 0.5s ease-out}
+    .animate-gun-spin{animation:gun-spin 2s cubic-bezier(0.68,-0.55,0.265,1.55)}
+    .animate-chamber-rotate{animation:chamber-rotate 0.3s ease-out}
+    .animate-tension{animation:tension-pulse 2s ease-in-out infinite}
     
     /* 카드 스타일 */
     .card-glass{background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2)}
@@ -140,6 +163,7 @@
     .card-liar{background:linear-gradient(145deg,#2a1a1a 0%,#1a1010 50%,#100808 100%);border:2px solid #5c3030;box-shadow:0 0 20px rgba(239,68,68,0.15)}
     .card-truth{background:linear-gradient(145deg,#1e3a5f 0%,#152238 50%,#0d1520 100%);border:2px solid #2d5a8a;box-shadow:0 0 20px rgba(59,130,246,0.15)}
     .card-draw{background:linear-gradient(145deg,#2d4a2d 0%,#1a3a1a 50%,#0d200d 100%);border:2px solid #3d6a3d;box-shadow:0 0 20px rgba(34,197,94,0.15)}
+    .card-liarsbar{background:linear-gradient(145deg,#1a0f14 0%,#0d0208 50%,#050103 100%);border:2px solid #4a2530;box-shadow:0 0 30px rgba(139,0,0,0.3)}
     
     /* 게임 카드 */
     .game-card{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);transition:all 0.4s;backdrop-filter:blur(10px)}
@@ -160,6 +184,7 @@
     .btn-liar{background:linear-gradient(180deg,#ef4444,#dc2626);border:2px solid #b91c1c;box-shadow:0 4px 0 #991b1b,0 0 15px rgba(239,68,68,0.3)}
     .btn-truth{background:linear-gradient(180deg,#f59e0b,#d97706);border:2px solid #b45309;box-shadow:0 4px 0 #92400e,0 0 15px rgba(245,158,11,0.3)}
     .btn-draw{background:linear-gradient(180deg,#22c55e,#16a34a);border:2px solid #15803d;box-shadow:0 4px 0 #166534,0 0 15px rgba(34,197,94,0.3)}
+    .btn-liarsbar{background:linear-gradient(180deg,#8b0000,#660000);border:2px solid #4a0000;box-shadow:0 4px 0 #330000,0 0 20px rgba(139,0,0,0.4)}
     .btn-danger{background:linear-gradient(180deg,#ef4444,#dc2626);border:2px solid #b91c1c;box-shadow:0 4px 0 #991b1b}
     .btn-secondary{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3)}
     .btn-ghost{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
@@ -175,6 +200,30 @@
     .input-truth:focus{border-color:#f59e0b;outline:none}
     .input-draw{background:rgba(0,0,0,0.4);border:2px solid rgba(34,197,94,0.3);color:white}
     .input-draw:focus{border-color:#22c55e;outline:none}
+    .input-liarsbar{background:rgba(0,0,0,0.5);border:2px solid rgba(139,0,0,0.3);color:white}
+    .input-liarsbar:focus{border-color:#8b0000;outline:none;box-shadow:0 0 15px rgba(139,0,0,0.3)}
+    
+    /* 라이어스 바 카드 스타일 */
+    .playing-card{
+      width:80px;height:112px;background:white;border-radius:8px;border:2px solid #333;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      cursor:pointer;transition:all 0.3s;box-shadow:0 4px 8px rgba(0,0,0,0.3);
+      position:relative;
+    }
+    .playing-card:hover{transform:translateY(-10px);box-shadow:0 8px 16px rgba(0,0,0,0.5)}
+    .playing-card.selected{transform:translateY(-20px);box-shadow:0 12px 24px rgba(139,0,0,0.6);border-color:#8b0000}
+    .card-red{color:#dc2626}
+    .card-black{color:#1a1a1a}
+    
+    /* 리볼버 스타일 */
+    .revolver{width:200px;height:200px;position:relative}
+    .chamber{
+      width:80px;height:80px;border:4px solid #666;border-radius:50%;
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      background:radial-gradient(circle,#333,#111);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .bullet-slot{width:12px;height:12px;background:#ffd700;border-radius:50%;position:absolute}
     
     .player-token{box-shadow:0 3px 6px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.5)}
     .roulette-wheel{transition:transform 4s cubic-bezier(0.2,0.8,0.3,1)}
@@ -188,9 +237,10 @@
     .scroll-area{max-height:60vh;overflow-y:auto}
     .star{position:absolute;background:white;border-radius:50%;pointer-events:none}
     
-    .chat-toggle{position:fixed;bottom:20px;right:20px;z-index:40}
-    .chat-panel{position:fixed;bottom:90px;right:20px;width:300px;max-height:400px;z-index:40;transition:all 0.3s}
-    .chat-panel.hidden{opacity:0;transform:translateY(20px);pointer-events:none}
+.chat-toggle{position:fixed;bottom:20px;right:20px;z-index:50}
+.chat-panel{position:fixed;bottom:90px;right:20px;width:320px;max-height:450px;z-index:50;transition:all 0.3s;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.chat-panel.hidden{opacity:0;transform:translateY(20px);pointer-events:none}
+.chat-panel-inner{height:100%;display:flex;flex-direction:column;background:rgba(20,20,30,0.95);border-radius:1rem;border:2px solid rgba(139,92,246,0.3);backdrop-filter:blur(20px)}
     
     .admin-btn{position:fixed;top:10px;left:10px;width:40px;height:40px;z-index:100;cursor:pointer;opacity:0.01}
     .maintenance-screen{position:fixed;inset:0;background:linear-gradient(135deg,#1a1a2e,#0f0f1a);display:flex;align-items:center;justify-content:center;z-index:9999}
@@ -249,13 +299,16 @@ function playSound(type){
       case 'vote':case 'discuss':playTone(350,0.06,'triangle',0.15);setTimeout(()=>playTone(450,0.08,'triangle',0.18),50);break;
       case 'reveal':playTone(250,0.12,'sine',0.18);setTimeout(()=>playTone(350,0.12,'sine',0.2),120);setTimeout(()=>playTone(500,0.2,'sine',0.25),240);break;
       case 'flip':playTone(500,0.06,'sine',0.15);setTimeout(()=>playTone(700,0.08,'sine',0.18),40);break;
+      case 'gunshot':playTone(100,0.3,'sawtooth',0.4);break;
+      case 'empty':playTone(300,0.1,'triangle',0.2);break;
       default:playTone(600,0.04,'square',0.08);
     }
   }catch(e){}
 }
 
 const UPDATE_LOGS=[
-  {version:'v1.13.5',date:'2025년 12월 19일',changes:['🔊 각종 효과음 롤백','애교 대사 수정 및 변경']},
+  {version:'v1.15.0',date:'2025년 12월 20일',changes:['🔧 채팅 독립 창 구현 (게임과 분리)','🎯 지목게임 화살표 동기화 수정','🎨 그림/채팅 충돌 문제 해결','✨ 채팅 UI 개선']},
+  {version:'v1.14.0',date:'2025년 12월 18일',changes:['🎴 라이어스 바 게임 추가','🔫 러시안 룰렛 시스템','🎯 블러핑 메커니즘','💀 실탄/공포탄 판정','🎨 다크 바 테마 디자인']},
   {version:'v1.13.0',date:'2025년 12월 17일',changes:['🎵 배경음악 시스템 (로비 전용)','🔊 음악 컨트롤 (음소거/볼륨 조절)','🎯 룰렛 결과 계산 로직 수정','💾 음악 설정 자동 저장']},
   {version:'v1.12.0',date:'2025년 12월 17일',changes:['🎮 버튼 클릭 버그 수정 (배경 pointer-events)','⏱️ 타이머 시스템 완전 개편 (DOM만 업데이트)','🔊 Web Audio API 실시간 효과음','✨ 성능 최적화 (매초 새로고침 제거)']},
   {version:'v1.11.0',date:'2025년 12월 16일',changes:['🍻 파이널 드링크 시스템 (첫 도착자 빼고원샷)','🔊 모든 효과음 품질 대폭 개선','🎰 룰렛 회전 애니메이션 수정','⭐ 배경 별 깜빡임 해결','🚪 중간 참여 복구 (주루마블 제외)','🎲 타일 추가: 당연하지, 브챗댄스, 닉변게임']},
@@ -277,807 +330,16 @@ const GAMES=[
   {id:'roulette',name:'룰렛',emoji:'🎡',desc:'랜덤 뽑기!',color:'from-purple-500 to-pink-500',glow:'rgba(168,85,247,0.4)',bg:'bg-roulette',solo:true},
   {id:'liar',name:'라이어 게임',emoji:'🎭',desc:'거짓말쟁이를 찾아라!',color:'from-red-500 to-rose-600',glow:'rgba(239,68,68,0.4)',bg:'bg-liar',min:3,max:10},
   {id:'truth',name:'진실게임',emoji:'🎯',desc:'지목된 사람이 벌칙!',color:'from-cyan-500 to-blue-500',glow:'rgba(6,182,212,0.4)',bg:'bg-truth',min:2,max:12},
-  {id:'draw',name:'그림 제시어',emoji:'🎨',desc:'그림으로 맞춰라!',color:'from-green-500 to-emerald-600',glow:'rgba(34,197,94,0.4)',bg:'bg-draw',min:3,max:10}
+  {id:'draw',name:'그림 제시어',emoji:'🎨',desc:'그림으로 맞춰라!',color:'from-green-500 to-emerald-600',glow:'rgba(34,197,94,0.4)',bg:'bg-draw',min:3,max:10},
+  {id:'liarsbar',name:'라이어스 바',emoji:'🎴',desc:'블러핑 & 러시안 룰렛!',color:'from-red-900 to-purple-900',glow:'rgba(139,0,0,0.5)',bg:'bg-liarsbar',min:2,max:6}
 ];
 
-const AEGYO_LIST=[  
-{
-id
-:
-1
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'당신눈 00이와 만나서 행복하다구 말하여따 >ㅁ< 당시눈! 00이와 남은생을 함께보내고 싶다구 말하여따! 당시눈! 00이와 손집구 뽀뽀하구 데이뚜하고 싶다구 말하여따! (녜헤헤♥) 나눈 이짜나 이짜나! 내가 너 쪼아하니 ><늉눈! 나보고싶니 ><늉뉸! 언제나 00만을 보게 헤두께!!'
-}
-,
+// 라이어스 바 전용 상수
+const CARD_SUITS=['♠','♥','♦','♣'];
+const CARD_RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+const CHAMBER_SIZE=6;
 
-  
-{
-id
-:
-2
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'상어 상어 상어상어 상어 상어(상어) 상어(상어) 상어상어(상어상어) 상어 상어상어 상어 상어 상어상어 상어 상어♥ 무지무지 또강하고 너무최고 무지또크고 또 멋지고 수영도 또 잘하고 너무 최고 전부전부 정말로 상어♥'
-}
-,
-
-  
-{
-id
-:
-3
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'오빠아앙 오빠나 오빠 쪼아행~~ 오빠도 나 조앙?? 난 영원히 오빠 곁에 있을꼬양 오빠 나 기엽징 세상에서 가장 귀엽터지는 기요미는 나양! 근데 이제 이런거 하지마아아아아~ 애교같은거 못 행 흐규흐규'
-}
-,
-
-  
-{
-id
-:
-4
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'아잉과자사죠냥_♥ 오빠라고 불러두댕? 쟈기야뽑호! 오빠오빠 맛난고 사죠잉_* 냐오옹 난 자기의 꼬냥이가 될래요○_○ 꼬냥이 밥줘어 산책도 시켜줘 냥아잉'
-}
-,
-
-  
-{
-id
-:
-5
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'나빠또나빠또 나빠또~ 이따만큼 나빠또~ 얼마나 나빠눈지알아? 하늘만꿈땅만꿈 나빠또~ 그러니까 사죄해 아파또아파또 아파또~ 요기요기 이파또~'
-}
-,
-
-  
-{
-id
-:
-6
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'멍멍 ! 주인님을 위해서라면 ♥ 멍멍이능 뭐등 할뚜있어요멍!♥ 헥헥헥헥~♥쥬잉님!멍!♥ 산책가쭈떼여!멍!♥ 헥헥!♥ 빨가안 가죽 목줄 채워주떼여~♥'
-}
-,
-
-  
-{
-id
-:
-7
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'자기야 자기야 우리자기 ○○이 초코우유 먹고싶어 츄릅~츄릅~초코초코~초코우유사줘~★히힛★ 너뮤너뮤 먹꼬싶딴마리야 쪽~~'
-}
-,
-
-  
-{
-id
-:
-8
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'@@쿤 @@쿤 00 부탁 들어줄 수 있냥? 싫타냥? 우웅 @@쿤 @@쿤 들어줄꺼지? 어서 눈 빨리 감으라냥 00눈 부끄럽다냥 츄~하 @@쿤 좋아하는 만큼 뽀뽀할꺼다냥 쪽 이만쿰 쪽 이만쿰 따랑해~♥'
-}
-,
-
-  
-{
-id
-:
-9
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'초콜릿 초콜릿 까맛코 입만에서 살살 녹는 초콜릿 화이트 초콜릿 밀크 초콜릿 타크 초콜릿 블랙 초콜릿 너무너무 맛있어요 가나 초콜릿이 너뮤너뮤 좋아요'
-}
-,
-
-  
-{
-id
-:
-10
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'달달 촉촉한 00애교 받아럇 세상에서 가장 귀여운 00애교 받아럇 마카롱 앗 댜메 댜메 츄파츕스 앗 댜메댜메 00에입쯀 00이를 세상에서 제일 사랑해줘'
-}
-,
-
-  
-{
-id
-:
-11
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'어 오빠 어디가? 또 나 두고 어디가는거야? 00이는 오빠랑 떨어져 있기 싫은데 진짜 갈꺼야? 역시 싫어! 가지마! 음...난 오빠의 사랑?'
-}
-,
-
-  
-{
-id
-:
-12
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'(술취한투로)오빠야~~ 오빠는 내 어케 생각하는데~♡ 뭐라고? 그러면 이거 마시면 나랑 사귀는거제? 오늘부터 1일이데이♡'
-}
-,
-
-  
-{
-id
-:
-13
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'변신 귀엽 뽁짝 00 애교와 귀여움으로 펼쳐진 00 @@이 지갑을 사로잡아버리겠어 필살 @@이 지갑에 하트 발쌰 뿅♥뿅♥'
-}
-,
-
-  
-{
-id
-:
-14
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'개껌~♥멍멍멍~♥ 아쟉아쟉아쨖~♥단단하녜~?♥아쟉아쨕!♥마시쪄~♥쥬잉님!♥멍멍!개껌은 멍멍이의 마싰늉 갼식거릐!♥'
-}
-,
-
-  
-{
-id
-:
-15
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'(울먹)오..빠..저 사람드리..00 괴로폈어...웅... 00 마음이 마니마니 아팠어... 울지 말라구? 00 안울고 있어! 00 삐질꼬얌!'
-}
-,
-
-  
-{
-id
-:
-16
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'콜랴아아~♥ 새까맣꾸우~♥ 달달하꾸우~♥ 꼬까꼴랴듀우 마시꾸우~♥ 팹띠꼴랴두우 마시꾸우~♥ 콜랴아 라믄 다 주떼여!♥'
-}
-,
-
-  
-{
-id
-:
-17
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'고양이다냥♥냥냥♥ 냥이의 짱짱긔여븐 냥이의 파워에 쫄아보아라냥♥ 강아지보다 냥♥ 더 긔엽브다냥♥ 할짝할짝♥ 냥냥♥'
-}
-,
-
-  
-{
-id
-:
-18
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'00냥이느응! 참치가 제일루 좋다냥! 오빠들과 같이 먹는 참치가 세상에서 제일로 달콤한 꿀처럼 냥냥! 달콤하다냥!'
-}
-,
-
-  
-{
-id
-:
-19
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'앗 오빠♥ 유드래곤의 본 모습을 본거에요? 하와와 다이헨다요~ 이모습을 봐버리면 나에게 빠져서 헤어나가지못하는데 뽀뽀! (쪽)'
-}
-,
-
-  
-{
-id
-:
-20
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'나는 매지컬 00짱! 세계에서 가장 귀여고 이쁘고 아름다운 매지컬 00! 모두모두 00의 매력에 푸욱 빠져보라구!? 찡긋 비이이이임'
-}
-,
-
-  
-{
-id
-:
-21
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'(상대방)이 삐쪘을때 대처법! 있지 삐져또?삐져또? 이로케 귀요운 내가 있는데 삐질꼬양? 아잉 뿌잉뿌잉~ 화를 풀렀어요~★'
-}
-,
-
-  
-{
-id
-:
-22
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'우리 언니오빠들 내 귀여운 애교 보면서 놀랭? 나 오늘 우리 언니오빠들한테 애교 보여주고 싶어! 심쿵 당해줄래요?'
-}
-,
-
-  
-{
-id
-:
-23
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'어? 오빠 어디가? 00이는 오빠랑 떨어져 있기 싫은데 가지마! 맛있는거 사올꺼야? 슈크림빵 먹구싶어! 사랑해~♥ 기다릴께~'
-}
-,
-
-  
-{
-id
-:
-24
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'나 예쁜척하면 재수없지? 근데 나도 곤란하다~ 나는 예쁜척하는게 아니라 그냥 예쁘게 태어난곤데 훙흥'
-}
-,
-
-  
-{
-id
-:
-25
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'안녕안녕 너무나도 멋있고 우월한 옵빠! 나는 최고의 귀여움과 애교를 가진 00라고 행! 내가 녀듈됴아행♥ 내 것이 되어줘!'
-}
-,
-
-  
-{
-id
-:
-26
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'아이쿠. 흐에에에엥. 쿤드으으으을. 나 무룹 까였또오. 호해도 호해도오오오 00눈 너무우 아포 후에에엥. 고마버요~~'
-}
-,
-
-  
-{
-id
-:
-27
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'@@ 쿤~! @@쿤의 귀~~~여운 아기천사 00이 왔떠여!!! 뿌잉뿌잉~!! 00이눈 사랑이 피료해용~! 사랑을 주때용~♡'
-}
-,
-
-  
-{
-id
-:
-28
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'@@쿤! 어디 보는 거야? 사랑에 빠져버릴 것 만 같은 00이의 눈? 입술이 탐났으면 말하지 뽀뽀! 내가 맛봤으니 @@쿤은 00이의 전용 식재료 앙!'
-}
-,
-
-  
-{
-id
-:
-29
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'삐약삐약 나는 삐야기 삐야기는 모이를 죠아해 삐약 주잉님의 따뜻한 손길 속에서 자고시퍼요 삐약 행복하게 연애하고 사귀고 결혼하고 방잡아놔요 삐약'
-}
-,
-
-  
-{
-id
-:
-30
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'안녕!!좋은저녁이야 친구들!! 나는 인싸중에 인싸! 초코~쬬아초코~쬬아 딸기~쬬아딸기~쬬아~ 흐흐흐흐흐헤헤헤헤헤헤헤'
-}
-,
-
-  
-{
-id
-:
-31
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'오빵~?♡ 지금 여기서 뭐해~♡ 000은 오빠 보눈게 더 좋은걸? 귀여운 동생이 어딨냐구? 여~기! 뽀뽀해줘... 징짜 안대여...?'
-}
-,
-
-  
-{
-id
-:
-32
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'(울먹)오..빠.. 저 사람드리...OO괴로폈어... OO 마음이 마니마니 아팠어... 안울고 있다니까... 오빠 미워! 힝... OO뚝 할거야...'
-}
-,
-
-  
-{
-id
-:
-33
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'00애교못하눈뎅ㅠㅠ 구래도해야징!! 1도하기1은기여미☞^.^☜ 2도하기2는기여미 3도하기3도기여미~~ 귀여우면 뽑뽀~♡'
-}
-,
-
-  
-{
-id
-:
-34
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'(? ³`)? 뽀뽀해줘요 그럼 안아줘요!!! 그것도 안돼요? 삐졌어요..저리가요. 부빗거리게 해줘요! 널 가져버리겠어!!!!! (박력있게)'
-}
-,
-
-  
-{
-id
-:
-35
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'어빠앙~ 긔여븐 OO한테에 꼐에소옥 애겨 시키려고 하고 이떵...힝... OO눈 따키 끄런 애겨 안해도 쯍부니 긔여버소.. 힝..OO울꼬야...'
-}
-,
-
-  
-{
-id
-:
-36
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'극단적이야 넌! 점괘가 맞을 때도 있지만 틀릴 때도 있다는걸! 뀨뀨뀨뀨뀨 야옹이, 길냥이, 나비, 뀨뀨! 잊지 마라 뀨!'
-}
-,
-
-  
-{
-id
-:
-37
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'누구누구라도 모두 완전 내 스타일! Let\'s go~뀨뀨 나도뀨 할 땐 한다구! 이 내가 널 좋아할까? 말까? 후다닥! 역시 도망가자!'
-}
-,
-
-  
-{
-id
-:
-38
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'안녕안녕! 나는 아이돌 OO라고 해! 언제나 당신 곁에서 응원하는 OO! 힘들어도 언제나 냥냥! 행복하게 보내자구!'
-}
-,
-
-  
-{
-id
-:
-39
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'OO눈...이고 머꼬시퍼요! 사주며는....OO눈 이~따만큼 좋아할꼬에여! 안대는데...우엥! OO 울꺼야! 으에에ㅠㅠ'
-}
-,
-
-  
-{
-id
-:
-40
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'짐은 사랑의 화신이자 애교를 즐기는 자다냥 사랑의 총알 한방 쪽! 두발 쪽! 세발 쪽! 네발 쪽! 짐의 존명은 심연의 드래곤 OO다!!!! 냥~'
-}
-,
-
-  
-{
-id
-:
-41
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'짜요짜요 ~ ♡ 맛나눈우웅~ ♡ 짜요옹~ ♡ 많이사쪼잉 ~ ♡ 짜요짜요 맛잇눈짜요 ~ ♡ 쪽쪼고쪽 맛잇게 빠라먹자앙 ~ ♡'
-}
-,
-
-  
-{
-id
-:
-42
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'냥이세마리가~♡ 한집에있냥~♡ 빅맥냥~♡ 악마냥~♡ 애기냥~♡ 애기냥은 너무긔엽냥!♡ 냥냥~♡ 나~이쁘냥~?♡'
-}
-,
-
-  
-{
-id
-:
-43
-,
-level
-:
-'★★☆☆☆'
-,
-text
-:
-'우웅~00애교못하눈뎅ㅠㅠ 구래도해야징!!히힛~ 1도하기1은기여미 2도하기2는기여미 3도하기3도기여미~~ 귀여우면 뽑뽀~♡'
-}
-,
-
-  
-{
-id
-:
-44
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'쥬잉님을 위해떠라믄멍!♡ 멍멍이능 뭐등 할뚜있댜아멍!♡ 헥헥헥헥~♡ 산책가쭈떼여!멍!♡ 목줄 체워주떼여~♡'
-}
-,
-
-  
-{
-id
-:
-45
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'우쥬 채강 귀요미 00쨩 등★쨩★ 태양보다 밝은 00쨩의 위풍★당당★얼굴!★ 00쨩...귀여버...?★ 뽀뽀하쟈...★'
-}
-,
-
-  
-{
-id
-:
-46
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'옵항~ 이 여자 사람이 나보고 누구냐는데~응응? 더 크게 말해줘~ 더 크게!! 보고 싶었쪄~~~'
-}
-,
-
-  
-{
-id
-:
-47
-,
-level
-:
-'★★★★☆'
-,
-text
-:
-'오빠아앙 나 오빠 쪼아헹~~ 난 영~원히 오빠 곁에 있을꼬양 세상에서 제일 귀욤터지는 기요미는 나양! 오빠 사랑행! 쪽!'
-}
-,
-
-  
-{
-id
-:
-48
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'(귀엽게)녀바라! 00 공듀님이 명한다아아 쬬꼬우유를 대령해라아아! OO 공듀는 우리 @@ 오빠를 따랑해~ 쪽! 에헤헤헿헤헤'
-}
-,
-
-  
-{
-id
-:
-49
-,
-level
-:
-'★★★☆☆'
-,
-text
-:
-'마계의 귀여운 마왕이에요~~ 귀엽죠? 귀엽지? OO이 기분좋아졌당!!! 기엽찌!! 사랑해줘!!!'
-}
-,
-
-  
-{
-id
-:
-50
-,
-level
-:
-'★★★★★'
-,
-text
-:
-'우후후, 프로듀서! (서버이름) 최고의 아이돌 00이의, 호화찬란한 데뷔에요♪ 에잇 달달 촉촉한 00이 애교 받아랏 다메다메 세상에서 제일 이쁜 00의 입쭐 (쪽) 저의 충실한 노예가 되어 주시와요♪'
-}];
+const AEGYO_LIST=[{id:1,level:'★☆☆☆☆',text:'(양손 브이하며) 오빠~ 사랑해요~♥'},{id:2,level:'★☆☆☆☆',text:'오빠가 제일 좋아~ (볼 하트)'},{id:3,level:'★☆☆☆☆',text:'(눈 깜빡깜빡) 오빠~ 뭐해?'},{id:4,level:'★☆☆☆☆',text:'오빠 최고! (엄지척)'},{id:5,level:'★☆☆☆☆',text:'(고개 갸우뚱) 오빠~ 나 예뻐?'},{id:6,level:'★★☆☆☆',text:'오빠~ 나 심심해~ 놀아줘~'},{id:7,level:'★★☆☆☆',text:'(팔짱 끼며) 오빠 팔! 내꺼~'},{id:8,level:'★★☆☆☆',text:'오빠~ 나 배고파~ 밥 사줘~'},{id:9,level:'★★☆☆☆',text:'(양 볼 손으로 감싸며) 오빠~ 내 볼 말랑말랑해~'},{id:10,level:'★★☆☆☆',text:'오빠~ 손잡아도 돼? (손 내밀며)'},{id:11,level:'★★★☆☆',text:'오빠~ 나 없으면 어떡해~ 흥!'},{id:12,level:'★★★☆☆',text:'오빠~ 나 졸려~ 무릎 빌려줘~'},{id:13,level:'★★★☆☆',text:'(손가락 하트) 오빠~ 나 사랑하지~?'},{id:14,level:'★★★☆☆',text:'오빠~ 뽀뽀~ (볼 내밀며)'},{id:15,level:'★★★★☆',text:'오빠~ 꿈에서 봤어~ 너무 좋았어~'},{id:16,level:'★★★★☆',text:'오빠~ 평생 함께 하자~ 약속!'},{id:17,level:'★★★★★',text:'오빠~ 내가 세상에서 제일 좋아하는 사람이야~'},{id:18,level:'★★★★★',text:'자기가 있어서 세상이 빛나~'}];
 
 const GOLDEN_KEYS=[
   {emoji:'👑',text:'지목한 사람 애교 시키기!',type:'aegyo-target'},
@@ -1140,8 +402,177 @@ const RANDOM_GAMES=["훈민정음!","딸기게임!","초성퀴즈!","업다운!"
 const PLAYER_COLORS=['#EAB308','#3B82F6','#22C55E','#EF4444','#A855F7','#F97316','#06B6D4','#EC4899','#84CC16','#F43F5E','#8B5CF6','#14B8A6'];
 const ROULETTE_COLORS=['#c53030','#c05621','#b7791f','#276749','#0d9488','#2b6cb0','#6b46c1','#b83280','#c53030','#5a7a23','#0891b2','#7c3aed'];
 
-let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,bgMusicVolume:50,bgMusicMuted:false,bgMusicUrl:'https://youtu.be/--D3PU0KFUI?si=_KvXHWggs4Ofn_0e'};
+let state={screen:'home',game:null,roomCode:null,odPlyerId:null,playerName:'',room:null,localDice:1,showLeave:false,showUpdate:false,showAegyo:false,showChat:false,showAdmin:false,showMaintForm:false,showManage:false,showSwapSelect:false,showBomb:false,rouletteSlots:['항목1','항목2','항목3','항목4','항목5','항목6'],rouletteAngle:0,rouletteSpinning:false,rouletteResult:null,rouletteResultColor:null,liarFlipped:false,liarVote:null,liarGuess:'',chatMsg:'',hasIslandSkip:false,hasJoker:false,arrowAngle:0,arrowSpinning:false,maintType:'',maintenance:null,drawColor:'#000000',drawSize:5,isDrawing:false,drawGuess:'',isEraser:false,bombCountdown:10,bombActive:false,macroTracker:{},kickedByMacro:false,lastReadChatCount:0,liarDiscussTime:5,liarCount:1,drawTimeLeft:300,drawTimerActive:false,showDrawResult:false,bgMusicVolume:50,bgMusicMuted:false,bgMusicUrl:'https://youtu.be/--D3PU0KFUI?si=_KvXHWggs4Ofn_0e',selectedCards:[]};
 let roomRef=null,maintRef=null,canvasCtx=null,bombInterval=null,ytPlayer=null;
+
+// 라이어스 바 전용 함수들
+function createDeck(){
+  const deck=[];
+  for(const suit of CARD_SUITS){
+    for(const rank of CARD_RANKS){
+      deck.push({suit,rank,id:suit+rank});
+    }
+  }
+  return shuffleArray(deck);
+}
+
+function shuffleArray(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function dealLiarsBarCards(players){
+  const deck=createDeck();
+  const hands={};
+  let idx=0;
+  players.forEach(p=>{
+    hands[p.id]=deck.slice(idx,idx+5);
+    idx+=5;
+  });
+  return {hands,remaining:deck.slice(idx)};
+}
+
+function toggleCard(idx){
+  if(state.selectedCards.includes(idx)){
+    state.selectedCards=state.selectedCards.filter(i=>i!==idx);
+  }else{
+    state.selectedCards.push(idx);
+  }
+  render();
+}
+
+function playCards(){
+  const rank=document.getElementById('claim-rank')?.value;
+  if(!rank)return alert('카드를 선택하세요!');
+  if(state.selectedCards.length===0)return alert('카드를 선택하세요!');
+  
+  const myHand=state.room.lbHands[state.odPlyerId];
+  const played=state.selectedCards.map(i=>myHand[i]);
+  const remaining=myHand.filter((c,i)=>!state.selectedCards.includes(i));
+  const newPlayed=[...(state.room.lbPlayedCards||[]),...played];
+  
+  roomRef.child('lbHands/'+state.odPlyerId).set(remaining);
+  roomRef.child('lbPlayedCards').set(newPlayed);
+  roomRef.child('lbPlayedCount').set(newPlayed.length);
+  roomRef.child('lbClaimed').set({
+    rank,
+    count:played.length,
+    player:state.odPlyerId,
+    playerName:state.playerName
+  });
+  
+  const players=Object.values(state.room.players);
+  const newTurn=(state.room.lbTurn+1)%players.length;
+  roomRef.child('lbTurn').set(newTurn);
+  
+  state.selectedCards=[];
+  playSound('success');
+  render();
+}
+
+function challengeLiar(){
+  if(!state.room.lbClaimed)return alert('아직 선언이 없습니다!');
+  
+  const played=state.room.lbPlayedCards||[];
+  const claimed=state.room.lbClaimed;
+  const actual=played.filter(c=>c.rank===claimed.rank).length;
+  
+  let loserId;
+  if(actual>=claimed.count){
+    // 챌린지한 사람이 틀림
+    loserId=state.odPlyerId;
+  }else{
+    // 라이어가 걸림
+    loserId=claimed.player;
+  }
+  
+  playSound('caught');
+  startRoulette(loserId);
+}
+
+function startRoulette(targetId){
+  const chamber=Math.floor(Math.random()*CHAMBER_SIZE);
+  const bullet=Math.floor(Math.random()*CHAMBER_SIZE);
+  
+  roomRef.update({
+    lbPhase:'roulette',
+    lbRouletteTarget:targetId,
+    lbChamber:chamber,
+    lbBullet:bullet,
+    lbSpinning:true,
+    lbRevealed:false
+  });
+}
+
+function pullTrigger(){
+  const hit=state.room.lbChamber===state.room.lbBullet;
+  
+  playSound(hit?'gunshot':'empty');
+  
+  roomRef.update({
+    lbRevealed:true,
+    lbSpinning:false
+  });
+  
+  if(hit){
+    roomRef.child('players/'+state.odPlyerId+'/lbAlive').set(false);
+  }
+}
+
+function continueGame(){
+  const alivePlayers=Object.values(state.room.players).filter(p=>p.lbAlive!==false);
+  
+  if(alivePlayers.length<=1){
+    alert('게임 종료! '+(alivePlayers[0]?.name||'?')+' 승리!');
+    playSound('win');
+    roomRef.update({
+      status:'waiting',
+      lbPhase:'waiting'
+    });
+    return;
+  }
+  
+  roomRef.update({
+    lbPhase:'playing',
+    lbPlayedCards:[],
+    lbPlayedCount:0,
+    lbClaimed:null,
+    lbRouletteTarget:null,
+    lbRevealed:false,
+    lbSpinning:false
+  });
+  
+  playSound('success');
+}
+
+function startLiarsBarGame(){
+  if(!roomRef||!state.room)return;
+  
+  const players=Object.values(state.room.players);
+  const {hands,remaining}=dealLiarsBarCards(players);
+  
+  // 모든 플레이어를 살아있는 상태로 초기화
+  players.forEach(p=>{
+    p.lbAlive=true;
+  });
+  
+  roomRef.update({
+    lbPhase:'playing',
+    lbHands:hands,
+    lbDeck:remaining,
+    lbPlayedCards:[],
+    lbClaimed:null,
+    lbTurn:0,
+    lbPlayedCount:0,
+    players:players.reduce((acc,p)=>({...acc,[p.id]:p}),{})
+  });
+  
+  playSound('success');
+}
 
 function getValidSlots(){return state.rouletteSlots.filter(s=>s&&s.trim().length>0)}
 function updateRouletteWheel(){
@@ -1246,12 +677,10 @@ function renderChatToggle(){
   return '<button data-action="toggle-chat" class="chat-toggle w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative">'+(state.showChat?'✕':'💬')+(unreadCount>0?'<span class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full text-white text-xs font-bold flex items-center justify-center animate-bounce">'+unreadCount+'</span>':'')+'</button>';
 }
 
-function renderChatPanel(theme){
+function renderChatPanel(){
   const chats=state.room?.chats?Object.values(state.room.chats).sort((a,b)=>a.time-b.time):[];
   const players=state.room?.players||{};
-  const cardClass=theme==='liar'?'card-liar':theme==='truth'?'card-truth':theme==='draw'?'card-draw':'card-wood';
-  const inputClass=theme==='liar'?'input-liar':theme==='truth'?'input-truth':theme==='draw'?'input-draw':'input-beer';
-  return '<div class="chat-panel '+(state.showChat?'':'hidden')+'"><div class="'+cardClass+' rounded-2xl p-4 h-full flex flex-col"><div class="text-white/80 font-bold text-sm mb-2">💬 채팅</div><div id="chat-box" class="flex-1 overflow-y-auto space-y-2 mb-2 min-h-[200px] max-h-[250px]">'+chats.map(c=>{const p=Object.values(players).find(x=>x.id===c.pid);const pIdx=Object.values(players).sort((a,b)=>a.order-b.order).findIndex(x=>x.id===c.pid);return'<div class="text-sm"><span class="font-bold" style="color:'+PLAYER_COLORS[pIdx>=0?pIdx:0]+'">'+(p?.name||'?')+'</span><span class="text-white/80 ml-1">'+c.msg+'</span></div>'}).join('')+'</div><div class="flex gap-2"><input type="text" id="chat-input" maxlength="100" placeholder="메시지..." class="'+inputClass+' flex-1 px-3 py-2 rounded-lg text-sm"><button data-action="send-chat" class="bg-white/20 text-white px-3 py-2 rounded-lg text-sm hover:bg-white/30">전송</button></div></div></div>';
+  return '<div class="chat-panel '+(state.showChat?'':'hidden')+'"><div class="chat-panel-inner p-4"><div class="flex items-center justify-between mb-2"><div class="text-white font-bold text-sm">💬 실시간 채팅</div><button data-action="toggle-chat" class="text-white/50 hover:text-white text-xl leading-none">&times;</button></div><div id="chat-box" class="flex-1 overflow-y-auto space-y-2 mb-3" style="min-height:280px;max-height:280px;">'+chats.map(c=>{const p=Object.values(players).find(x=>x.id===c.pid);const pIdx=Object.values(players).sort((a,b)=>a.order-b.order).findIndex(x=>x.id===c.pid);return'<div class="text-sm bg-black/20 rounded-lg p-2"><span class="font-bold" style="color:'+PLAYER_COLORS[pIdx>=0?pIdx:0]+'">'+(p?.name||'?')+'</span><span class="text-white/90 ml-1">'+c.msg+'</span></div>'}).join('')+'</div><div class="flex gap-2"><input type="text" id="chat-input" maxlength="100" placeholder="메시지 입력..." class="bg-black/30 border border-purple-500/30 flex-1 px-3 py-2 rounded-lg text-sm text-white focus:border-purple-500 focus:outline-none"><button data-action="send-chat" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">전송</button></div></div></div>';
 }
 
 function renderMusicControl(){
@@ -1330,10 +759,11 @@ function renderTruthGame(){
   const isHost=room.hostId===state.odPlyerId;
   const playerCount=players.length;const tableRadius=120;const angleStep=360/playerCount;
   const targetPlayer=room.arrowTarget?players.find(p=>p.id===room.arrowTarget):null;
-  let displayAngle=state.arrowAngle||0;
-  const arrowSvg='<svg width="80" height="80" viewBox="0 0 80 80" class="'+(state.arrowSpinning?'arrow-spin':'')+'" style="--spin-deg:'+displayAngle+'deg;"><defs><linearGradient id="arrowGold" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#fde047"/><stop offset="50%" style="stop-color:#fbbf24"/><stop offset="100%" style="stop-color:#f59e0b"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><polygon points="40,5 50,30 45,30 45,65 35,65 35,30 30,30" fill="url(#arrowGold)" stroke="#92400e" stroke-width="2" filter="url(#glow)"/><circle cx="40" cy="65" r="10" fill="#78350f" stroke="#451a03" stroke-width="2"/></svg>';
+  let displayAngle=room.arrowAngle||state.arrowAngle||0;
+  const isSpinning=room.arrowSpinning||state.arrowSpinning;
+  const arrowSvg='<svg width="80" height="80" viewBox="0 0 80 80" class="'+(isSpinning?'arrow-spin':'')+'" style="--spin-deg:'+displayAngle+'deg;"><defs><linearGradient id="arrowGold" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#fde047"/><stop offset="50%" style="stop-color:#fbbf24"/><stop offset="100%" style="stop-color:#f59e0b"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><polygon points="40,5 50,30 45,30 45,65 35,65 35,30 30,30" fill="url(#arrowGold)" stroke="#92400e" stroke-width="2" filter="url(#glow)"/><circle cx="40" cy="65" r="10" fill="#78350f" stroke="#451a03" stroke-width="2"/></svg>';
   
-  return '<div class="min-h-screen bg-truth p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎯</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">⭐</div><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-amber-400 flex-1 text-center">🎯 지목게임 🎯</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="flex flex-col items-center"><div class="relative" style="width:300px;height:300px;"><div class="absolute inset-0 rounded-full bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 border-8 border-amber-600/50 shadow-2xl" style="box-shadow:0 0 60px rgba(251,191,36,0.2),inset 0 0 30px rgba(0,0,0,0.5)"></div>'+players.map((p,i)=>{const angle=(angleStep*i-90)*Math.PI/180;const x=150+tableRadius*Math.cos(angle)-28;const y=150+tableRadius*Math.sin(angle)-28;const isTarget=room.arrowTarget===p.id;return'<div class="absolute flex flex-col items-center transition-all duration-500 '+(isTarget?'scale-125 z-20':'')+'" style="left:'+x+'px;top:'+y+'px;width:56px;"><div class="relative"><div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg player-token '+(isTarget?'ring-4 ring-amber-400 pulse-glow':'')+'" style="background:'+PLAYER_COLORS[i]+';">'+p.name[0]+'</div>'+(isTarget?'<div class="absolute -top-2 -right-2 text-2xl animate-bounce">🎯</div>':'')+'</div><span class="text-white text-xs mt-1 truncate w-full text-center '+(isTarget?'text-amber-300 font-bold':'')+'">'+p.name+'</span></div>'}).join('')+'<div class="absolute left-1/2 top-1/2" style="transform:translate(-50%,-50%);">'+arrowSvg+'</div></div><div class="mt-6 text-center min-h-[100px]">'+(room.arrowTarget&&targetPlayer?'<div class="animate-result-pop"><div class="text-6xl mb-2">🎯</div><p class="text-amber-300 text-lg mb-1">걸린 사람!</p><p class="title-font text-4xl text-amber-400">'+targetPlayer.name+'</p></div>':(state.arrowSpinning?'<div class="text-4xl animate-spin mb-2">🌀</div><p class="text-amber-300 text-lg">돌아가는 중...</p>':'<p class="text-white/40 text-lg">화살표를 돌려주세요!</p>'))+'</div>'+(isHost?'<div class="flex gap-3 mt-4"><button data-action="spin-arrow" '+(state.arrowSpinning||room.arrowTarget?'disabled':'')+' class="btn-truth text-white text-xl font-bold py-4 px-10 rounded-2xl '+(state.arrowSpinning||room.arrowTarget?'opacity-50 cursor-not-allowed':'hover:scale-105 transition-transform')+'">🎯 돌리기!</button>'+(room.arrowTarget?'<button data-action="reset-arrow" class="btn-secondary text-amber-300 py-4 px-6 rounded-2xl hover:bg-white/10">🔄 다시</button>':'')+'</div>':'<p class="text-white/50 mt-4">호스트가 돌릴 수 있습니다</p>')+'</div></div>'+renderChatToggle()+renderChatPanel('truth')+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
+  return '<div class="min-h-screen bg-truth p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎯</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">⭐</div><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-amber-400 flex-1 text-center">🎯 지목게임 🎯</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="flex flex-col items-center"><div class="relative" style="width:300px;height:300px;"><div class="absolute inset-0 rounded-full bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 border-8 border-amber-600/50 shadow-2xl" style="box-shadow:0 0 60px rgba(251,191,36,0.2),inset 0 0 30px rgba(0,0,0,0.5)"></div>'+players.map((p,i)=>{const angle=(angleStep*i-90)*Math.PI/180;const x=150+tableRadius*Math.cos(angle)-28;const y=150+tableRadius*Math.sin(angle)-28;const isTarget=room.arrowTarget===p.id;return'<div class="absolute flex flex-col items-center transition-all duration-500 '+(isTarget?'scale-125 z-20':'')+'" style="left:'+x+'px;top:'+y+'px;width:56px;"><div class="relative"><div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg player-token '+(isTarget?'ring-4 ring-amber-400 pulse-glow':'')+'" style="background:'+PLAYER_COLORS[i]+';">'+p.name[0]+'</div>'+(isTarget?'<div class="absolute -top-2 -right-2 text-2xl animate-bounce">🎯</div>':'')+'</div><span class="text-white text-xs mt-1 truncate w-full text-center '+(isTarget?'text-amber-300 font-bold':'')+'">'+p.name+'</span></div>'}).join('')+'<div class="absolute left-1/2 top-1/2" style="transform:translate(-50%,-50%);">'+arrowSvg+'</div></div><div class="mt-6 text-center min-h-[100px]">'+(room.arrowTarget&&targetPlayer?'<div class="animate-result-pop"><div class="text-6xl mb-2">🎯</div><p class="text-amber-300 text-lg mb-1">걸린 사람!</p><p class="title-font text-4xl text-amber-400">'+targetPlayer.name+'</p></div>':(isSpinning?'<div class="text-4xl animate-spin mb-2">🌀</div><p class="text-amber-300 text-lg">돌아가는 중...</p>':'<p class="text-white/40 text-lg">화살표를 돌려주세요!</p>'))+'</div>'+(isHost?'<div class="flex gap-3 mt-4"><button data-action="spin-arrow" '+(isSpinning||room.arrowTarget?'disabled':'')+' class="btn-truth text-white text-xl font-bold py-4 px-10 rounded-2xl '+(state.arrowSpinning||room.arrowTarget?'opacity-50 cursor-not-allowed':'hover:scale-105 transition-transform')+'">🎯 돌리기!</button>'+(room.arrowTarget?'<button data-action="reset-arrow" class="btn-secondary text-amber-300 py-4 px-6 rounded-2xl hover:bg-white/10">🔄 다시</button>':'')+'</div>':'<p class="text-white/50 mt-4">호스트가 돌릴 수 있습니다</p>')+'</div></div>'+renderChatToggle()+renderChatPanel()+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
 }
 
 function renderJurumarble(){
@@ -1360,7 +790,7 @@ function renderJurumarble(){
   const myPlayer=players.find(p=>p.id===state.odPlyerId);
   const isTrappedOnIsland=myPlayer&&myPlayer.islandTurn>0;
   
-  return '<div class="min-h-screen bg-beer p-2 overflow-auto relative">'+renderStars()+'<div class="absolute top-10 right-10 text-8xl opacity-10">🍺</div><div class="max-w-5xl mx-auto"><div class="flex justify-between items-center mb-2 flex-wrap gap-2"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-xl sm:text-2xl text-amber-400">🍺 주루마블 🍺</h1><div class="flex items-center gap-2"><span class="text-amber-200/50 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="card-wood rounded-2xl p-2 mb-3"><div class="flex flex-wrap gap-1 justify-center items-center mb-2">'+players.map((p,i)=>'<div class="flex items-center gap-1 px-2 py-1 rounded-lg '+(curr?.id===p.id?'bg-amber-500/30 ring-2 ring-amber-400':p.finished?'bg-green-500/20':'bg-black/20')+'"><div class="w-5 h-5 rounded-full" style="background:'+PLAYER_COLORS[i]+'"></div><span class="text-white text-xs">'+p.name+(p.finished?' 🏆':'')+(p.islandTurn>0?' 🏝️':'')+'</span></div>').join('')+'</div><p class="text-amber-200 text-center text-sm">'+(gameEnded?'🏆 게임 종료!':curr?.finished?'다음 차례...':'🎲 '+curr?.name+'님 차례')+'</p></div><div class="flex flex-col lg:flex-row gap-3"><div class="flex-1 overflow-x-auto"><div class="relative mx-auto" style="width:'+bsz+'px;height:'+bsz+'px;min-width:'+bsz+'px;">'+TILES.map(t=>{const pos=getTilePos(t.id);const l=pos.x*(sz+gap)+10,tp=pos.y*(sz+gap)+10;return'<div class="absolute rounded-lg tile-'+t.type+' flex flex-col items-center justify-center text-center p-1 border-2 border-black/30 shadow-lg" style="width:'+sz+'px;height:'+sz+'px;left:'+l+'px;top:'+tp+'px;"><span class="text-lg leading-none">'+t.emoji+'</span><span class="text-white text-[8px] font-bold leading-tight">'+t.name+'</span></div>'}).join('')+players.map((p,i)=>{if(p.finished)return'';const pos=getTilePos(p.position);const off=getOffset(i);const pl=pos.x*(sz+gap)+10+sz/2-12+off[0],pt=pos.y*(sz+gap)+10+sz/2-12+off[1];return'<div class="absolute w-6 h-6 rounded-full player-token flex items-center justify-center text-white text-xs font-bold transition-all duration-500 '+(curr?.id===p.id?'ring-2 ring-white':'')+'" style="left:'+pl+'px;top:'+pt+'px;background:'+PLAYER_COLORS[i]+';z-index:'+(10+i)+';">'+p.name[0]+'</div>'}).join('')+'</div></div><div class="lg:w-64 space-y-3"><div class="card-wood rounded-xl p-3"><div class="flex items-center justify-center gap-3 mb-3"><svg viewBox="0 0 100 100" class="w-16 h-16 '+(room.rolling?'animate-dice-roll':'')+'"><rect x="5" y="5" width="90" height="90" rx="15" fill="#FFF8E7" stroke="#8B5A14" stroke-width="3"/>'+diceDots(state.localDice)+'</svg></div><button data-action="roll-dice" '+(isMyTurn&&!room.rolling&&!curr?.finished?'':'disabled')+' class="btn-beer w-full text-white font-bold py-3 rounded-xl text-lg '+(isMyTurn&&!room.rolling&&!curr?.finished?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(room.rolling?'🎲 굴리는 중...':isTrappedOnIsland?'🏝️ 탈출 도전!':'🎲 주사위 굴리기')+'</button></div>'+(state.hasIslandSkip||state.hasJoker?'<div class="card-wood rounded-xl p-3"><p class="text-amber-300 text-sm mb-1">🎴 보유 카드</p>'+(state.hasIslandSkip?'<span class="inline-block bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded text-xs mr-1">👻 무인도 까방권</span>':'')+(state.hasJoker?'<span class="inline-block bg-purple-500/30 text-purple-300 px-2 py-1 rounded text-xs">🃏 조커</span>':'')+'</div>':'')+'<button data-action="show-aegyo" class="btn-secondary w-full text-amber-300 py-2 rounded-xl text-sm hover:bg-white/10">💕 애교대사 보기</button></div></div></div>'+renderChatToggle()+renderChatPanel('beer')+(room.showMission?renderMissionModal():'')+(room.rescueVoting?renderRescueModal():'')+(state.showLeave?renderLeaveModal():'')+(state.showAegyo?renderAegyoModal():'')+(state.showManage?renderManageModal():'')+(state.showSwapSelect?renderSwapSelectModal():'')+(state.showBomb?renderBombModal():'')+(room.showFinalDrink?renderFinalDrinkModal(players,room.finalDrinkWinner):'')+(gameEnded?renderGameEndModal(players):'')+'</div>';
+  return '<div class="min-h-screen bg-beer p-2 overflow-auto relative">'+renderStars()+'<div class="absolute top-10 right-10 text-8xl opacity-10">🍺</div><div class="max-w-5xl mx-auto"><div class="flex justify-between items-center mb-2 flex-wrap gap-2"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-xl sm:text-2xl text-amber-400">🍺 주루마블 🍺</h1><div class="flex items-center gap-2"><span class="text-amber-200/50 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="card-wood rounded-2xl p-2 mb-3"><div class="flex flex-wrap gap-1 justify-center items-center mb-2">'+players.map((p,i)=>'<div class="flex items-center gap-1 px-2 py-1 rounded-lg '+(curr?.id===p.id?'bg-amber-500/30 ring-2 ring-amber-400':p.finished?'bg-green-500/20':'bg-black/20')+'"><div class="w-5 h-5 rounded-full" style="background:'+PLAYER_COLORS[i]+'"></div><span class="text-white text-xs">'+p.name+(p.finished?' 🏆':'')+(p.islandTurn>0?' 🏝️':'')+'</span></div>').join('')+'</div><p class="text-amber-200 text-center text-sm">'+(gameEnded?'🏆 게임 종료!':curr?.finished?'다음 차례...':'🎲 '+curr?.name+'님 차례')+'</p></div><div class="flex flex-col lg:flex-row gap-3"><div class="flex-1 overflow-x-auto"><div class="relative mx-auto" style="width:'+bsz+'px;height:'+bsz+'px;min-width:'+bsz+'px;">'+TILES.map(t=>{const pos=getTilePos(t.id);const l=pos.x*(sz+gap)+10,tp=pos.y*(sz+gap)+10;return'<div class="absolute rounded-lg tile-'+t.type+' flex flex-col items-center justify-center text-center p-1 border-2 border-black/30 shadow-lg" style="width:'+sz+'px;height:'+sz+'px;left:'+l+'px;top:'+tp+'px;"><span class="text-lg leading-none">'+t.emoji+'</span><span class="text-white text-[8px] font-bold leading-tight">'+t.name+'</span></div>'}).join('')+players.map((p,i)=>{if(p.finished)return'';const pos=getTilePos(p.position);const off=getOffset(i);const pl=pos.x*(sz+gap)+10+sz/2-12+off[0],pt=pos.y*(sz+gap)+10+sz/2-12+off[1];return'<div class="absolute w-6 h-6 rounded-full player-token flex items-center justify-center text-white text-xs font-bold transition-all duration-500 '+(curr?.id===p.id?'ring-2 ring-white':'')+'" style="left:'+pl+'px;top:'+pt+'px;background:'+PLAYER_COLORS[i]+';z-index:'+(10+i)+';">'+p.name[0]+'</div>'}).join('')+'</div></div><div class="lg:w-64 space-y-3"><div class="card-wood rounded-xl p-3"><div class="flex items-center justify-center gap-3 mb-3"><svg viewBox="0 0 100 100" class="w-16 h-16 '+(room.rolling?'animate-dice-roll':'')+'"><rect x="5" y="5" width="90" height="90" rx="15" fill="#FFF8E7" stroke="#8B5A14" stroke-width="3"/>'+diceDots(state.localDice)+'</svg></div><button data-action="roll-dice" '+(isMyTurn&&!room.rolling&&!curr?.finished?'':'disabled')+' class="btn-beer w-full text-white font-bold py-3 rounded-xl text-lg '+(isMyTurn&&!room.rolling&&!curr?.finished?'hover:scale-105 transition-transform':'opacity-50 cursor-not-allowed')+'">'+(room.rolling?'🎲 굴리는 중...':isTrappedOnIsland?'🏝️ 탈출 도전!':'🎲 주사위 굴리기')+'</button></div>'+(state.hasIslandSkip||state.hasJoker?'<div class="card-wood rounded-xl p-3"><p class="text-amber-300 text-sm mb-1">🎴 보유 카드</p>'+(state.hasIslandSkip?'<span class="inline-block bg-cyan-500/30 text-cyan-300 px-2 py-1 rounded text-xs mr-1">👻 무인도 까방권</span>':'')+(state.hasJoker?'<span class="inline-block bg-purple-500/30 text-purple-300 px-2 py-1 rounded text-xs">🃏 조커</span>':'')+'</div>':'')+'<button data-action="show-aegyo" class="btn-secondary w-full text-amber-300 py-2 rounded-xl text-sm hover:bg-white/10">💕 애교대사 보기</button></div></div></div>'+renderChatToggle()+renderChatPanel()+(room.showMission?renderMissionModal():'')+(room.rescueVoting?renderRescueModal():'')+(state.showLeave?renderLeaveModal():'')+(state.showAegyo?renderAegyoModal():'')+(state.showManage?renderManageModal():'')+(state.showSwapSelect?renderSwapSelectModal():'')+(state.showBomb?renderBombModal():'')+(room.showFinalDrink?renderFinalDrinkModal(players,room.finalDrinkWinner):'')+(gameEnded?renderGameEndModal(players):'')+'</div>';
 }
 
 function renderDrawGame(){
@@ -1388,7 +818,7 @@ function renderDrawGame(){
   if(winner&&phase==='drawing'){
     return '<div class="min-h-screen bg-draw p-4 relative overflow-hidden flex items-center justify-center">'+renderStars()+'<div class="card-draw rounded-3xl p-8 max-w-lg w-full animate-bounce-in text-center"><div class="text-6xl mb-4">🏆</div><h2 class="title-font text-3xl text-green-400 mb-4">게임 종료!</h2><p class="text-white text-xl mb-6"><span class="text-yellow-400 font-bold">'+winner.name+'</span>님이 100점 달성!</p><div class="space-y-2 mb-6">'+players.sort((a,b)=>(scores[b.id]||0)-(scores[a.id]||0)).map((p,i)=>{const pIdx=players.findIndex(pl=>pl.id===p.id);return'<div class="flex items-center gap-3 bg-black/30 rounded-xl p-3"><span class="text-2xl">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'')+'</span><div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background:'+PLAYER_COLORS[pIdx]+'">'+p.name[0]+'</div><span class="flex-1 text-white font-bold">'+p.name+'</span><span class="text-green-400 font-bold text-xl">'+(scores[p.id]||0)+'점</span></div>'}).join('')+'</div>'+(isHost?'<button data-action="back-to-lobby" class="btn-draw text-white text-lg font-bold py-3 px-8 rounded-2xl hover:scale-105 transition-transform">🏠 대기실로</button>':'<p class="text-white/50">호스트가 대기실로 이동합니다</p>')+'</div></div>';
   }
-  return '<div class="min-h-screen bg-draw p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎨</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">🖌️</div><div class="max-w-5xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-green-400 flex-1 text-center">🎨 그림 제시어 🎨</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="flex flex-col lg:flex-row gap-4">'+(phase==='waiting'?'<div class="flex-1 card-draw rounded-2xl p-6 text-center"><div class="text-6xl mb-4 animate-float">🎨</div><p class="text-green-300 text-xl mb-4">그림 제시어 게임</p><p class="text-white/70 mb-2">그림을 그리고 맞추는 게임!</p><div class="bg-black/30 rounded-xl p-3 mb-4 text-left"><p class="text-green-300 text-sm mb-1">🏆 점수 규칙</p><p class="text-white/70 text-xs">1등: 15점 | 2등: 10점 | 3등: 5점</p><p class="text-white/70 text-xs">나머지 정답: 3점 | 못맞춤: -2점</p><p class="text-yellow-400 text-xs mt-1">100점 먼저 달성 시 승리!</p></div>'+(isHost?'<button data-action="start-game" class="btn-draw text-white text-lg font-bold py-3 px-8 rounded-2xl hover:scale-105 transition-transform">🖌️ 게임 시작</button>':'<p class="text-white/50">호스트가 시작합니다</p>')+'</div>':'<div class="flex-1"><div class="card-draw rounded-2xl p-4 mb-4"><div class="flex justify-between items-center mb-2"><div class="flex items-center gap-2">'+(isDrawer?'<span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">🖌️ 내 차례!</span><span class="text-green-300">제시어: <strong class="text-white text-lg">'+word+'</strong></span>':'<span class="text-green-300">그리는 사람: <strong class="text-white">'+(drawer?.name||'?')+'</strong></span>')+'</div><div class="flex items-center gap-2"><span id="draw-timer-text" class="text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white')+'">⏱️'+timeStr+'</span></div></div><div class="w-full h-2 bg-black/50 rounded-full overflow-hidden mb-3"><div id="draw-timer-bar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000" style="width:'+progress+'%"></div></div>'+(roundEnded&&!isDrawer?'<div class="bg-yellow-500/20 rounded-xl p-3 mb-3 text-center"><p class="text-yellow-400 font-bold">정답: '+word+'</p></div>':'')+'<div class="flex justify-center bg-white/5 rounded-xl p-2 relative"><canvas id="draw-canvas" width="400" height="300" class="draw-canvas"></canvas></div>'+(isDrawer?'<div class="mt-3 space-y-2"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 rounded-full flex items-center justify-center" style="background:'+(state.isEraser?'white':state.drawColor)+';width:'+Math.min(state.drawSize,30)+'px;height:'+Math.min(state.drawSize,30)+'px;border:2px solid #888"></div><span class="text-white/70 text-sm">'+(state.isEraser?'지우개':'펜')+' 미리보기</span></div><div class="color-palette">'+colorPalette+'</div><div class="flex items-center justify-center gap-4 mt-2"><button data-action="toggle-eraser" class="px-3 py-1 rounded-lg text-sm transition-all '+(state.isEraser?'bg-pink-500 text-white ring-2 ring-white':'bg-white/20 text-white hover:bg-white/30')+'">🧽 지우개</button><div class="flex items-center gap-2"><label class="text-white/70 text-sm">굵기: '+state.drawSize+'px</label><input type="range" id="draw-size" min="2" max="30" value="'+state.drawSize+'" class="w-24"></div><button data-action="clear-canvas" class="btn-secondary text-white px-4 py-1 rounded-lg text-sm hover:bg-white/20">🗑️ 전체 지우기</button></div></div>':'<div class="flex gap-2 mt-3"><input type="text" id="draw-guess" placeholder="'+(alreadyCorrect?'✓ 정답!':'정답 입력...')+'" class="input-draw flex-1 px-4 py-2 rounded-xl" '+(roundEnded||alreadyCorrect?'disabled':'')+'><button data-action="submit-guess" class="btn-draw px-6 py-2 rounded-xl text-white font-bold '+(roundEnded||alreadyCorrect?'opacity-50 cursor-not-allowed':'hover:scale-105 transition-transform')+'" '+(roundEnded||alreadyCorrect?'disabled':'')+'>제출</button></div>')+'</div></div>')+'<div class="lg:w-64"><div class="card-draw rounded-2xl p-4"><h3 class="text-green-300 font-bold mb-3">📊 점수판 (100점 목표)</h3><div class="space-y-2">'+players.sort((a,b)=>(scores[b.id]||0)-(scores[a.id]||0)).map((p,i)=>{const pIdx=players.findIndex(pl=>pl.id===p.id);const rank=correctOrder.indexOf(p.id);const rankEmoji=rank===0?'🥇':rank===1?'🥈':rank===2?'🥉':rank>=0?'✓':'';return'<div class="flex items-center gap-2 p-1 rounded-lg '+(p.id===drawerId?'bg-green-500/20':'')+'"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background:'+PLAYER_COLORS[pIdx]+'">'+p.name[0]+'</div><span class="flex-1 text-white text-sm truncate">'+p.name+'</span><span class="text-green-400 font-bold">'+(scores[p.id]||0)+'</span>'+(p.id===drawerId?'<span class="text-xs">🖌️</span>':'<span class="text-xs">'+rankEmoji+'</span>')+'</div>'}).join('')+'</div>'+(isHost&&roundEnded&&phase==='drawing'?'<button data-action="end-draw-round" class="mt-4 w-full btn-draw text-white py-2 rounded-xl hover:scale-105 transition-transform animate-pulse">⏭️ 다음 라운드</button>':'')+'</div></div></div></div>'+renderChatToggle()+renderChatPanel('draw')+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
+  return '<div class="min-h-screen bg-draw p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎨</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">🖌️</div><div class="max-w-5xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost text-red-400 px-3 py-1 rounded-lg hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-green-400 flex-1 text-center">🎨 그림 제시어 🎨</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div><div class="flex flex-col lg:flex-row gap-4">'+(phase==='waiting'?'<div class="flex-1 card-draw rounded-2xl p-6 text-center"><div class="text-6xl mb-4 animate-float">🎨</div><p class="text-green-300 text-xl mb-4">그림 제시어 게임</p><p class="text-white/70 mb-2">그림을 그리고 맞추는 게임!</p><div class="bg-black/30 rounded-xl p-3 mb-4 text-left"><p class="text-green-300 text-sm mb-1">🏆 점수 규칙</p><p class="text-white/70 text-xs">1등: 15점 | 2등: 10점 | 3등: 5점</p><p class="text-white/70 text-xs">나머지 정답: 3점 | 못맞춤: -2점</p><p class="text-yellow-400 text-xs mt-1">100점 먼저 달성 시 승리!</p></div>'+(isHost?'<button data-action="start-game" class="btn-draw text-white text-lg font-bold py-3 px-8 rounded-2xl hover:scale-105 transition-transform">🖌️ 게임 시작</button>':'<p class="text-white/50">호스트가 시작합니다</p>')+'</div>':'<div class="flex-1"><div class="card-draw rounded-2xl p-4 mb-4"><div class="flex justify-between items-center mb-2"><div class="flex items-center gap-2">'+(isDrawer?'<span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">🖌️ 내 차례!</span><span class="text-green-300">제시어: <strong class="text-white text-lg">'+word+'</strong></span>':'<span class="text-green-300">그리는 사람: <strong class="text-white">'+(drawer?.name||'?')+'</strong></span>')+'</div><div class="flex items-center gap-2"><span id="draw-timer-text" class="text-2xl font-bold '+(remaining<=30?'text-red-500 animate-pulse':'text-white')+'">⏱️'+timeStr+'</span></div></div><div class="w-full h-2 bg-black/50 rounded-full overflow-hidden mb-3"><div id="draw-timer-bar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000" style="width:'+progress+'%"></div></div>'+(roundEnded&&!isDrawer?'<div class="bg-yellow-500/20 rounded-xl p-3 mb-3 text-center"><p class="text-yellow-400 font-bold">정답: '+word+'</p></div>':'')+'<div class="flex justify-center bg-white/5 rounded-xl p-2 relative"><canvas id="draw-canvas" width="400" height="300" class="draw-canvas"></canvas></div>'+(isDrawer?'<div class="mt-3 space-y-2"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 rounded-full flex items-center justify-center" style="background:'+(state.isEraser?'white':state.drawColor)+';width:'+Math.min(state.drawSize,30)+'px;height:'+Math.min(state.drawSize,30)+'px;border:2px solid #888"></div><span class="text-white/70 text-sm">'+(state.isEraser?'지우개':'펜')+' 미리보기</span></div><div class="color-palette">'+colorPalette+'</div><div class="flex items-center justify-center gap-4 mt-2"><button data-action="toggle-eraser" class="px-3 py-1 rounded-lg text-sm transition-all '+(state.isEraser?'bg-pink-500 text-white ring-2 ring-white':'bg-white/20 text-white hover:bg-white/30')+'">🧽 지우개</button><div class="flex items-center gap-2"><label class="text-white/70 text-sm">굵기: '+state.drawSize+'px</label><input type="range" id="draw-size" min="2" max="30" value="'+state.drawSize+'" class="w-24"></div><button data-action="clear-canvas" class="btn-secondary text-white px-4 py-1 rounded-lg text-sm hover:bg-white/20">🗑️ 전체 지우기</button></div></div>':'<div class="flex gap-2 mt-3"><input type="text" id="draw-guess" placeholder="'+(alreadyCorrect?'✓ 정답!':'정답 입력...')+'" class="input-draw flex-1 px-4 py-2 rounded-xl" '+(roundEnded||alreadyCorrect?'disabled':'')+'><button data-action="submit-guess" class="btn-draw px-6 py-2 rounded-xl text-white font-bold '+(roundEnded||alreadyCorrect?'opacity-50 cursor-not-allowed':'hover:scale-105 transition-transform')+'" '+(roundEnded||alreadyCorrect?'disabled':'')+'>제출</button></div>')+'</div></div>')+'<div class="lg:w-64"><div class="card-draw rounded-2xl p-4"><h3 class="text-green-300 font-bold mb-3">📊 점수판 (100점 목표)</h3><div class="space-y-2">'+players.sort((a,b)=>(scores[b.id]||0)-(scores[a.id]||0)).map((p,i)=>{const pIdx=players.findIndex(pl=>pl.id===p.id);const rank=correctOrder.indexOf(p.id);const rankEmoji=rank===0?'🥇':rank===1?'🥈':rank===2?'🥉':rank>=0?'✓':'';return'<div class="flex items-center gap-2 p-1 rounded-lg '+(p.id===drawerId?'bg-green-500/20':'')+'"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background:'+PLAYER_COLORS[pIdx]+'">'+p.name[0]+'</div><span class="flex-1 text-white text-sm truncate">'+p.name+'</span><span class="text-green-400 font-bold">'+(scores[p.id]||0)+'</span>'+(p.id===drawerId?'<span class="text-xs">🖌️</span>':'<span class="text-xs">'+rankEmoji+'</span>')+'</div>'}).join('')+'</div>'+(isHost&&roundEnded&&phase==='drawing'?'<button data-action="end-draw-round" class="mt-4 w-full btn-draw text-white py-2 rounded-xl hover:scale-105 transition-transform animate-pulse">⏭️ 다음 라운드</button>':'')+'</div></div></div></div>'+renderChatToggle()+renderChatPanel()+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
 }
 
 function renderSwapSelectModal(){
@@ -1465,7 +895,7 @@ function renderLiarGame(){
   else if(phase==='vote')content=renderLiarVote(room,players,isHost);
   else if(phase==='reveal')content=renderLiarReveal(room,players);
   else if(phase==='result')content=renderLiarResult(room,players,isHost);
-  return '<div class="min-h-screen bg-liar p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎭</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">🔍</div><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost px-3 py-1 text-red-400 rounded-xl hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-red-400 flex-1 text-center">🎭 라이어 게임 🎭</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div>'+content+'</div>'+renderChatToggle()+renderChatPanel('liar')+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
+  return '<div class="min-h-screen bg-liar p-4 relative overflow-hidden">'+renderStars()+'<div class="absolute top-20 right-10 text-6xl opacity-15 animate-float">🎭</div><div class="absolute bottom-20 left-10 text-5xl opacity-10 animate-float-reverse">🔍</div><div class="max-w-4xl mx-auto relative z-10"><div class="flex justify-between items-center mb-4"><button data-action="show-leave" class="btn-ghost px-3 py-1 text-red-400 rounded-xl hover:bg-red-500/20">🚪</button><h1 class="title-font text-3xl text-red-400 flex-1 text-center">🎭 라이어 게임 🎭</h1><div class="flex items-center gap-2"><span class="text-white/30 text-sm">'+state.roomCode+'</span>'+(isHost?'<button data-action="show-manage" class="text-yellow-400 text-sm hover:text-yellow-300">👑관리</button>':'')+'</div></div>'+content+'</div>'+renderChatToggle()+renderChatPanel()+(state.showLeave?renderLeaveModal():'')+(state.showManage?renderManageModal():'')+'</div>';
 }
 
 function renderLiarRole(room,players,isLiar,isHost){
@@ -1602,6 +1032,13 @@ function initDrawCanvas(){
   }
   if(!isDrawer)return;
   
+    // 채팅 입력 포커스 확인 함수
+  const isChatFocused=()=>{
+    const chatInput=document.getElementById('chat-input');
+    const drawGuessInput=document.getElementById('draw-guess');
+    return document.activeElement===chatInput||document.activeElement===drawGuessInput;
+  };
+  
   // 기존 커서 제거
   const oldCursor=document.querySelector('.draw-cursor');
   if(oldCursor)oldCursor.remove();
@@ -1614,6 +1051,10 @@ function initDrawCanvas(){
   document.body.appendChild(cursor);
   
   const updateCursor=(e)=>{
+    if(isChatFocused()){
+      cursor.style.display='none';
+      return;
+    }
     const rect=canvas.getBoundingClientRect();
     const x=e.clientX-rect.left;
     const y=e.clientY-rect.top;
@@ -1631,13 +1072,13 @@ function initDrawCanvas(){
     cursor.style.borderColor=state.isEraser?'#ec4899':'#22c55e';
   };
   
-  canvas.onmouseenter=()=>{cursor.style.display='block'};
+  canvas.onmouseenter=()=>{if(!isChatFocused())cursor.style.display='block'};
   canvas.onmouseleave=()=>{cursor.style.display='none';cursor.remove();state.isDrawing=false;saveCanvas()};
-  canvas.onmousedown=e=>{state.isDrawing=true;const rect=canvas.getBoundingClientRect();lastX=(e.clientX-rect.left)*(canvas.width/rect.width);lastY=(e.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY);updateCursor(e)};
-  canvas.onmousemove=e=>{updateCursor(e);if(!state.isDrawing)return;const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);const y=(e.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
+  canvas.onmousedown=e=>{if(isChatFocused())return;state.isDrawing=true;const rect=canvas.getBoundingClientRect();lastX=(e.clientX-rect.left)*(canvas.width/rect.width);lastY=(e.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY);updateCursor(e)};
+  canvas.onmousemove=e=>{updateCursor(e);if(!state.isDrawing||isChatFocused())return;const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);const y=(e.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
   canvas.onmouseup=()=>{state.isDrawing=false;saveCanvas()};
-  canvas.ontouchstart=e=>{e.preventDefault();state.isDrawing=true;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];lastX=(touch.clientX-rect.left)*(canvas.width/rect.width);lastY=(touch.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY)};
-  canvas.ontouchmove=e=>{e.preventDefault();if(!state.isDrawing||!e.touches[0])return;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];const x=(touch.clientX-rect.left)*(canvas.width/rect.width);const y=(touch.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
+  canvas.ontouchstart=e=>{if(isChatFocused())return;e.preventDefault();state.isDrawing=true;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];lastX=(touch.clientX-rect.left)*(canvas.width/rect.width);lastY=(touch.clientY-rect.top)*(canvas.height/rect.height);draw(lastX,lastY)};
+  canvas.ontouchmove=e=>{if(isChatFocused())return;e.preventDefault();if(!state.isDrawing||!e.touches[0])return;const rect=canvas.getBoundingClientRect();const touch=e.touches[0];const x=(touch.clientX-rect.left)*(canvas.width/rect.width);const y=(touch.clientY-rect.top)*(canvas.height/rect.height);drawLine(lastX,lastY,x,y);lastX=x;lastY=y};
   canvas.ontouchend=()=>{state.isDrawing=false;saveCanvas()};
 }
 
@@ -1935,8 +1376,20 @@ function subscribeRoom(){
     const prevDrawEnd=state.room?.drawEndTime;
     const prevPhase=state.room?.phase;
     const prevStatus=state.room?.status;  // 추가
-    
+    const prevArrowAngle=state.room?.arrowAngle;
+    const prevArrowSpinning=state.room?.arrowSpinning;
+
     state.room=val;
+    
+        // 화살표 각도 동기화
+    if(val.arrowAngle!==undefined&&val.arrowAngle!==prevArrowAngle){
+      state.arrowAngle=val.arrowAngle;
+    }
+
+    // 화살표 회전 상태 동기화
+    if(val.arrowSpinning!==undefined&&val.arrowSpinning!==prevArrowSpinning){
+      state.arrowSpinning=val.arrowSpinning;
+    }
     
     // 라이어 게임에서 새 라운드 시작 시에만 로컬 상태 초기화 (대기실 복귀 제외)
     if(val.gameId==='liar'&&prevPhase==='result'&&val.phase==='role'&&val.status==='playing'){
@@ -2048,7 +1501,7 @@ function startGame(){
     const liarIds=selectLiarsByHistory(players,liarCount);
     updateRoom({status:'playing',phase:'role',topic,word,liarId:liarIds[0],liarIds,flippedPlayers:{},votes:{},liarGuessCorrect:null,liarCaught:null,discussTime:state.room.discussTime||5,liarHistory:state.room.liarHistory||{}});
   }else if(g.id==='truth'){
-    updateRoom({status:'playing',arrowTarget:null});
+    updateRoom({status:'playing',arrowTarget:null,arrowAngle:0,arrowSpinning:false});
   }else if(g.id==='draw'){
     const drawer=players[0];
     const difficulties=Object.keys(DRAW_WORDS);
@@ -2121,11 +1574,18 @@ function spinArrow(){
   const baseAngle=targetIdx*angleStep;
   const spins=4+Math.floor(Math.random()*2);
   const finalAngle=spins*360+baseAngle;
-  state.arrowAngle=finalAngle;
-  render();
+  
+  roomRef.update({
+    arrowAngle:finalAngle,
+    arrowSpinning:true
+  });
+  
   setTimeout(()=>{
     state.arrowSpinning=false;
-    roomRef.update({arrowTarget:players[targetIdx].id});
+    roomRef.update({
+      arrowTarget:players[targetIdx].id,
+      arrowSpinning:false
+    });
     playSound('win');
   },3000);
 }
@@ -2133,7 +1593,7 @@ function spinArrow(){
 function resetArrow(){
   if(!roomRef)return;
   state.arrowAngle=0;
-  roomRef.update({arrowTarget:null});
+  roomRef.update({arrowTarget:null,arrowAngle:0,arrowSpinning:false});
   render();
 }
 
