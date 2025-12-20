@@ -1767,8 +1767,8 @@ function bindEvents(){
     if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value;
 const chatInput=document.getElementById('chat-input');
     if(chatInput){
+      chatInput.value=state.chatMsg||''; // 입력 중이던 내용 복원
       chatInput.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();sendChat()}};
-      state.chatMsg='';
       chatInput.oninput=e=>state.chatMsg=e.target.value;
     }
     const chatBox=document.getElementById('chat-box');
