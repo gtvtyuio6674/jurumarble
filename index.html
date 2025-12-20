@@ -968,10 +968,37 @@ function bindEvents(){
     });
     const guessInput=document.getElementById('liar-guess');
     if(guessInput)guessInput.oninput=e=>state.liarGuess=e.target.value;
-    const chatInput=document.getElementById('chat-input');
-    if(chatInput){chatInput.onkeydown=e=>{if(e.key==='Enter')sendChat()};state.chatMsg='';chatInput.oninput=e=>state.chatMsg=e.target.value}
+const chatInput=document.getElementById('chat-input');
+    if(chatInput){
+      chatInput.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();sendChat()}};
+      state.chatMsg='';
+      chatInput.oninput=e=>state.chatMsg=e.target.value;
+    }
     const chatBox=document.getElementById('chat-box');
     if(chatBox)chatBox.scrollTop=chatBox.scrollHeight;
+    
+    // 전역 Enter 키 이벤트 (채팅 토글)
+    document.onkeydown=e=>{
+      if(e.key==='Enter'){
+        // 이미 input에 포커스 되어있으면 무시
+        const activeEl=document.activeElement;
+        if(activeEl&&(activeEl.tagName==='INPUT'||activeEl.tagName==='TEXTAREA'))return;
+        
+        // 게임 화면에서만 작동 (홈, 로비, 룰렛 제외)
+        if(state.screen!=='game')return;
+        
+        e.preventDefault();
+        if(!state.showChat){
+          state.showChat=true;
+          state.lastReadChatCount=state.room?.chats?Object.keys(state.room.chats).length:0;
+          render();
+          setTimeout(()=>{
+            const input=document.getElementById('chat-input');
+            if(input)input.focus();
+          },100);
+        }
+      }
+    };
     const drawSizeInput=document.getElementById('draw-size');
     if(drawSizeInput)drawSizeInput.oninput=e=>state.drawSize=parseInt(e.target.value);
     const drawGuessInput=document.getElementById('draw-guess');
@@ -1142,8 +1169,7 @@ function handleAction(a,d){
     case 'show-result':showFinalResult();break;
     case 'new-round':newLiarRound();break;
     case 'send-chat':sendChat();break;
-    case 'toggle-chat':state.showChat=!state.showChat;if(state.showChat){state.lastReadChatCount=state.room?.chats?Object.keys(state.room.chats).length:0}render();break;
-    case 'spin-arrow':spinArrow();break;
+case 'toggle-chat':state.showChat=!state.showChat;if(state.showChat){state.lastReadChatCount=state.room?.chats?Object.keys(state.room.chats).length:0}render();if(state.showChat){setTimeout(()=>{const input=document.getElementById('chat-input');if(input)input.focus()},100)}break;    case 'spin-arrow':spinArrow();break;
     case 'reset-arrow':resetArrow();break;
     case 'rescue-vote':rescueVote(d.vote==='yes');break;
     case 'show-admin':state.showAdmin=true;render();break;
@@ -1250,7 +1276,10 @@ function sendChat(){
   roomRef.child('chats').push().set({pid:state.odPlyerId,msg:state.chatMsg.trim(),time:Date.now()});
   state.chatMsg='';
   const input=document.getElementById('chat-input');
-  if(input)input.value='';
+  if(input){
+    input.value='';
+    input.focus(); // 전송 후 포커스 유지
+  }
 }
 
 function flipLiarCard(){
